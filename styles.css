@@ -1,0 +1,1377 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Amsterdam';
+    src: url('fonts/amsterdam.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'unbounded light';
+    src: url('fonts/Unbounded-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Unbounded', sans-serif;
+    background: white;
+    overflow-x: hidden;
+    
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: white;
+    border-bottom: 1px solid #e6e6e6; /* Add light bottom border */
+}
+.logo img {
+    height: 50px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #037EF3;
+    left: 50%;
+    bottom: -5px;
+    transition: all 0.3s;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.main-title {
+    text-align: center;
+    font-size: 42px;
+    font-weight: 300;
+    color: #404040;
+    margin: 60px auto;
+    max-width: 1200px;
+    padding: 0 20px;
+    padding-bottom: 10px;
+    font-family: "unbounded light";
+
+}
+
+.impact-wrapper {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.impact {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Six Caps';
+    z-index: -2;
+gap: 50px;
+}
+
+.letter {
+    font-size: 90vh;
+    font-weight: bold;
+    background-image: url('aspects/background.jpg');
+    background-size: 1500px auto;
+    background-position: center;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
+    line-height: 2;
+    padding-bottom: 200px;
+    z-index: -2;
+
+}
+
+/* Position the background image differently for each letter */
+.letter:nth-child(1) { background-position: 10% center; }
+.letter:nth-child(2) { background-position: 20% center; }
+.letter:nth-child(3) { background-position: 40% center; }
+.letter:nth-child(4) { background-position: 60% center; }
+.letter:nth-child(5) { background-position: 80% center; }
+.letter:nth-child(6) { background-position: 90% center; }
+
+
+
+@media (max-width: 1200px) {
+    .letter {
+        font-size: 30vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .letter {
+        font-size: 20vh;
+    }
+}
+
+@keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .aiesec-hub {
+      text-align: center;
+      max-width: 900px;
+      margin: 100px auto;
+      position: relative;
+      padding: 40px 20px;
+  }
+  
+  /* Initial hidden states */
+  .hey-text {
+    font-family: "unbounded light";
+      font-weight: 300;
+      font-size: 3rem;
+      color: #646363;
+      opacity: 0;
+      transform: translateY(-40px); /* Start above */
+  }
+  
+  .hub-description {
+      font-size: 1.4rem;
+      color: rgb(22, 22, 22);
+      line-height: 1.8;
+      opacity: 0;
+      transform: translateY(40px); /* Start below */
+      font-family: "unbounded light";
+
+  }
+  
+  /* Animation triggers */
+  .aiesec-hub.in-view .hey-text {
+      animation: slideDown 0.8s ease-out forwards;
+  }
+  
+  .aiesec-hub.in-view .hub-description {
+      animation: slideUp 0.8s ease-out 0.2s forwards; /* Slight delay */
+  }
+  
+  .pre-loader {
+    position: fixed;
+    background-color: #ffffff;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+  }
+  .pre-loader img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+  }
+
+
+
+.aiesec-hub h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #222;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #037EF3, #8a2be2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hub-icon {
+    width: 200px;
+    position: absolute;
+    transition: transform 0.5s ease-in-out;
+}
+
+
+
+.hub-icon:hover {
+    transform: scale(1.1);
+}
+
+.icon1 { top: -30px; left: -10%; width: 180px; }
+.icon2 { top: -20px; right: -10%; width: 200px; }
+.icon3 { bottom: 10px; left: -30%; width: 190px;}
+.icon4 { bottom: 10px; right: -30%; width: 210px; }
+.icon5 { top: 25%; left: -30%;  }
+.icon6 { top: 25%; right: -30%; }
+
+@media (max-width: 768px) {
+    .aiesec-hub h1 {
+        font-size: 3rem;
+    }
+    
+    .hub-description {
+        font-size: 1.4rem;
+        color: #444;
+        margin-top: 15px;
+        line-height: 1.6;
+    }
+    .hub-icon {
+        width: 200px;
+    }
+}
+
+.hey-text {
+    font-weight: 300;
+    font-size: 3rem;
+    color: #646363;
+}
+
+.aiesec-text {
+    font-weight: bold;
+    background: linear-gradient(90deg, #037EF3, #8a2be2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+
+/* middle */
+.video_section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 200px;
+}
+
+.the-text {
+    font-family: "unbounded light";
+    font-weight: 300;
+    font-size: 3rem;
+    color: #ffffff;
+    text-align: center;
+}
+
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+}
+
+.aiesec1-text {
+    font-size: 3rem; /* Adjust size as needed */
+    font-weight: bold;
+    color: white; /* Keep text white */
+    position: relative;
+    padding: 10px 20px; /* Adds spacing inside the background */
+    display: inline-block;
+    z-index: 2; /* Ensure text stays above the background */
+}
+
+/* Gradient Background Behind the Text */
+.aiesec1-text::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #F85A40,#F48924,#0CB9C1,#037EF3, #8a2be2,#F85A40);
+    background-size: 200% 200%;
+    animation: gradientMove 3s infinite linear;
+    border-radius: 36px; /* Optional: Adds rounded corners */
+    z-index: -1; /* Ensures the background stays behind */
+    opacity: 1; /* Adjust transparency for better readability */
+}
+
+
+
+/* Video Container */
+.video_container {
+    padding-top: 20px;
+    position: relative;
+    width: 60%;
+    max-width: 800px;
+}
+
+/* Thumbnail Image */
+.video_thumbnail {
+    width: 90%;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Play Button */
+.play_button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+
+
+/* Hide video by default */
+.video_container video {
+    display: none;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+.carousel-inner {
+    display:block;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.carousel-item {
+    text-align: center;
+    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+}
+
+.card {
+    width: 100%;
+    height: 250px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    text-align: center;
+    transition: all 0.5s ease-in-out;
+}
+
+.bg-gradient-red {
+    background: linear-gradient(to right, #E44D26, #FF7F50);
+}
+
+.bg-gradient-green {
+    background: linear-gradient(to right, #11998e, #38ef7d);
+}
+
+.bg-gradient-blue {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+}
+
+
+
+/* Blur effect for non-active cards */
+.carousel-item:not(.active) .card {
+    opacity: 0.5;
+    filter: blur(5px);
+    transform: scale(0.9);
+}
+
+
+
+
+
+/* Ensure video container is centered */
+.container-elementor {
+    height: 600px;
+    background-image: linear-gradient(140deg, #037ef3 10%, #037ef3 100%);
+    background-size: cover;
+    position: relative;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* SVG Styling */
+.elementor-svg {
+    position: absolute;
+    width: calc(100% + 2px);
+    height: 50px;
+}
+
+.elementor-svg path {
+    fill: #fff;
+}
+
+.bottomSVG {
+    bottom: -1px;
+}
+
+.bottomSVG-rotateX,
+.bottomSVG-tiltDownLeft,
+.topSVG-rotateX {
+    transform: rotateX(180deg);
+}
+
+.topSVG {
+    top: -1px;
+}
+
+/* Video Styling */
+.ogv-videos {
+    border-radius: var(--temp-bdr-radius);
+    width: 75%;
+    display: block; /* Ensure it's visible */
+}
+
+/* Play Button Styling */
+.play-button {
+    position: absolute;
+    font-size: 80px;
+    z-index: 100; /* Ensure it's above the video */
+    background: transparent;
+    border: 0;
+    color: grey;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+/* Ensure play button appears above the video */
+.play-button:hover {
+    color: white;
+}
+
+
+/* Section Background */
+.video_section {
+    background: linear-gradient(140deg, #037ef3 10%, #037ef3 100%);
+    position: relative;
+    padding: 50px 0;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* SVG Styling */
+.elementor-svg {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+}
+
+.topSVG {
+    top: 0;
+    left: 0;
+}
+
+.bottomSVG {
+    bottom: 0;
+    left: 0;
+}
+
+.bottomSVG-rotateX {
+    transform: rotateX(180deg);
+}
+
+/* Video Styling */
+.video_container {
+    position: relative;
+    width: 50%;
+    max-width: 700px;
+    display: flex;
+    justify-content: center;
+}
+
+.video_thumbnail {
+    width: 80%;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.video_container video {
+    display: none;
+    width: 80%;
+    border-radius: 10px;
+}
+
+/* Play Button */
+.play_button {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    color: white;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.text-header h1 {
+    font-size: 70px;
+    color: #037FF3;
+    opacity: 0.2;
+    position: relative;
+    display: inline-block; 
+    margin-left: 15px;
+    font-family: 'unbounded', sans-serif;
+    background: linear-gradient(90deg, #037EF3, #8a2be2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+
+
+}
+
+.text-header h2 {
+
+    font-size: 54px;
+    color: #404040;
+    position: relative;
+    display: inline-block; 
+    vertical-align: middle; 
+    margin-left: -30%; 
+    font-family: "unbounded light";
+
+}
+
+.moving-bar-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 10px 0;
+    position: relative;
+}
+
+.moving-bar {
+    display: inline-block;
+    white-space: nowrap;
+    animation: moveBar 10s linear infinite; /* Adjust speed here */
+}
+
+.moving-bar span {
+    margin-right: 100px; /* Space between messages */
+    font-size: 80px;
+    color: #40404028;
+    font-family: 'RobotoFlex', sans-serif;
+    font-weight: bold;
+}
+
+
+@keyframes moveBar {
+    0% {
+        transform: translateX(0%); /* Start from the beginning */
+    }
+    100% {
+        transform: translateX(-50%); /* Move to the halfway point (since content is duplicated) */
+    }
+}
+
+/* Card section */
+.carousel-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh; /* Full height */
+    overflow: hidden; /* Prevent overflow */
+}
+
+.carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.5s ease; /* Smooth slide transition */
+}
+
+.cards, .cards1, .cards2, .cards3, .cards4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 350px;
+    height: 520px;
+    background: #fff;
+    border-radius: 2rem;
+    border: 1px solid rgb(175, 175, 175);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    opacity: 0; /* Start with invisible cards */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    visibility: hidden; /* Hide the cards until they are the center one */
+}
+
+.cards img, .cards1 img, .cards2 img, .cards3 img, .cards4 img {
+    position: absolute;
+    width: 90%;
+    height: 60%;
+    border-radius: 1rem;
+    top: 5%;
+}
+
+.cards h1, .cards1 h1, .cards2 h1, .cards3 h1, .cards4 h1 {
+    display: flex;
+    position: absolute;
+    top: 70%;
+    left: 28%;
+    font-size: 20px;
+    color: #16192C;
+    transform: translate(-50%, -50%);
+    font-family: 'RobotoFlex', sans-serif;
+
+
+}
+
+.cards p1, .cards1 p1, .cards2 p1, .cards3 p1, .cards4 p1 {
+    display: flex;
+    position: relative;
+    top: 25%;
+    left: 34%;
+    font-size: 14px;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #425466;
+    font-family: 'RobotoFlex', sans-serif;
+
+}
+
+.cards button, .cards1 button, .cards2 button, .cards3 button, .cards4 button {
+    position: relative;
+    display: flex;
+    background-color: rgb(48, 129, 250);
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    top: 0%;
+    right: 50%;
+    font-family: 'RobotoFlex', sans-serif;
+
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 3rem; /* Adjust the size as needed */
+    cursor: pointer;
+    color: #969CB1; /* Adjust color if needed */
+    z-index: 1000;
+    user-select: none;
+}
+
+.arrow.left {
+    left: 20px;
+    content: "<"; 
+}
+
+.arrow.right {
+    right: 20px;
+    content: ">"; 
+}
+
+@keyframes moving-left1 {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+
+.moving-section {
+    overflow: hidden;
+    padding: 10px 0;
+    background: white;
+    white-space: nowrap;
+    justify-content: space-between; /* Ensure they take up space equally */
+    position: relative; 
+
+
+}
+
+.moving-left1 {
+    display: inline-block;
+    margin-bottom: 20px;
+    animation: moving-left1 10s linear infinite; /* Apply animation */
+}
+
+
+
+.moving-section img {
+    height: 176px;
+    width: 228px;
+    margin: 0 25px; /* Space between images */
+}
+
+.moving-section span {
+    font-size: 96px;
+    color: #007bff;
+    font-weight: bold;
+    font-style: italic;
+    margin: 0px 25px; /* Space between images */
+    font-family: 'Montserratt', sans-serif;
+
+}
+
+
+
+@keyframes moving-right {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0%);
+    }
+}
+
+.moving-section2 {
+    overflow: hidden;
+    padding: 10px 0;
+    background: white;
+    white-space: nowrap;
+    position: relative; 
+}
+
+.moving-right {
+    display:inline-block;
+    animation: moving-right 10s linear infinite; 
+}
+
+.moving-section2 img {
+    height: 290px;
+    width: 228px;
+    margin: 0 25px; /* Space between images */
+}
+.moving-section2 span {
+    font-size: 96px;
+    color: #007bff;
+    font-weight: bold;
+    font-style: italic;
+    margin: 0 50px; /* Space between text and previous image */
+    font-family: 'Montserratt', sans-serif;
+
+}
+
+
+
+@keyframes moving-left2 {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+
+.moving-section3 {
+    overflow: hidden;
+    padding: 10px 0;
+    background: white;
+    white-space: nowrap;
+    justify-content: space-between; /* Ensure they take up space equally */
+    position: relative; 
+
+
+}
+
+.moving-left2 {
+    display: inline-block;
+    animation: moving-left2 10s linear infinite; /* Apply animation */
+}
+
+
+
+.moving-section3 img {
+    height: 176px;
+    width: 228px;
+    margin: 0 25px; /* Space between images */
+}
+
+.moving-section3 span {
+    font-size: 128px;
+    color: #007bff;
+    font-family: 'Amsterdam', sans-serif;
+
+    margin: 0 50px; /* Space between text and previous image */
+}
+
+@media screen and (max-width: 768px) {
+
+
+    .text-header h1 {
+        font-size: 60px;
+        
+    }
+
+    .text-header h2 {
+        font-size: 42px;
+        position:absolute;
+        top:10%;
+        left:35%;
+    }
+    .cards, .cards1, .cards2, .cards3, .cards4 {
+       
+        width: 280px;
+        height: 470px;
+        
+    }
+    .cards img, .cards1 img, .cards2 img, .cards3 img, .cards4 img {
+        width: 90%;
+        height: 50%;
+        top: 5%;
+    }
+
+    .cards h1, .cards1 h1, .cards2 h1, .cards3 h1, .cards4 h1 {
+        
+        top: 58%;
+        left: 32%;
+        font-size: 20px;
+        
+
+
+    }
+
+    .cards p1, .cards1 p1, .cards2 p1, .cards3 p1, .cards4 p1 {
+        top: 19%;
+        left: 34%;
+        font-size: 14px;
+    }
+
+    .cards button, .cards1 button, .cards2 button, .cards3 button, .cards4 button {
+        
+        font-size: 14px;
+        top: 41%;
+        right: 55%;
+        
+
+    }
+
+    .moving-section img {
+        height: 176px;
+        width: 208px;
+        
+    }
+    
+    .moving-section span {
+        font-size: 66px;           
+
+    }
+    .moving-section2 img {
+        height: 250px;
+        width: 208px;
+        
+    }
+    
+    .moving-section2 span {
+        font-size: 66px;           
+
+    }
+
+    .moving-section3 img {
+        height: 176px;
+        width: 208px;
+        
+    }
+    
+    .moving-section3 span {
+        font-size: 90px;           
+
+    }
+
+}
+@media screen and (max-width: 375px) {
+
+    .text-header h1 {
+        font-size: 50px;
+        
+    }
+    .text-header h2 {
+        font-size: 35px;
+        position:absolute;
+        top:9%;
+        left:35%;
+    }
+
+}
+
+.news-section {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.news-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+/* Swiper Container */
+.swiper1 {
+    overflow: hidden;
+    position: relative;
+}
+
+/* Swiper Slide */
+.swiper1-slide {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.swiper1-slide:hover {
+    transform: scale(1.03);
+}
+
+/* Card Image */
+.card1 img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Card Text */
+.card h3 {
+    font-size: 1.3rem;
+    margin-top: 10px;
+}
+
+.card p {
+    font-size: 1rem;
+    color: #444;
+    margin-top: 8px;
+    font-family: "roboto";
+    font-weight: flex;
+}
+
+/* Button */
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 0.9rem;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Navigation Buttons */
+.swiper-button-next, .swiper-button-prev {
+    color: #007bff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .news-title {
+        font-size: 2rem;
+        text-align: center;
+    }
+}
+
+/* Ensure the Swiper container allows full height */
+.swiper {
+    width: 100%;
+    padding: 20px 0; /* Add padding to prevent cropping */
+}
+
+/* Adjust slide width and ensure content fits */
+.swiper-slide {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    height: auto; /* Ensure dynamic height */
+    min-height: 350px; /* Adjust based on content */
+}
+
+/* Ensure images fit properly */
+.card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Adjust the Swiper wrapper */
+.swiper-wrapper {
+    display: flex;
+    align-items: stretch; /* Ensures all slides are fully visible */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .swiper-slide {
+        min-height: 400px;
+    }
+}
+
+.academy-section {
+    width: 90%;
+    max-width: 1200px;
+    margin: 60px auto;
+}
+
+.section-title {
+    font-size: 3rem;
+    font-family: "unbounded light";
+    text-align: center;
+}
+
+.highlight {
+
+        font-weight: bold;
+        background: linear-gradient(90deg, #037EF3, #8a2be2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    
+    }
+
+/* Section Description */
+.section-description {
+    font-family: "roboto";
+    font-weight: flex;
+    text-align: center;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Swiper Container */
+.swiper {
+    width: 100%;
+    overflow: visible;
+    padding: 20px 0;
+}
+
+/* Swiper Slide (Card) */
+.academy-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 24px;
+    padding: 30px;
+    text-align: center;
+    height: 250px;
+    width: 90%;
+    max-width: 600px;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.academy-card:hover {
+    transform: scale(1.05);
+}
+
+/* Different Card Backgrounds */
+.red {     background: linear-gradient(to right, #E44D26, #FF7F50);}
+.green { background: linear-gradient(135deg, #076D3E,#0DA15D, #46D286); }
+.blue { background: linear-gradient(90deg,#0CB9C1, #F48924 ); }
+.orange { background: linear-gradient(135deg, #ff9800, #ffb74d); }
+.purple { background: linear-gradient(135deg, #35266A, #A785F0); }
+.yellow { background: linear-gradient(135deg, #fbc02d, #ffeb3b); }
+
+/* Blur Effect for Inactive Cards */
+.swiper-slide {
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+.swiper-slide-active {
+    opacity: 1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .academy-card {
+        height: 300px;
+    }
+}
+/* Swiper container */
+.swiper {
+    width: 100%;
+    overflow: visible;
+    padding: 20px 0;
+}
+
+/* Base Slide Styling */
+.swiper-slide {
+    transition: transform 0.5s ease-in-out, filter 0.5s ease-in-out;
+    opacity: 1;
+    transform: scale(0.8);
+    filter: blur(5px); /* Apply blur to inactive slides */
+}
+
+/* Active Slide (Focused, No Blur) */
+.swiper-slide-active {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0); /* Remove blur for the active slide */
+}
+
+.card-title .custom-font {
+    font-family: 'Amsterdam', cursive;
+    font-size: 4rem; /* Slightly larger for emphasis */
+}
+
+
+/* News Section Container */
+.latest-news-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+}
+
+.latest-news-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+/* Swiper Container */
+.swiper {
+    width: 100%;
+    overflow: visible;
+    padding: 20px 0;
+}
+
+/* Swiper Slide */
+.news-card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Card Hover Effect */
+.news-card:hover {
+    transform: scale(1.03);
+}
+
+/* News Image */
+.news-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* News Content */
+.news-content {
+    padding: 15px;
+}
+
+/* News Heading */
+.news-heading {
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+
+/* News Description */
+.news-description {
+    font-size: 1rem;
+    color: #444;
+    margin-top: 8px;
+    font-family: "roboto";
+}
+
+/* Button */
+.news-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.news-button:hover {
+    background-color: #0056b3;
+}
+
+.news-swiper-button-prev {
+    left: -2500px; /* Moves it outside the section */
+}
+
+/* Position Right Arrow */
+.news-swiper-button-next {
+    right: -100px; /* Moves it outside the section */
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .latest-news-title {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+}
+
+/* Footer Background */
+.image-footer {
+   margin-top: 100px;
+    background: #333;
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Scrolling Container */
+.scrolling-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+/* Scrolling Content */
+.scrolling-content {
+    display: flex;
+    gap: 10px;
+}
+
+/* Image Styling */
+.scrolling-content img {
+    width: 300px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer Text */
+.footer-text {
+    background: linear-gradient(90deg, #037EF3, #8a2be2);
+    color: white;
+    padding: 10px 0;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.moving-bar .custom-font {
+    font-family: 'Amsterdam', cursive;
+    font-size: 4rem; /* Slightly larger for emphasis */
+}
+/* Load Amsterdam Font */
+@font-face {
+    font-family: 'Amsterdam';
+    src: url('fonts/amsterdam.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Scrolling Bar Container */
+.scrolling-bar-container {
+    width: 100%;
+    padding: 10px 0;
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+    margin-bottom: 100px;
+    margin-top: 100px;
+
+}
+
+/* Scrolling Bar */
+.scrolling-bar {
+    display: flex;
+    white-space: nowrap;
+    font-size: 8rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.273);
+}
+
+/* Apply Amsterdam font to "IMPACT" */
+.impact-highlight {
+    font-family: 'Amsterdam', cursive;
+    font-size: 8rem; /* Slightly larger */
+    background: linear-gradient(90deg, #037EF3, #8a2be2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Makes the gradient visible */
+    display: inline-block;
+}
+/* Continuous Scrolling Animation */
