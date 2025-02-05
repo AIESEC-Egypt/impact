@@ -303,3 +303,4 @@ window.onload = function () {
     //hide the preloader
     document.querySelector(".pre-loader").style.display = "none";
   };
+  
