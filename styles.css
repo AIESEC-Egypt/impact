@@ -106,13 +106,16 @@ body {
     font-family: "unbounded light";
 
 }
-
+/* Responsive Impact Section */
 .impact-wrapper {
     width: 100%;
-    height: 90vh;
+    height: 120vh; /* Increased height */
     display: flex;
     justify-content: center;
     align-items: center;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 .impact {
@@ -121,22 +124,33 @@ body {
     align-items: center;
     font-family: 'Six Caps';
     z-index: -2;
-gap: 50px;
+    gap: 70px; /* Increased gap */
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.impact-highlight {
+    font-family: 'Amsterdam', cursive;
+    font-size: 10rem; /* Increased size */
+    background: linear-gradient(90deg, #037EF3, #8a2be2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; /* Makes the gradient visible */
+    display: inline-block;
 }
 
 .letter {
-    font-size: 90vh;
+    font-size: 110vh; /* Increased size */
     font-weight: bold;
     background-image: url('aspects/background.jpg');
-    background-size: 1500px auto;
+    background-size: 1800px auto; /* Increased background size */
     background-position: center;
     -webkit-background-clip: text;
     color: transparent;
     display: inline-block;
     line-height: 2;
-    padding-bottom: 200px;
+    padding-bottom: 250px;
     z-index: -2;
-
 }
 
 /* Position the background image differently for each letter */
@@ -147,17 +161,28 @@ gap: 50px;
 .letter:nth-child(5) { background-position: 80% center; }
 .letter:nth-child(6) { background-position: 90% center; }
 
-
-
+/* Responsive Adjustments */
 @media (max-width: 1200px) {
+    .impact-wrapper {
+        height: 90vh; /* Increased height */
+    }
     .letter {
-        font-size: 30vh;
+        font-size: 40vh; /* Increased size */
     }
 }
 
 @media (max-width: 768px) {
+    .impact-wrapper {
+        height: 80vh; /* Increased height */
+    }
+    .impact {
+        flex-direction: row;
+        gap: 20px; /* Increased spacing */
+    }
     .letter {
-        font-size: 20vh;
+        font-size: 20vh; /* Increased font size */
+        line-height: 1;
+        padding-bottom: 50px;
     }
 }
 
@@ -170,9 +195,9 @@ gap: 50px;
       opacity: 1;
       transform: translateY(0);
     }
-  }
+}
   
-  @keyframes slideUp {
+@keyframes slideUp {
     from {
       opacity: 0;
       transform: translateY(40px);
@@ -181,8 +206,8 @@ gap: 50px;
       opacity: 1;
       transform: translateY(0);
     }
-  }
-  
+}
+
   .aiesec-hub {
       text-align: center;
       max-width: 900px;
@@ -1081,6 +1106,7 @@ gap: 50px;
     transition: transform 0.3s ease-in-out;
     height: auto; /* Ensure dynamic height */
     min-height: 350px; /* Adjust based on content */
+    
 }
 
 /* Ensure images fit properly */
@@ -1192,6 +1218,10 @@ gap: 50px;
         height: 300px;
     }
 }
+
+
+
+
 /* Swiper container */
 .swiper {
     width: 100%;
@@ -1220,6 +1250,12 @@ gap: 50px;
 }
 
 
+
+
+
+
+
+
 /* News Section Container */
 .latest-news-container {
     width: 90%;
@@ -1235,13 +1271,14 @@ gap: 50px;
 }
 
 /* Swiper Container */
+/* Ensure Swiper is Fully Responsive */
 .swiper {
     width: 100%;
-    overflow: visible;
+    overflow: hidden; /* Prevent horizontal scrolling */
     padding: 20px 0;
 }
 
-/* Swiper Slide */
+/* Swiper Slide - Responsive Card */
 .news-card {
     display: flex;
     flex-direction: column;
@@ -1250,18 +1287,27 @@ gap: 50px;
     padding: 15px;
     text-align: left;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    width: 100%; /* Full width on smaller screens */
+    max-width: 420px; /* Limit max width on larger screens */
+    margin: auto; /* Center the card */
 }
 
-/* Card Hover Effect */
-.news-card:hover {
-    transform: scale(1.03);
+/* Smooth Slide-in Animation */
+.swiper-slide {
+    transition: transform 0.5s ease-in-out;
+}
+
+/* Add Scale Effect on Active Slide */
+.swiper-slide-active {
+    transform: scale(1.05);
+    transition: transform 0.5s ease-in-out;
 }
 
 /* News Image */
 .news-image {
     width: 100%;
-    height: 250px;
+    height: 230px;
     object-fit: cover;
     border-radius: 8px;
 }
@@ -1273,7 +1319,7 @@ gap: 50px;
 
 /* News Heading */
 .news-heading {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     margin-top: 10px;
 }
 
@@ -1282,7 +1328,7 @@ gap: 50px;
     font-size: 1rem;
     color: #444;
     margin-top: 8px;
-    font-family: "roboto";
+    font-family: "Roboto", sans-serif;
 }
 
 /* Button */
@@ -1295,29 +1341,144 @@ gap: 50px;
     font-size: 1rem;
     border-radius: 5px;
     text-decoration: none;
+    text-align: center;
+    left: 0 !important;
 }
 
 .news-button:hover {
     background-color: #0056b3;
 }
 
+/* Swiper Navigation Buttons */
+.news-swiper-button-prev,
+.news-swiper-button-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+/* Position Left Arrow */
 .news-swiper-button-prev {
-    left: -2500px; /* Moves it outside the section */
+    left: 10px;
 }
 
 /* Position Right Arrow */
 .news-swiper-button-next {
-    right: -100px; /* Moves it outside the section */
+    right: 10px;
 }
 
-
-/* Responsive Adjustments */
+/* Reduce Button Size on Mobile */
 @media (max-width: 768px) {
     .latest-news-title {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         text-align: center;
     }
+
+    /* Make cards take full width */
+    .news-card {
+        width: 95%;
+    }
+
+    /* Reduce image height for better mobile fit */
+    .news-image {
+        height: 180px;
+    }
+
+    /* Adjust font sizes for readability */
+    .news-heading {
+        font-size: 1.2rem;
+    }
+
+    .news-description {
+        font-size: 0.9rem;
+    }
+
+    /* Reduce button size */
+    .news-button {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+    }
+
+    /* Adjust Swiper Button Size */
+    .news-swiper-button-prev,
+    .news-swiper-button-next {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
 }
+
+/* Ensure text stays within card */
+.news-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute content properly */
+    height: 100%; /* Ensure full height for spacing */
+}
+
+/* Ensure heading does not overflow */
+.news-heading {
+    font-size: 1.4rem;
+    margin-top: 10px;
+    line-height: 1.2; /* Prevents text from overflowing */
+    word-wrap: break-word; /* Ensures text wraps properly */
+}
+
+/* Prevent description from overflowing */
+.news-description {
+    font-size: 1rem;
+    color: #444;
+    margin-top: 8px;
+    font-family: "Roboto", sans-serif;
+    word-wrap: break-word;
+    flex-grow: 1; /* Allows text to take available space without pushing the button */
+}
+
+/* Fix button alignment */
+.news-button {
+    display: block; /* Ensures full width on smaller screens */
+    margin-top: auto; /* Pushes the button to the bottom */
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    width: 100%; /* Makes button full width for better responsiveness */
+}
+
+.news-button:hover {
+    background-color: #0056b3;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .news-heading {
+        font-size: 1.2rem;
+    }
+
+    .news-description {
+        font-size: 0.9rem;
+    }
+
+    .news-button {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+}
+
 
 /* Footer Background */
 .image-footer {
@@ -1351,6 +1512,8 @@ gap: 50px;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
+
+
 
 /* Footer Text */
 .footer-text {
@@ -1394,13 +1557,15 @@ gap: 50px;
     color: rgba(0, 0, 0, 0.273);
 }
 
-/* Apply Amsterdam font to "IMPACT" */
-.impact-highlight {
-    font-family: 'Amsterdam', cursive;
-    font-size: 8rem; /* Slightly larger */
-    background: linear-gradient(90deg, #037EF3, #8a2be2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; /* Makes the gradient visible */
-    display: inline-block;
-}
+
+
 /* Continuous Scrolling Animation */
+html {
+    scroll-behavior: smooth;
+    touch-action: manipulation;
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
