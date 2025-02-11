@@ -6,7 +6,7 @@
 
 @font-face {
     font-family: 'Amsterdam';
-    src: url('fonts/amsterdam.ttf') format('truetype');
+    src: url('fonts/am.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -26,14 +26,66 @@ body {
 }
 
 .navbar {
+    top: 0;
+    left: 0;
+    width: 100%;
     display: flex;
+    list-style: none !important;
+
     justify-content: space-between;
     align-items: center;
     padding: 20px 40px;
     background: white;
     border-bottom: 1px solid #e6e6e6;
+    z-index: 1000; /* Keeps it above other content */
+    transition: all 0.3s ease-in-out;
+}
+.navbar-nav{
+    list-style: none !important;
+
 }
 
+.navbar.fixed-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    list-style: none !important;
+
+    background: rgba(255, 255, 255, 0.95); /* Slight transparency */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds shadow when fixed */
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, visibility 0.5s;
+}
+@media (max-width: 768px) {
+    .navbar {
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 40px;
+        background: white;
+        border-bottom: 1px solid #e6e6e6;
+        z-index: 1000;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    /* Show Navbar When Scrolling Up */
+    .navbar.visible {
+        position: fixed; /* Default: Not Fixed */
+
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    /* Remove Fixed Position When at Top */
+    .navbar.at-top {
+    }
+}
+
+body.fixed-body {
+    padding-top: 80px; /* Adjust based on navbar height */
+}
 .logo img {
     height: 50px;
 }
@@ -102,8 +154,8 @@ body {
     margin: 60px auto;
     max-width: 1200px;
     padding: 0 20px;
-    padding-bottom: 10px;
     font-family: "unbounded light";
+    
 
 }
 /* Responsive Impact Section */
@@ -132,8 +184,8 @@ body {
 
 .impact-highlight {
     font-family: 'Amsterdam', cursive;
-    font-size: 10rem; /* Increased size */
-    background: linear-gradient(90deg, #037EF3, #8a2be2);
+    font-size: 8rem; /* Increased size */
+    background: linear-gradient(90deg, #F85A40,#F48924,#0CB9C1,#037EF3, #8a2be2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent; /* Makes the gradient visible */
     display: inline-block;
@@ -148,8 +200,7 @@ body {
     -webkit-background-clip: text;
     color: transparent;
     display: inline-block;
-    line-height: 2;
-    padding-bottom: 250px;
+    line-height: 1;
     z-index: -2;
 }
 
@@ -171,21 +222,28 @@ body {
     }
 }
 
+
 @media (max-width: 768px) {
+    .main-title{
+        font-size: 30px;
+        margin-bottom: 0;
+    }
     .impact-wrapper {
-        height: 80vh; /* Increased height */
+        height: 30vh; /* Reduce height further to prevent excessive gaps */
     }
+
     .impact {
-        flex-direction: row;
-        gap: 20px; /* Increased spacing */
+        gap: 10px; /* Reduce letter spacing even more */
     }
+
     .letter {
-        font-size: 20vh; /* Increased font size */
-        line-height: 1;
-        padding-bottom: 50px;
+        font-size: 25vh; /* Reduce size for mobile */
+        line-height: 1; /* Maintain spacing */
+    }
+    .aiesec-hub{
+        margin: 0px;
     }
 }
-
 @keyframes slideDown {
     from {
       opacity: 0;
@@ -216,6 +274,11 @@ body {
       padding: 40px 20px;
   }
   
+  @media (max-width: 768px) {
+    .aiesec-hub{
+        margin: 0px;
+    }
+}
   /* Initial hidden states */
   .hey-text {
     font-family: "unbounded light";
@@ -310,7 +373,11 @@ body {
         width: 200px;
     }
 }
-
+@media (max-width: 768px) {
+    .hub-icon {
+        display: none;
+    }
+}
 .hey-text {
     font-weight: 300;
     font-size: 3rem;
@@ -994,7 +1061,6 @@ body {
     }
     .text-header h2 {
         font-size: 35px;
-        position:absolute;
         top:9%;
         left:35%;
     }
@@ -1274,24 +1340,11 @@ body {
 /* Ensure Swiper is Fully Responsive */
 .swiper {
     width: 100%;
-    overflow: hidden; /* Prevent horizontal scrolling */
     padding: 20px 0;
 }
 
 /* Swiper Slide - Responsive Card */
-.news-card {
-    display: flex;
-    flex-direction: column;
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    text-align: left;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out;
-    width: 100%; /* Full width on smaller screens */
-    max-width: 420px; /* Limit max width on larger screens */
-    margin: auto; /* Center the card */
-}
+
 
 /* Smooth Slide-in Animation */
 .swiper-slide {
@@ -1350,73 +1403,12 @@ body {
 }
 
 /* Swiper Navigation Buttons */
-.news-swiper-button-prev,
-.news-swiper-button-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
 
-/* Position Left Arrow */
-.news-swiper-button-prev {
-    left: 10px;
-}
 
-/* Position Right Arrow */
-.news-swiper-button-next {
-    right: 10px;
-}
+
 
 /* Reduce Button Size on Mobile */
-@media (max-width: 768px) {
-    .latest-news-title {
-        font-size: 1.4rem;
-        text-align: center;
-    }
 
-    /* Make cards take full width */
-    .news-card {
-        width: 95%;
-    }
-
-    /* Reduce image height for better mobile fit */
-    .news-image {
-        height: 180px;
-    }
-
-    /* Adjust font sizes for readability */
-    .news-heading {
-        font-size: 1.2rem;
-    }
-
-    .news-description {
-        font-size: 0.9rem;
-    }
-
-    /* Reduce button size */
-    .news-button {
-        font-size: 0.9rem;
-        padding: 6px 10px;
-    }
-
-    /* Adjust Swiper Button Size */
-    .news-swiper-button-prev,
-    .news-swiper-button-next {
-        width: 35px;
-        height: 35px;
-        font-size: 14px;
-    }
-}
 
 /* Ensure text stays within card */
 .news-content {
@@ -1569,3 +1561,270 @@ html {
     max-width: 1200px;
     margin: 0 auto;
 }
+
+
+/* Swiper Container */
+.swiper.newsSwiperUnique {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 40px; /* Extra padding to avoid arrow overlap */
+    position: relative;
+}
+
+/* Move Navigation Arrows to Section Edges */
+.news-swiper-button-next,
+.news-swiper-button-prev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #007bff;
+    z-index: 10;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Position Left Arrow */
+.news-swiper-button-prev {
+    left: -50px; /* Moves it outside the section */
+}
+
+/* Position Right Arrow */
+.news-swiper-button-next {
+    right: -50px; /* Moves it outside the section */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) {
+    .news-swiper-button-prev {
+        left: -30px; /* Adjust for smaller screens */
+    }
+    .news-swiper-button-next {
+        right: -30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .news-swiper-button-prev,
+    .news-swiper-button-next {
+        left: 10px;
+        right: 10px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .academy-card {
+        width: 100%;
+        max-width: 400px;
+        height: 320px; /* Adjust height for mobile */
+        overflow: hidden; /* Hide any overflowing content */
+
+    }
+    
+    /* Ensure slides are centered on mobile */
+    .swiper-slide {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* Ensure Swiper Container is Large Enough */
+.academySwiper {
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+
+
+/* News Section Styling */
+.newsSwiper {
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px 0;
+}
+
+/* Ensure News Cards Are Full Width */
+.news-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Adjust Card Layout */
+.news-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    max-width: 350px; /* Prevent shrinking */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure Images Fit Properly */
+.news-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+    .news-card {
+        max-width: 100%; /* Keep proper width */
+        overflow: hidden; /* Hide any overflowing content */
+
+    }
+
+    .swiper-slide {
+        justify-content: center;
+        display: flex;
+    }
+}
+
+@media (max-width: 768px) {
+
+
+    .video_container {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .play_button {
+        font-size: 2.5rem;
+        padding: 15px;
+    }
+}
+
+/* 🔹 Prevent Horizontal Scrolling */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+
+/* 🔹 Hide Overflow from Large Elements */
+@media (max-width: 768px) {
+    .impact-wrapper, .function-academies, .video_section {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+}
+
+
+/* Floating Scroll to Top Button */
+.scroll-to-top {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    width: 50px;
+    height: 50px;
+    background: #037EF3; /* Button Color */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    z-index: 1000;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Show Button When Scrolling Down */
+.scroll-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Hover Effect */
+.scroll-to-top:hover {
+    background: #0256a1;
+}
+
+/* Only Show on Mobile */
+@media (min-width: 769px) {
+    .scroll-to-top {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+.footer-text{
+    font-size: 10px;
+}
+}
+@media (max-width: 768px) {
+    .news-card {
+        width: 85%; /* Reduce width to create space for arrows */
+        margin: auto; /* Center the card */
+    }
+
+    /* Left Arrow */
+    .swiper-button-prev {
+        left: -10px; /* Move it outside the card */
+    }
+
+    /* Right Arrow */
+    .swiper-button-next {
+        right: -10px; /* Move it outside the card */
+    }
+
+
+}
+
+/* Remove default dropdown underline */
+.navbar-nav .dropdown-toggle::after {
+    display: none !important;
+}
+
+/* Ensure consistent underline effect */
+
+
+.navbar-nav .nav-link::after,
+.navbar-nav .dropdown-toggle::before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background: #037EF3;
+    left: 50%;
+    bottom: -5px;
+    transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+}
+
+/* Make it expand on hover */
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .dropdown-toggle:hover::before {
+    width: 100%;
+    left: 0;
+}
+
+/* Increase spacing between dropdown items */
+.dropdown-menu .dropdown-item {
+    text-decoration: none !important;
+    padding: 12px 20px; /* Increase spacing */
+    display: block;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus,
+.dropdown-menu .dropdown-item:active {
+    text-decoration: none !important;
+    outline: none !important; /* Remove any focus border */
+}
+/* Unique hover colors for each dropdown item */
+.dropdown-menu li:nth-child(1) .dropdown-item:hover { background: #f85a40; color: white; } /* oGV Academy */
+.dropdown-menu li:nth-child(2) .dropdown-item:hover { background: #f85a40; color: white; } /* iGV Academy */
+.dropdown-menu li:nth-child(3) .dropdown-item:hover { background: linear-gradient(90deg,#0CB9C1, #F48924 );color: white;} /* oGT Academy */
+.dropdown-menu li:nth-child(4) .dropdown-item:hover {background: linear-gradient(135deg, #F48924, #0CB9C1);color: white; } /* iGT Academy */
+.dropdown-menu li:nth-child(5) .dropdown-item:hover { background: #037ef3; color: white; } /* B2C Academy */
+.dropdown-menu li:nth-child(6) .dropdown-item:hover { background: #0e33af; color: white; } /* B2B Academy */
+.dropdown-menu li:nth-child(7) .dropdown-item:hover { background: #7552CC; color: white; } /* MXP Academy */
+.dropdown-menu li:nth-child(8) .dropdown-item:hover { background: #0DA15D; color: white; } /* F&L Academy */

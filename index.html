@@ -18,24 +18,44 @@
     <link rel="icon" href="aspects/icon.png">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
-        <a href="#" class="logo">
-            <img src="aspects/impact.png" alt="AIESEC">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <div class="nav-links">
-                <a href="#">Home</a>
-                <a href="#">The AIESEC Way</a>
-                <a href="#">Leadership Model</a>
-                <a href="#">AIESEC 2025</a>
-                <a href="#">Functional Academies</a>
-                <a href="#">Conference Output</a>
-            </div>
-        </div>
-    </nav>
+    <!-- Floating Scroll to Top Button -->
+<button id="scrollToTopBtn" class="scroll-to-top">&#8679;</button>
+
+<nav class="navbar navbar-expand-lg">
+    <a href="/" class="logo">
+        <img src="aspects/impact.png" alt="AIESEC">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav nav-links">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">The AIESEC Way</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Leadership Model</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">AIESEC 2025</a></li>
+            
+            <!-- Functional Academies Dropdown (Fixed Alignment) -->
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" >Functional Academies ⌵</a>
+
+                <ul class="dropdown-menu" style="width: 100%;">
+                    <li><a class="dropdown-item" href="#">oGV Academy</a></li>
+                    <li><a class="dropdown-item" href="#">iGV Academy</a></li>
+                    <li><a class="dropdown-item" href="#">oGT Academy</a></li>
+                    <li><a class="dropdown-item" href="#">iGT Academy</a></li>
+                    <li><a class="dropdown-item" href="#">B2C Academy</a></li>
+                    <li><a class="dropdown-item" href="#">B2B Academy</a></li>
+                    <li><a class="dropdown-item" href="#">MXP Academy</a></li>
+                    <li><a class="dropdown-item" href="#">F&L Academy</a></li>
+                </ul>
+            </li>
+
+            <li class="nav-item"><a class="nav-link" href="#">Conference Output</a></li>
+        </ul>
+    </div>
+</nav>
 
     <main>
         <div class="pre-loader">
@@ -61,7 +81,7 @@
         The AIESEC Hub is a dynamic and collaborative platform. It serves as your go-to resource for essential AIESEC knowledge, along with the latest departmental updates, global opportunities, and much more.
     </p>
     <p class="hub-description">
-        We're excited to have you here and are committed to ensuring you find everything you need to grow, lead, and make an impact. Explore, connect, and make the most of your AIESEC journey!
+        We're excited to have you here and are committed to ensuring you find everything you need to learn, lead, and make an impact!
     </p>
 
     <!-- Floating Icons -->
@@ -87,9 +107,9 @@
 
     <div class="video_container">
         <img src="Middel Video/thumbnail.jpg" alt="Video Thumbnail" class="video_thumbnail">
-        <div class="play_button" onclick="playVideo()">▶️</div>
+        <div class="play_button" onclick="playVideo()">▶</div>
         <video id="aiesecVideo" controls>
-            <source src="Middel Video/The AIESEC way.mp4" type="video/mp4">
+            <source src="Middel Video/This Is AIESEC.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
     </div>
