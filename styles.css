@@ -155,11 +155,7 @@ body.fixed-body {
     max-width: 1200px;
     padding: 0 20px;
     font-family: "unbounded light";
-<<<<<<< HEAD
     
-=======
-    margin-bottom: 0px;
->>>>>>> c3dc7e5bbf27e5aa708b7e5587b522706205f18d
 
 }
 /* Responsive Impact Section */
@@ -205,12 +201,9 @@ body.fixed-body {
     -webkit-background-clip: text;
     color: transparent;
     display: inline-block;
-<<<<<<< HEAD
     line-height: 1;
-=======
     line-height: 2;
     padding-bottom: 50px;
->>>>>>> c3dc7e5bbf27e5aa708b7e5587b522706205f18d
     z-index: -2;
     margin-top: 0px;
 
@@ -245,15 +238,7 @@ body.fixed-body {
     }
 
     .impact {
-<<<<<<< HEAD
         gap: 10px; /* Reduce letter spacing even more */
-=======
-        flex-direction: row;
-        gap: 20px; /* Increased spacing */
-        margin-top: 0px;
-
-        
->>>>>>> c3dc7e5bbf27e5aa708b7e5587b522706205f18d
     }
 
     .letter {
@@ -405,16 +390,11 @@ body.fixed-body {
     .icon5 { top: 15%; left: -15%; width: 90px; }
     .icon6 { top: 15%; right: -15%; width: 90px; }
 }
-<<<<<<< HEAD
 @media (max-width: 768px) {
     .hub-icon {
         display: none;
     }
 }
-=======
-
-
->>>>>>> c3dc7e5bbf27e5aa708b7e5587b522706205f18d
 .hey-text {
     font-weight: 300;
     font-size: 3rem;
@@ -1618,7 +1598,6 @@ html {
     margin: 0 auto;
 }
 
-<<<<<<< HEAD
 
 /* Swiper Container */
 .swiper.newsSwiperUnique {
@@ -1885,5 +1864,3 @@ html, body {
 .dropdown-menu li:nth-child(6) .dropdown-item:hover { background: #0e33af; color: white; } /* B2B Academy */
 .dropdown-menu li:nth-child(7) .dropdown-item:hover { background: #7552CC; color: white; } /* MXP Academy */
 .dropdown-menu li:nth-child(8) .dropdown-item:hover { background: #0DA15D; color: white; } /* F&L Academy */
-=======
->>>>>>> c3dc7e5bbf27e5aa708b7e5587b522706205f18d
