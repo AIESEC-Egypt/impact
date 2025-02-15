@@ -1299,6 +1299,9 @@ body.fixed-body {
 .orange { background: linear-gradient(135deg, #ff9800, #ffb74d); }
 .purple { background: linear-gradient(135deg, #35266A, #A785F0); }
 .yellow { background: linear-gradient(135deg, #fbc02d, #ffeb3b); }
+.b2c { background: linear-gradient(135deg, #037EF3, #1366b4); }
+.b2b { background: linear-gradient(135deg, #0e33af, #2651dc); }
+
 
 /* Blur Effect for Inactive Cards */
 .swiper-slide {
@@ -1534,8 +1537,8 @@ body.fixed-body {
 
 /* Image Styling */
 .scrolling-content img {
-    width: 300px;
-    height: 150px;
+    width: 350px;
+    height: 100px;
     object-fit: cover;
     border-radius: 10px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);

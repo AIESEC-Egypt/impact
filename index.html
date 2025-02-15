@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIESEC Impact</title>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&display=swap" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Six Caps' rel='stylesheet'>
+    <title>IMPACT - AIESEC in Egypt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href='https://fonts.googleapis.com/css?family=Six Caps' rel='stylesheet'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <!-- Swiper CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
 <!-- Swiper JS -->
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
     <link rel="icon" href="aspects/icon.png">
 </head>
 <body>
@@ -52,8 +52,25 @@
                 </ul>
             </li>
 
-            <li class="nav-item"><a class="nav-link" href="#">Conference Output</a></li>
-        </ul>
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" >Conference Outputs ⌵</a>
+
+                <ul class="dropdown-menu" style="width: 100%;">
+                    <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+       onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+       onmouseout="this.style.background='transparent'; this.style.color='black';" href="#">Fusion</a></li>
+                    <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                        onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                        onmouseout="this.style.background='transparent'; this.style.color='black';" href="#">Activate</a></li>
+                    <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                        onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                        onmouseout="this.style.background='transparent'; this.style.color='black';" href="#">Mahd</a></li>
+                    <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                        onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                        onmouseout="this.style.background='transparent'; this.style.color='black';" href="#">Momentum</a></li>
+                </ul>
+            </li>        </ul>
     </div>
 </nav>
 
@@ -85,12 +102,12 @@
     </p>
 
     <!-- Floating Icons -->
-    <img src="aspects/Acting Sustainably.png" class="hub-icon icon1" alt="Icon 1">
-    <img src="aspects/Activating Leadership.png" class="hub-icon icon2" alt="Icon 2">
-    <img src="aspects/Demonstrating Integrity.png" class="hub-icon icon3" alt="Icon 3">
-    <img src="aspects/Enjoying Participation.png" class="hub-icon icon4" alt="Icon 4">
-    <img src="aspects/Living Diversity.png" class="hub-icon icon5" alt="Icon 5">
-    <img src="aspects/Striving for Excellence.png" class="hub-icon icon6" alt="Icon 6">
+    <img loading="lazy" src="aspects/Acting Sustainably.png" class="hub-icon icon1" alt="Icon 1">
+    <img loading="lazy" src="aspects/Activating Leadership.png" class="hub-icon icon2" alt="Icon 2">
+    <img loading="lazy" src="aspects/Demonstrating Integrity.png" class="hub-icon icon3" alt="Icon 3">
+    <img loading="lazy" src="aspects/Enjoying Participation.png" class="hub-icon icon4" alt="Icon 4">
+    <img loading="lazy"  src="aspects/Living Diversity.png" class="hub-icon icon5" alt="Icon 5">
+    <img loading="lazy" src="aspects/Striving for Excellence.png" class="hub-icon icon6" alt="Icon 6">
 </section>
 
 
@@ -106,7 +123,7 @@
     <h1><span class="the-text">THE </span> <span class="aiesec1-text">AIESEC</span><span class="the-text"> WAY </span></h1>
 
     <div class="video_container">
-        <img src="Middel Video/thumbnail.jpg" alt="Video Thumbnail" class="video_thumbnail">
+        <img loading="lazy" src="Middel Video/thumbnail.jpg" alt="Video Thumbnail" class="video_thumbnail">
         <div class="play_button" onclick="playVideo()">▶</div>
         <video id="aiesecVideo" controls>
             <source src="Middel Video/This Is AIESEC.mp4" type="video/mp4">
@@ -176,12 +193,20 @@ function Play_OGV_1() {
                 <h3 class="card-title"><span class="custom-font">iGT</span> ACADEMY</h3>
                 <p>Explore various leadership courses and grow your professional skills...</p>
             </div>
-            <div class="swiper-slide academy-card green">
-                <h3 class="card-title"><span class="custom-font">Finance</span> ACADEMY</h3>
+            <div class="swiper-slide academy-card b2c">
+                <h3 class="card-title"><span class="custom-font">B2C</span> ACADEMY</h3>
+                <p>Master digital marketing and branding with expert-led courses...</p>
+            </div>
+            <div class="swiper-slide academy-card b2b">
+                <h3 class="card-title"><span class="custom-font">B2B</span> ACADEMY</h3>
                 <p>Master digital marketing and branding with expert-led courses...</p>
             </div>
             <div class="swiper-slide academy-card purple">
                 <h3 class="card-title"><span class="custom-font">MXP</span> ACADEMY</h3>
+                <p>Master digital marketing and branding with expert-led courses...</p>
+            </div>
+            <div class="swiper-slide academy-card green">
+                <h3 class="card-title"><span class="custom-font">Finance</span> ACADEMY</h3>
                 <p>Master digital marketing and branding with expert-led courses...</p>
             </div>
         </div>
@@ -213,7 +238,7 @@ function Play_OGV_1() {
                <div class="swiper newsSwiper">
             <div class="swiper-wrapper">
                 <div class="swiper-slide news-card" style="filter: blur(0px);">
-                    <img src="image/hackathon.png" alt="News 1" class="news-image">
+                    <img loading="lazy" src="image/hackathon.png" alt="News 1" class="news-image">
                     <div class="news-content">
                         <h3 class="news-heading">IC 2024 - Registration is Open</h3>
                         <p class="news-description">Don't miss out on the International Congress 2024! Register today!</p>
@@ -221,7 +246,7 @@ function Play_OGV_1() {
                     </div>
                 </div>
                 <div class="swiper-slide news-card" style="filter: blur(0px);">
-                    <img src="image/ic.png" alt="News 2" class="news-image">
+                    <img loading="lazy" src="image/ic.png" alt="News 2" class="news-image">
                     <div class="news-content">
                         <h3 class="news-heading">Global Hackathon - Starts Now</h3>
                         <p class="news-description">Calling all AIESECers! Participate in the Global Hackathon now.</p>
@@ -229,7 +254,7 @@ function Play_OGV_1() {
                     </div>
                 </div>
                 <div class="swiper-slide news-card" style="filter: blur(0px);">
-                    <img src="image/hackathon.png" alt="News 3" class="news-image">
+                    <img loading="lazy" src="image/hackathon.png" alt="News 3" class="news-image">
                     <div class="news-content">
                         <h3 class="news-heading">Earn Commissions for Your Entity</h3>
                         <p class="news-description">Boost your entity’s growth with this exciting opportunity!</p>
@@ -237,7 +262,7 @@ function Play_OGV_1() {
                     </div>
                 </div>
                 <div class="swiper-slide news-card" style="filter: blur(0px);">
-                    <img src="image/ic.png" alt="News 2" class="news-image">
+                    <img loading="lazy" src="image/ic.png" alt="News 2" class="news-image">
                     <div class="news-content">
                         <h3 class="news-heading">Global Hackathon - Starts Now</h3>
                         <p class="news-description">Calling all AIESECers! Participate in the Global Hackathon now.</p>
@@ -259,22 +284,24 @@ function Play_OGV_1() {
     <footer class="image-footer">
         <div class="scrolling-container">
             <div class="scrolling-content">
-                <img src="image/ic.png" alt="Image 1">
-                <img src="image/ic.png" alt="Image 2">
-                <img src="image/ic.png" alt="Image 3">
-                <img src="image/ic.png" alt="Image 4">
-                <img src="image/ic.png" alt="Image 5">
-                <img src="image/ic.png" alt="Image 6">
+                <img loading="lazy" src="image/IMG-20250213-WA0004.webp" alt="Image 1">
+                <img loading="lazy" src="image/IMG-20250213-WA0005.webp" alt="Image 2">
+                <img loading="lazy" src="image/IMG-20250213-WA0006.webp" alt="Image 3">
+                <img loading="lazy" src="image/IMG-20250213-WA0007.webp" alt="Image 4">
+                <img loading="lazy" src="image/IMG-20250213-WA0008.webp" alt="Image 5">
+                <img loading="lazy" src="image/IMG-20250213-WA0010.webp" alt="Image 6">
                 <!-- Duplicate images for infinite effect -->
-                <img src="image/ic.png" alt="Image 1">
-                <img src="image/ic.png" alt="Image 2">
-                <img src="image/ic.png" alt="Image 3">
-                <img src="image/ic.png" alt="Image 4">
-                <img src="image/ic.png" alt="Image 5">
-                <img src="image/ic.png" alt="Image 6">
+                <img loading="lazy" src="image/IMG-20250213-WA0009.webp" alt="Image 2">
+                <img loading="lazy" src="image/IMG-20250213-WA0011.webp" alt="Image 3">
+                <img loading="lazy" src="image/IMG-20250213-WA0012.webp" alt="Image 4">
+
+
             </div>
         </div>
-        <p class="footer-text">Made with ❤️, developed by AIESEC in Egypt. © 2025</p>
+        <p class="footer-text">
+            Made with ❤️, Powered by AIESEC in Egypt. © 2025 <br>
+Developed by <a href="https://www.linkedin.com/in/ibraheem-a-nassar/" target="_blank" style="color: white; font-weight: lighter;">Ibraheem Nassar</p>
+
     </footer>
     
 </main>
