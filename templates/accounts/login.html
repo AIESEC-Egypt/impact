@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | IMPACT</title>
+  <link rel="icon" href="{% static 'aspects/icon.png' %}" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@300;600&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      height: 100vh; display: flex; justify-content: center; align-items: center;
+      background: linear-gradient(135deg, #007bff, #6f42c1);
+      background-size: 300% 300%; animation: bgMove 6s ease infinite alternate;
+      font-family: 'Unbounded', sans-serif;
+    }
+    .logo { width: 100px; margin: 0 auto 20px auto; display: block; }
+    @keyframes bgMove { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
+    .container {
+      text-align: center; padding: 35px; background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px; backdrop-filter: blur(12px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1); max-width: 450px; width: 90%;
+    }
+    h1 { color: white; font-size: 1.8rem; font-weight: 600; margin-bottom: 14px; }
+    p.sub { color: rgba(255,255,255,0.85); font-size: 0.85rem; font-weight: 300; margin-bottom: 28px; line-height: 1.5; }
+    .btn-login {
+      padding: 15px 30px; font-size: 1rem; font-weight: 500; border: none;
+      border-radius: 50px; background-color: white; color: #007bff; cursor: pointer;
+      transition: all 0.3s ease; font-family: "Unbounded"; text-decoration: none; display: inline-block;
+    }
+    .btn-login:hover { background-color: #007bff; color: white; }
+    .msg { background: rgba(255,255,255,0.18); color: #fff; padding: 10px 14px; border-radius: 10px; margin-bottom: 18px; font-size: 0.8rem; }
+    .footer { position: absolute; bottom: 10px; width: 100%; text-align: center; font-size: 0.85rem; color: rgba(255, 255, 255, 0.8); font-weight: 300; }
+    @media (max-width: 600px) { h1 { font-size: 1.4rem; } .logo { width: 80px; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="{% static 'aspects/icon.png' %}" alt="Logo" class="logo" />
+    <h1>Welcome to IMPACT</h1>
+    <p class="sub">Sign in with your AIESEC EXPA account to access the academies and the dreaming process. Only active members of AIESEC in Egypt can log in.</p>
+    {% if messages %}
+      {% for message in messages %}
+        <div class="msg">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    <a class="btn-login" href="{% url 'accounts:expa_start' %}?next={{ next|urlencode }}">Login with EXPA</a>
+  </div>
+  <div class="footer">
+    Made with &#10084;, Powered by AIESEC in Egypt. &copy; 2025
+  </div>
+</body>
+</html>

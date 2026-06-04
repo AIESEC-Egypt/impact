@@ -1,0 +1,237 @@
+/**
+ * Shared quiz take / result styling (IMPACT — same look for every exam).
+ */
+:root {
+  --exam-bg: #f5f7fb;
+  --exam-text: #1b1b2f;
+  --exam-muted: #6c6c80;
+  --exam-primary: #037ef3;
+  --exam-primary-hover: #0257a8;
+  --exam-primary-soft: rgba(3, 126, 243, 0.12);
+  --exam-pass: #0a8a0a;
+  --exam-pass-soft: rgba(10, 138, 10, 0.12);
+  --exam-pass-bg: rgba(10, 138, 10, 0.1);
+  --exam-fail: #b00020;
+  --exam-fail-soft: rgba(176, 0, 32, 0.12);
+  --exam-fail-bg: rgba(176, 0, 32, 0.1);
+  --exam-card-shadow: 0 8px 24px rgba(3, 126, 243, 0.08);
+  --exam-divider: #eef0f6;
+  --exam-radius: 16px;
+  --exam-font: "Unbounded", sans-serif;
+}
+
+.exam-card {
+  background: #fff;
+  border: none;
+  border-radius: var(--exam-radius);
+  box-shadow: var(--exam-card-shadow);
+}
+
+.exam-pill {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  background: var(--exam-primary-soft);
+  color: var(--exam-primary);
+}
+
+.exam-pill--pass {
+  background: var(--exam-pass-soft);
+  color: var(--exam-pass);
+}
+
+.exam-pill--fail {
+  background: var(--exam-fail-soft);
+  color: var(--exam-fail);
+}
+
+.exam-title {
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 0;
+  color: var(--exam-text);
+}
+
+.exam-description {
+  color: var(--exam-muted);
+  margin-bottom: 0;
+}
+
+.exam-meta {
+  font-size: 0.85rem;
+  color: var(--exam-muted);
+  margin-bottom: 0;
+}
+
+.exam-question {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--exam-divider);
+}
+
+.exam-question:last-of-type {
+  border-bottom: none;
+}
+
+.exam-question__text {
+  font-weight: 600;
+  color: var(--exam-text);
+  margin-bottom: 0.5rem;
+}
+
+.exam-question__points {
+  font-weight: 300;
+  font-size: 0.8rem;
+  color: var(--exam-muted);
+}
+
+.exam-form .form-check-label {
+  color: var(--exam-text);
+  font-weight: 400;
+  font-size: 0.95rem;
+}
+
+.exam-form .form-check-input:checked {
+  background-color: var(--exam-primary);
+  border-color: var(--exam-primary);
+}
+
+.exam-form .form-check-input:focus {
+  border-color: var(--exam-primary);
+  box-shadow: 0 0 0 0.2rem rgba(3, 126, 243, 0.25);
+}
+
+.exam-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--exam-divider);
+}
+
+.exam-actions--centered {
+  justify-content: center;
+  border-top: none;
+  padding-top: 0;
+}
+
+.exam-btn-primary {
+  background: var(--exam-primary);
+  color: #fff;
+  border-radius: 50px;
+  padding: 10px 26px;
+  border: none;
+  font-weight: 500;
+  font-family: var(--exam-font);
+  font-size: 0.9rem;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.exam-btn-primary:hover {
+  background: var(--exam-primary-hover);
+  color: #fff;
+}
+
+.exam-btn-link {
+  color: var(--exam-primary);
+  font-family: var(--exam-font);
+  font-size: 0.9rem;
+  text-decoration: none;
+  font-weight: 400;
+}
+
+.exam-btn-link:hover {
+  color: var(--exam-primary-hover);
+  text-decoration: underline;
+}
+
+.exam-timer {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  background: var(--exam-primary);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  z-index: 1000;
+  font-family: var(--exam-font);
+  box-shadow: var(--exam-card-shadow);
+}
+
+/* Result summary */
+.exam-result-card {
+  text-align: center;
+}
+
+.exam-score {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 0.5rem 0;
+}
+
+.exam-score--pass {
+  color: var(--exam-pass);
+}
+
+.exam-score--fail {
+  color: var(--exam-fail);
+}
+
+.exam-status {
+  font-size: 1.1rem;
+  margin-bottom: 0.25rem;
+}
+
+.exam-status--pass {
+  color: var(--exam-pass);
+}
+
+.exam-status--fail {
+  color: var(--exam-fail);
+}
+
+.exam-review-heading {
+  text-align: center;
+  color: var(--exam-primary);
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+  font-weight: 700;
+}
+
+.exam-review-card .exam-question__text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.exam-choice {
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  color: var(--exam-text);
+  font-size: 0.95rem;
+}
+
+.exam-choice--correct {
+  background: var(--exam-pass-bg);
+}
+
+.exam-choice--wrong {
+  background: var(--exam-fail-bg);
+}
+
+.exam-choice__hint {
+  color: var(--exam-pass);
+  font-size: 0.78rem;
+}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ academy.title }} | IMPACT{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{% static 'Academy/hero-themes.css' %}">
+<link rel="stylesheet" href="{% static 'Academy/materials.css' %}">
+<style>
+  @font-face {
+    font-family: 'Amsterdam';
+    src: url("{% static 'fonts/am.ttf' %}") format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+</style>
+{% endblock %}
+
+{% block hero %}
+<section class="home-section academy-hero {{ academy_theme.theme_class }}" aria-label="{{ academy.title }}">
+  <div class="content-section">
+    <p class="background-text" aria-hidden="true">Academy</p>
+    <h1 class="foreground-text">{{ academy_theme.label }}</h1>
+  </div>
+  {% if academy.subtitle or user_department or user_role %}
+  <div class="academy-hero__meta">
+    {% if academy.subtitle %}<p>{{ academy.subtitle }}</p>{% endif %}
+    {% if user_role or user_department %}
+    <p>
+      {% if user_role %}Role: {{ user_role }}{% endif %}
+      {% if user_department %}{% if user_role %} · {% endif %}Department: {{ user_department }}{% endif %}
+    </p>
+    {% endif %}
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
+
+{% block after_wrap %}
+{% include "lms/_academy_dynamic.html" %}
+{% endblock %}

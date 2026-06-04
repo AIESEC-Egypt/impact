@@ -1,0 +1,3414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B2B Contracts System - AIESEC in Egypt | IMPACT Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.min.css">
+    <link rel="icon" href="aspects/icon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Unbounded', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px 0 60px;
+        }
+
+        /* Navbar Styling - Scrollable */
+        .navbar {
+            position: relative;
+            width: 100%;
+            z-index: 1030;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px 20px;
+        }
+
+        .navbar .navbar-brand {
+            max-height: 50px;
+        }
+
+        /* Page Header - Scrollable, directly below navbar */
+        .page-header {
+            position: relative;
+            width: 100%;
+            background: linear-gradient(135deg, #0e33af, #2651dc);
+            color: white;
+            padding: 40px 20px;
+            padding-top: 60px; /* Extra padding at top for back button */
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 20px rgba(14, 51, 175, 0.3);
+        }
+
+        /* Back Button - Below banner, scrollable */
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            z-index: 1031;
+            background: linear-gradient(135deg, #037EF3, #8a2be2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(3, 126, 243, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(3, 126, 243, 0.4);
+            background: linear-gradient(135deg, #0256a1, #6a1bb2);
+        }
+
+        .back-button svg {
+            width: 18px;
+            height: 18px;
+        }
+
+
+        .page-header h1 {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 700;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .page-header p {
+            font-family: 'Roboto', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            opacity: 0.95;
+            margin: 0;
+        }
+
+        .form-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e6e6e6;
+        }
+
+        .section-header {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            background: linear-gradient(90deg, #037EF3, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        .section-progress-container {
+            position: relative;
+            width: 100%;
+            height: 4px;
+            background-color: #e6e6e6;
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .section-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #037EF3, #8a2be2);
+            border-radius: 2px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .section-progress-text {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.75rem;
+            color: #646363;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .form-label {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            color: #404040;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-control, .form-select {
+            font-family: 'Roboto', sans-serif;
+            border: 1px solid #e6e6e6;
+            border-radius: 8px;
+            padding: 10px 14px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #037EF3;
+            box-shadow: 0 0 0 0.2rem rgba(3, 126, 243, 0.15);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: #999;
+        }
+
+        .opp-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 1px solid #e6e6e6;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 24px;
+            border-left: 5px solid #037EF3;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .opp-card:hover {
+            box-shadow: 0 6px 20px rgba(3, 126, 243, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .opp-card h5 {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 700;
+            color: #037EF3;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #037EF3, #8a2be2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(3, 126, 243, 0.3);
+        }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(3, 126, 243, 0.4);
+            background: linear-gradient(135deg, #0256a1, #6a1bb2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #037EF3, #8a2be2);
+            border: none;
+            border-radius: 8px;
+            padding: 14px 32px;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(3, 126, 243, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(3, 126, 243, 0.4);
+            background: linear-gradient(135deg, #0256a1, #6a1bb2);
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #e6e6e6;
+            margin: 30px 0;
+        }
+
+        h5 {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            color: #404040;
+            margin-bottom: 20px;
+        }
+
+        h6 {
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            color: #037EF3;
+            margin-bottom: 12px;
+        }
+
+        .small {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.85rem;
+            color: #646363;
+        }
+
+        .fw-bold {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 600;
+            color: #404040;
+        }
+
+        .text-danger {
+            color: #dc3545 !important;
+            font-weight: 600;
+        }
+
+        .slot-box {
+            background: #ffffff;
+            border: 1px dashed #ced4da;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .form-check {
+            margin-bottom: 8px;
+        }
+
+        .form-check-label {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+            color: #404040;
+        }
+
+        .weekend-days-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e6e6e6;
+        }
+
+        .weekend-days-container .form-check {
+            margin: 0;
+            min-width: 90px;
+        }
+
+        .weekend-days-container .form-check-input {
+            margin-top: 0.35rem;
+            cursor: pointer;
+        }
+
+        .weekend-days-container .form-check-label {
+            cursor: pointer;
+            user-select: none;
+            margin-left: 6px;
+        }
+
+        .border-top {
+            border-top: 1px solid #e6e6e6 !important;
+        }
+
+        .text-muted {
+            color: #646363 !important;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px 0 40px;
+            }
+
+            .page-header {
+                padding: 40px 20px;
+                margin-bottom: 30px;
+            }
+
+            .page-header h1 {
+                font-size: 1.75rem;
+                line-height: 1.2;
+            }
+
+            .page-header p {
+                font-size: 0.95rem;
+            }
+
+            .form-container {
+                padding: 20px 16px;
+                margin: 0 10px;
+                border-radius: 12px;
+            }
+
+            .section-header {
+                font-size: 1.3rem;
+                margin-top: 25px;
+                margin-bottom: 20px;
+                line-height: 1.3;
+            }
+
+            .form-label {
+                font-size: 0.9rem;
+                margin-bottom: 6px;
+                display: block;
+            }
+
+            .form-control, .form-select {
+                font-size: 16px; /* Prevents zoom on iOS */
+                padding: 12px 14px;
+                width: 100%;
+            }
+
+            .row {
+                margin-left: -8px;
+                margin-right: -8px;
+            }
+
+            .row > * {
+                padding-left: 8px;
+                padding-right: 8px;
+                margin-bottom: 16px;
+            }
+
+            /* Force full width on mobile for all column classes */
+            [class*="col-"] {
+                width: 100% !important;
+                max-width: 100% !important;
+                flex: 0 0 100% !important;
+                margin-bottom: 16px;
+            }
+
+            .opp-card {
+                padding: 20px 16px;
+                margin-bottom: 20px;
+                border-left-width: 4px;
+            }
+
+            .opp-card h5 {
+                font-size: 1.2rem;
+                margin-bottom: 16px;
+                line-height: 1.3;
+            }
+
+            .weekend-days-container {
+                gap: 8px;
+                padding: 10px;
+            }
+
+            .weekend-days-container .form-check {
+                min-width: auto;
+                flex: 1 1 calc(50% - 4px);
+                margin-bottom: 8px;
+            }
+
+            .weekend-days-container .form-check-label {
+                font-size: 0.85rem;
+            }
+
+            .slot-box {
+                padding: 12px;
+                margin-top: 8px;
+            }
+
+            .slot-box h6 {
+                font-size: 0.9rem;
+                margin-bottom: 10px;
+            }
+
+            .slot-box .row {
+                margin-left: -4px;
+                margin-right: -4px;
+            }
+
+            .slot-box .row > * {
+                padding-left: 4px;
+                padding-right: 4px;
+            }
+
+            .slot-box .col-6 {
+                width: 100% !important;
+                margin-bottom: 12px;
+            }
+
+            .btn-add, .btn-primary, .btn-secondary {
+                width: 100%;
+                padding: 14px 20px;
+                font-size: 1rem;
+                margin-bottom: 12px;
+            }
+
+            .form-check {
+                margin-bottom: 10px;
+            }
+
+            .form-check-label {
+                font-size: 0.9rem;
+            }
+
+            h5 {
+                font-size: 1.1rem;
+                margin-bottom: 16px;
+                line-height: 1.3;
+            }
+
+            h6 {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+
+            .small {
+                font-size: 0.8rem;
+            }
+
+            .fw-bold {
+                font-size: 0.9rem;
+            }
+
+            .border-top {
+                margin-top: 20px;
+                padding-top: 20px !important;
+            }
+
+            .d-grid {
+                margin-bottom: 20px;
+            }
+
+            .d-grid.gap-2 {
+                gap: 12px !important;
+            }
+
+            .mb-3 {
+                margin-bottom: 20px !important;
+            }
+
+            .mb-4 {
+                margin-bottom: 24px !important;
+            }
+
+            .mb-5 {
+                margin-bottom: 30px !important;
+            }
+
+            .mt-3, .mt-4, .mt-5 {
+                margin-top: 20px !important;
+            }
+
+            .pt-3 {
+                padding-top: 16px !important;
+            }
+
+            hr {
+                margin: 20px 0;
+            }
+
+            .section-progress-container {
+                height: 3px;
+                margin-top: 6px;
+            }
+
+            .section-progress-text {
+                font-size: 0.7rem;
+                margin-top: 3px;
+            }
+
+            /* Improve textarea on mobile */
+            textarea.form-control {
+                min-height: 100px;
+                resize: vertical;
+            }
+
+            /* Better spacing for form groups */
+            .mb-3 > .row {
+                margin-bottom: 0;
+            }
+
+            /* Stack badge and title on mobile */
+            .opp-card h5 .badge {
+                display: block;
+                margin-top: 8px;
+                margin-left: 0;
+                width: fit-content;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 8px 0 30px;
+            }
+
+            .page-header {
+                padding: 30px 16px;
+                margin-bottom: 20px;
+            }
+
+            .page-header h1 {
+                font-size: 1.5rem;
+                line-height: 1.2;
+            }
+
+            .page-header p {
+                font-size: 0.9rem;
+            }
+
+            .form-container {
+                padding: 16px 12px;
+                margin: 0 8px;
+                border-radius: 10px;
+            }
+
+            .section-header {
+                font-size: 1.15rem;
+                margin-top: 20px;
+                margin-bottom: 16px;
+            }
+
+            .form-label {
+                font-size: 0.85rem;
+            }
+
+            .form-control, .form-select {
+                font-size: 16px;
+                padding: 10px 12px;
+            }
+
+            .opp-card {
+                padding: 16px 12px;
+                margin-bottom: 16px;
+            }
+
+            .opp-card h5 {
+                font-size: 1.1rem;
+                margin-bottom: 14px;
+            }
+
+            .weekend-days-container {
+                gap: 6px;
+                padding: 8px;
+            }
+
+            .weekend-days-container .form-check {
+                flex: 1 1 calc(50% - 3px);
+                margin-bottom: 6px;
+            }
+
+            .weekend-days-container .form-check-label {
+                font-size: 0.8rem;
+            }
+
+            .slot-box {
+                padding: 10px;
+            }
+
+            .slot-box h6 {
+                font-size: 0.85rem;
+            }
+
+            .btn-add, .btn-primary, .btn-secondary {
+                padding: 12px 16px;
+                font-size: 0.95rem;
+            }
+
+            h5 {
+                font-size: 1rem;
+            }
+
+            h6 {
+                font-size: 0.95rem;
+            }
+
+            .small {
+                font-size: 0.75rem;
+            }
+
+            .fw-bold {
+                font-size: 0.85rem;
+            }
+
+            .mb-3 {
+                margin-bottom: 16px !important;
+            }
+
+            .mb-4 {
+                margin-bottom: 20px !important;
+            }
+
+            .mb-5 {
+                margin-bottom: 24px !important;
+            }
+
+            .section-progress-text {
+                font-size: 0.65rem;
+            }
+
+            textarea.form-control {
+                min-height: 80px;
+            }
+
+            /* Ensure inputs don't overflow */
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            input[type="url"],
+            input[type="date"],
+            input[type="number"] {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            /* Better spacing for nested rows */
+            .row .row {
+                margin-left: -4px;
+                margin-right: -4px;
+            }
+        }
+
+        /* Additional mobile improvements */
+        @media (max-width: 576px) {
+            .form-container {
+                margin: 0 5px;
+                padding: 14px 10px;
+            }
+
+            .page-header {
+                padding: 25px 12px;
+            }
+
+            .page-header h1 {
+                font-size: 1.35rem;
+            }
+
+            .opp-card {
+                padding: 14px 10px;
+            }
+
+            .section-header {
+                font-size: 1.05rem;
+            }
+
+            /* Stack all columns on very small screens */
+            .row > [class*="col-"] {
+                width: 100% !important;
+                max-width: 100% !important;
+                flex: 0 0 100% !important;
+            }
+
+            /* Page header mobile */
+            .page-header {
+                padding: 30px 16px;
+            }
+
+            /* Back button mobile */
+            .back-button {
+                top: 8px;
+                left: 10px;
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+
+            .back-button svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            /* Navbar mobile adjustments */
+            .navbar {
+                padding: 8px 15px;
+            }
+        }
+
+        /* Navbar active state for B2B Contracts */
+        .navbar-nav .dropdown-item.active {
+            background: #037ef3;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg">
+        <a href="index.html" class="logo">
+            <img class="navbar-brand" src="aspects/impact.png" alt="AIESEC">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav nav-links">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="AiE/History.html">AIESEC in Egypt History</a></li>
+                
+                <!-- Functional Academies Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Functional Academies ⌵</a>
+                    <ul class="dropdown-menu" style="width: 100%;">
+                        <li><a class="dropdown-item" href="Academy/oGV.html">oGV Academy</a></li>
+                        <li><a class="dropdown-item" href="Academy/iGV.html">iGV Academy</a></li>
+                        <li><a class="dropdown-item" href="Academy/oGT.html">oGT Academy</a></li>
+                        <li><a class="dropdown-item" href="Academy/iGT.html">iGT Academy</a></li>
+                        <li><a class="dropdown-item" href="Academy/B2C.html">B2C Academy</a></li>
+                        <li><a class="dropdown-item" href="Academy/B2B.html">B2B Academy</a></li>
+                        <li><a class="dropdown-item" href="Academy/MXP.html">MXP Academy</a></li>
+                        <li><a class="dropdown-item" href="Academy/F&L.html">F&L Academy</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Contracts Systems Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Contracts Systems ⌵</a>
+                    <ul class="dropdown-menu" style="width: 250px; white-space: normal;">
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://docs.google.com/forms/d/1n54SOC6Tz-rGqfeytC8x5-GgN59JHQiDegTf-gRak_8/" target="_blank">iGV Contracts System</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://docs.google.com/forms/d/e/1FAIpQLScLOJfJ3YN6oTwKHs030-jB2RkIerVdileWt3XZcAh0swNgrQ/viewform?usp=sf_link" target="_blank">iGTa/e Contracts System</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://forms.gle/SjbiVE4NwLxZ3KML8" target="_blank">oGX Contracts System</a></li>
+                        <li><a class="dropdown-item active" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out; background: #037ef3; color: white;"
+                            href="b2b-contracts.html">B2B Contracts System</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Conference Outputs Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Conference Outputs ⌵</a>
+                    <ul class="dropdown-menu" style="width: 100%;">
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/16YWyC5145B376VjVhrO3_nF6aS9Od_8k?usp=drive_link" target="_blank">Fusion</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="dreaming.html">Dreaming</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="membership-ranking.html">Membership Ranking</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header Banner -->
+    <div class="page-header">
+        <!-- Back Button -->
+        <button class="back-button" onclick="window.location.href='index.html'" title="Go back to Home">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back
+        </button>
+        <h1>B2B Contracts System</h1>
+        <p>Please fill out all relevant sections to submit your contract data</p>
+    </div>
+
+<div class="container">
+    <div class="form-container">
+        <form id="b2bForm" onsubmit="submitB2BContract(event)">
+            
+            <h4 class="section-header">1. AIESECer Information</h4>
+            <div class="section-progress-container" id="section1-progress-container">
+                <div class="section-progress-bar" id="section1-progress-bar"></div>
+            </div>
+            <div class="section-progress-text" id="section1-progress-text">0% Complete</div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">AIESECer Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="Your Full Name" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">AIESECer E-mail <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" placeholder="name@aiesec.net" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">AIESECer Role <span class="text-danger">*</span></label>
+                    <select class="form-select" name="aiesecerRole" required>
+                        <option value="" selected disabled>Choose role...</option>
+                        <option>Member</option>
+                        <option>Team Leader</option>
+                        <option>Coordinator</option>
+                        <option>Director</option>
+                        <option>LCVP</option>
+                        <option>MCVP</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">LC Name <span class="text-danger">*</span></label>
+                    <select class="form-select" name="lcName" required>
+                        <option value="" selected disabled>Choose LC...</option>
+                        <option>Ain Shams University</option>
+                        <option>AAST in Cairo</option>
+                        <option>GUC</option>
+                        <option>AAST in Alexandria</option>
+                        <option>Suez</option>
+                        <option>Mansoura</option>
+                        <option>Helwan</option>
+                        <option>MIU</option>
+                        <option>Menofia</option>
+                        <option>6th October University</option>
+                        <option>AUC</option>
+                        <option>Cairo University</option>
+                        <option>Tanta</option>
+                        <option>Zagazig</option>
+                        <option>MUST</option>
+                        <option>MSA</option>
+                        <option>Alexandria</option>
+                        <option>Beni Suef</option>
+                        <option>MC Egypt</option>
+                    </select>
+                </div>
+            </div>
+
+            <h4 class="section-header mt-5">2. Organization Information</h4>
+            <div class="section-progress-container" id="section2-progress-container">
+                <div class="section-progress-bar" id="section2-progress-bar"></div>
+            </div>
+            <div class="section-progress-text" id="section2-progress-text">0% Complete</div>
+            <div class="mb-3">
+                <label class="form-label">Contract Type <span class="text-danger">*</span></label>
+                <select class="form-select" id="contractType" name="contractType" onchange="updateMaxOpportunities()" required>
+                    <option value="" selected disabled>Select contract type...</option>
+                    <option>iGV 5+1 - (Accommodation Not Covered)</option>
+                    <option>iGV 7+2 - (Accommodation Not Covered)</option>
+                    <option>iGV 3+1 - (Accommodation Covered)</option>
+                    <option>iGV 5+2 - (Accommodation Covered)</option>
+                    <option>iGV 10+5 - (Accommodation Covered)</option>
+                    <option>iGTa 2+1</option>
+                    <option>iGTa 5+2</option>
+                    <option>iGTa 7+3</option>
+                    <option>iGTe Nurseries 2+1</option>
+                    <option>iGTe Nurseries 5+2</option>
+                    <option>iGTe Nurseries 7+3</option>
+                    <option>iGTe Schools 2+1</option>
+                    <option>iGTe Schools 5+2</option>
+                    <option>iGTe Schools 7+3</option>
+                    <option>3 iGV + 1 iGTa</option>
+                    <option>3 iGV + 1 iGTe</option>
+                </select>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Organization Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Organization Email <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" name="orgEmail" placeholder="Organization Email" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Website <span class="text-danger">*</span></label>
+                    <input type="url" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Phone <span class="text-danger">*</span></label>
+                    <input type="tel" class="form-control" required placeholder="20 1234567890">
+                    <small class="text-muted d-block mt-1">Don't add + to the beginning of the number</small>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Address <span class="text-danger">*</span></label>
+                <textarea class="form-control" rows="2" required></textarea>
+            </div>
+            
+            <hr>
+            <h5>Contact Person Details</h5>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Contact Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Contact Email <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" required>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Contact Position <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Contact Phone <span class="text-danger">*</span></label>
+                    <input type="tel" class="form-control" required placeholder="20 1234567890">
+                    <small class="text-muted d-block mt-1">Don't add + to the beginning of the number</small>
+                </div>
+            </div>
+             <div class="mb-3">
+                <label class="form-label">Organization Size <span class="text-danger">*</span></label>
+                <select class="form-select" name="organizationSize" required>
+                    <option value="" selected disabled>Select organization size...</option>
+                    <option>1–50</option>
+                    <option>51–200</option>
+                    <option>201–500</option>
+                    <option>1,000–5,000</option>
+                    <option>5,001–10,000</option>
+                    <option>10,000+</option>
+                </select>
+            </div>
+            <div class="mb-3" id="industryField" style="display: none;">
+                <label class="form-label">Industry <span class="text-danger">*</span></label>
+                <select class="form-select" name="industry">
+                    <option value="" selected disabled>Select industry...</option>
+                    <option>Engineering</option>
+                    <option>IT</option>
+                    <option>Business Administration</option>
+                    <option>Business Development</option>
+                    <option>Marketing</option>
+                    <option>Finance</option>
+                    <option>Education</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <h4 class="section-header mt-5">3. Opportunity Details</h4>
+            <div class="section-progress-container" id="section3-progress-container">
+                <div class="section-progress-bar" id="section3-progress-bar"></div>
+            </div>
+            <div class="section-progress-text" id="section3-progress-text">0% Complete</div>
+            <div id="opportunities-container">
+                </div>
+
+            <div class="d-grid gap-2 mb-5">
+                <button type="button" class="btn btn-add" id="addOppBtn" onclick="addOpportunity()">+ Add Opportunity (Max <span id="maxOppsDisplay">9</span>)</button>
+            </div>
+
+        
+            
+            <!-- <div class="d-grid gap-2 mb-3">
+                <button type="button" class="btn btn-secondary btn-lg" onclick="fillMockupData()">Fill Mockup Data (3 iGV + 1 iGTa)</button>
+                <button type="button" class="btn btn-secondary btn-lg" onclick="fillMockupData10Plus5()">Fill Mockup Data (10+5 iGV)</button>
+                <button type="button" class="btn btn-secondary btn-lg" onclick="fillMockupData7Plus3IGTa()">Fill Mockup Data (7+3 iGTa)</button>
+            </div> -->
+          
+            
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg">Submit Contract Data</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    let oppCount = 0;
+    let maxOpps = 9;
+    const container = document.getElementById('opportunities-container');
+
+    function isIGTaOrIGTeContract(contractType) {
+        return contractType.includes('iGTa') || contractType.includes('iGTe') || 
+               contractType.includes('IGTa') || contractType.includes('IGTe');
+    }
+
+    function isMixedContract(contractType) {
+        return contractType === '3 iGV + 1 iGTa' || contractType === '3 iGV + 1 iGTe';
+    }
+
+    function getMaxOppsForContractType(contractType) {
+        if (contractType === 'iGV 5+1 - (Accommodation Not Covered)') {
+            return 6;
+        } else if (contractType === 'iGV 7+2 - (Accommodation Not Covered)') {
+            return 9;
+        } else if (contractType === 'iGV 3+1 - (Accommodation Covered)') {
+            return 4;
+        } else if (contractType === 'iGV 5+2 - (Accommodation Covered)') {
+            return 7;
+        } else if (contractType === 'iGV 10+5 - (Accommodation Covered)') {
+            return 15;
+        } else if (contractType === 'iGTa 2+1') {
+            return 3;
+        } else if (contractType === 'iGTa 5+2') {
+            return 7;
+        } else if (contractType === 'iGTa 7+3') {
+            return 10;
+        } else if (contractType.includes('iGTe') && !contractType.startsWith('3 iGV')) {
+            if (contractType.includes('2+1')) return 3;
+            if (contractType.includes('5+2')) return 7;
+            if (contractType.includes('7+3')) return 10;
+            return 9;
+        } else if (contractType === '3 iGV + 1 iGTa') {
+            return 4;
+        } else if (contractType === '3 iGV + 1 iGTe') {
+            return 4;
+        } else {
+            // Default for any other type
+            return 9;
+        }
+    }
+
+    function updateMaxOpportunities() {
+        const contractTypeSelect = document.getElementById('contractType');
+        const selectedContractType = contractTypeSelect ? contractTypeSelect.value : '';
+        
+        // If no contract type selected, hide button and return
+        if (!selectedContractType) {
+            const addOppBtn = document.getElementById('addOppBtn');
+            if (addOppBtn) {
+                addOppBtn.style.display = 'none';
+            }
+            const industryField = document.getElementById('industryField');
+            const industrySelect = industryField?.querySelector('select[name="industry"]');
+            if (industryField) {
+                industryField.style.display = 'none';
+                // Remove required attribute when hiding
+                if (industrySelect) {
+                    industrySelect.removeAttribute('required');
+                    industrySelect.selectedIndex = 0;
+                }
+            }
+            return;
+        }
+        
+        const newMaxOpps = getMaxOppsForContractType(selectedContractType);
+        const isIGTa = isIGTaOrIGTeContract(selectedContractType);
+        
+        maxOpps = newMaxOpps;
+        
+        // Update button text
+        const maxOppsDisplay = document.getElementById('maxOppsDisplay');
+        if (maxOppsDisplay) {
+            maxOppsDisplay.textContent = maxOpps;
+        }
+        
+        // If current count exceeds new max, show warning and hide button
+        const addOppBtn = document.getElementById('addOppBtn');
+        if (oppCount >= maxOpps) {
+            if (addOppBtn) {
+                addOppBtn.style.display = 'none';
+            }
+            // Show notification if count exceeds new max
+            if (oppCount > maxOpps) {
+                alert('Warning: Current contract type allows maximum ' + maxOpps + ' opportunities. You currently have ' + oppCount + '. Please remove excess opportunities.');
+            }
+        } else {
+            if (addOppBtn) {
+                addOppBtn.style.display = 'block';
+            }
+        }
+        
+        // Show/hide Industry field based on contract type (show for iGTa/e and mixed contracts)
+        const isMixed = isMixedContract(selectedContractType);
+        const industryField = document.getElementById('industryField');
+        const industrySelect = industryField?.querySelector('select[name="industry"]');
+        if (industryField) {
+            const shouldShow = isIGTa || isMixed;
+            industryField.style.display = shouldShow ? 'block' : 'none';
+            // Add/remove required attribute based on visibility
+            if (industrySelect) {
+                if (shouldShow) {
+                    industrySelect.setAttribute('required', 'required');
+                } else {
+                    industrySelect.removeAttribute('required');
+                    // Reset to default value when hiding
+                    industrySelect.selectedIndex = 0;
+                }
+            }
+        }
+        
+        // For mixed contracts, automatically add all 4 opportunities (3 iGV + 1 iGTa/e)
+        if (isMixed) {
+            container.innerHTML = '';
+            oppCount = 0;
+            
+            // Add 3 iGV opportunities
+            for (let i = 0; i < 3; i++) {
+                addOpportunity();
+            }
+            
+            // Add 1 iGTa/e opportunity (4th one)
+            addOpportunity();
+            
+            // Hide the add button since all opportunities are added
+            if (addOppBtn) {
+                addOppBtn.style.display = 'none';
+            }
+            
+            // Update progress
+            setTimeout(updateSectionProgress, 200, 3);
+        } else {
+            // If contract type changed between iGV and iGTa/e, warn user to refresh opportunities
+            if (oppCount > 0) {
+                const existingOpp = document.getElementById('opp-1');
+                if (existingOpp) {
+                    const hasIGTaFields = existingOpp.querySelector('textarea[placeholder*="Job Description"]');
+                    if (isIGTa && !hasIGTaFields) {
+                        if (confirm('Contract type changed to iGTa/e. Existing opportunities use iGV format. Would you like to clear all opportunities and start fresh with iGTa/e format?')) {
+                            container.innerHTML = '';
+                            oppCount = 0;
+                            addOpportunity();
+                        }
+                    } else if (!isIGTa && hasIGTaFields) {
+                        if (confirm('Contract type changed to iGV. Existing opportunities use iGTa/e format. Would you like to clear all opportunities and start fresh with iGV format?')) {
+                            container.innerHTML = '';
+                            oppCount = 0;
+                            addOpportunity();
+                        }
+                    } else if (!isIGTa && !hasIGTaFields) {
+                        // Contract type changed but still iGV - update accommodation defaults for existing iGV opportunities
+                        const isAccommodationNotCovered = selectedContractType.includes('Accommodation Not Covered');
+                        const isAccommodationCovered = selectedContractType.includes('Accommodation Covered');
+                        
+                        if (isAccommodationNotCovered || isAccommodationCovered) {
+                            for (let i = 1; i <= oppCount; i++) {
+                                const oppCard = document.getElementById(`opp-${i}`);
+                                if (oppCard) {
+                                    const accommodationProvidedSelect = oppCard.querySelector('select[name*="accommodationProvidedBy"]');
+                                    const accommodationCoveredSelect = oppCard.querySelector('select[name*="accommodationCoveredBy"]');
+                                    
+                                    if (accommodationProvidedSelect && accommodationCoveredSelect) {
+                                        if (isAccommodationNotCovered) {
+                                            // Set both to Partner
+                                            Array.from(accommodationProvidedSelect.options).forEach((opt, idx) => {
+                                                if (opt.text === 'Partner') {
+                                                    accommodationProvidedSelect.selectedIndex = idx;
+                                                    accommodationProvidedSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                                }
+                                            });
+                                            Array.from(accommodationCoveredSelect.options).forEach((opt, idx) => {
+                                                if (opt.text === 'Partner') {
+                                                    accommodationCoveredSelect.selectedIndex = idx;
+                                                    accommodationCoveredSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                                }
+                                            });
+                                        } else if (isAccommodationCovered) {
+                                            // Set both to AIESEC
+                                            Array.from(accommodationProvidedSelect.options).forEach((opt, idx) => {
+                                                if (opt.text === 'AIESEC') {
+                                                    accommodationProvidedSelect.selectedIndex = idx;
+                                                    accommodationProvidedSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                                }
+                                            });
+                                            Array.from(accommodationCoveredSelect.options).forEach((opt, idx) => {
+                                                if (opt.text === 'AIESEC') {
+                                                    accommodationCoveredSelect.selectedIndex = idx;
+                                                    accommodationCoveredSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                            console.log(`[updateMaxOpportunities] Updated accommodation defaults for ${oppCount} existing iGV opportunities`);
+                            syncIGVDurationOptionsForContractType(selectedContractType);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Add or remove "4 weeks" on iGV duration dropdowns when contract is Accommodation Covered vs not.
+     */
+    function syncIGVDurationOptionsForContractType(selectedContractType) {
+        const showFourWeeks = selectedContractType.includes('Accommodation Covered');
+        for (let i = 1; i <= oppCount; i++) {
+            const oppCard = document.getElementById(`opp-${i}`);
+            if (!oppCard) continue;
+            if (!oppCard.querySelector('select[name*="_projectType"]')) continue;
+            const durationSelect = oppCard.querySelector('select[name*="_duration"]');
+            if (!durationSelect) continue;
+            const options = Array.from(durationSelect.options);
+            const fourWeeksIdx = options.findIndex(o => o.text === '4 weeks');
+            if (showFourWeeks && fourWeeksIdx === -1) {
+                const opt = document.createElement('option');
+                opt.textContent = '4 weeks';
+                const placeholder = durationSelect.querySelector('option[disabled]') || durationSelect.options[0];
+                if (placeholder && placeholder.nextSibling) {
+                    durationSelect.insertBefore(opt, placeholder.nextSibling);
+                } else {
+                    durationSelect.add(opt, 1);
+                }
+            } else if (!showFourWeeks && fourWeeksIdx !== -1) {
+                if (durationSelect.selectedIndex === fourWeeksIdx) {
+                    durationSelect.selectedIndex = 0;
+                }
+                durationSelect.remove(fourWeeksIdx);
+            }
+        }
+    }
+
+    function addOpportunity() {
+        // Check if contract type is selected
+        const contractTypeSelect = document.getElementById('contractType');
+        if (!contractTypeSelect || !contractTypeSelect.value) {
+            alert("Please select a contract type first.");
+            return;
+        }
+        
+        if (oppCount >= maxOpps) {
+            alert("Maximum of " + maxOpps + " opportunities reached.");
+            return;
+        }
+
+        oppCount++;
+        
+        const selectedContractType = contractTypeSelect.value;
+        const isMixed = isMixedContract(selectedContractType);
+        const isIGTa = isIGTaOrIGTeContract(selectedContractType);
+        
+        // For mixed contracts: first 3 are iGV, 4th is iGTa/e
+        let shouldUseIGTaFormat = false;
+        if (isMixed) {
+            shouldUseIGTaFormat = (oppCount === 4); // 4th opportunity (after increment, oppCount is 4)
+        } else {
+            shouldUseIGTaFormat = isIGTa;
+        }
+        
+        const igvDurationOptionsHtml = selectedContractType.includes('Accommodation Covered')
+            ? `<option value="" selected disabled>Select duration...</option>
+                            <option>4 weeks</option>
+                            <option>6 weeks</option>
+                            <option>8 weeks</option>
+                            <option>6 - 8 weeks</option>`
+            : `<option value="" selected disabled>Select duration...</option>
+                            <option>6 weeks</option>
+                            <option>8 weeks</option>
+                            <option>6 - 8 weeks</option>`;
+        
+        let oppHtml = '';
+        
+        if (shouldUseIGTaFormat) {
+            // iGTa/e Opportunity Template
+            const oppTypeLabel = isMixed ? ' <span class="badge bg-primary" style="font-size: 0.7rem; margin-left: 8px;">iGTa/e</span>' : '';
+            oppHtml = `
+            <div class="opp-card" id="opp-${oppCount}">
+                <h5 class="mb-3">Opportunity #${oppCount}${oppTypeLabel}</h5>
+                
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <label class="form-label">Role Title <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="opp_${oppCount}_title" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Duration <span class="text-danger">*</span></label>
+                        <select class="form-select" name="opp_${oppCount}_duration" required>
+                            <option value="" selected disabled>Select duration...</option>
+                            <option>6-8 weeks</option>
+                            <option>9-12 Weeks</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Field(s) of Work <span class="text-danger">*</span></label>
+                    <select class="form-select" name="opp_${oppCount}_fieldOfWork" required>
+                        <option value="">Select field...</option>
+                        <option>Engineering</option>
+                        <option>IT</option>
+                        <option>Business Administration</option>
+                        <option>Business Development</option>
+                        <option>Marketing</option>
+                        <option>Finance</option>
+                        <option>Education</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Job Description / Main Activities <span class="text-danger">*</span></label>
+                    <textarea class="form-control" rows="3" name="opp_${oppCount}_description" required></textarea>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold small">Skills</label>
+                        <input type="text" class="form-control form-control-sm mb-1" placeholder="Skill 1">
+                        <input type="text" class="form-control form-control-sm mb-1" placeholder="Skill 2">
+                        <input type="text" class="form-control form-control-sm mb-1" placeholder="Skill 3">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold small">Backgrounds</label>
+                        <input type="text" class="form-control form-control-sm mb-1" placeholder="Background 1">
+                        <input type="text" class="form-control form-control-sm mb-1" placeholder="Background 2">
+                        <input type="text" class="form-control form-control-sm mb-1" placeholder="Background 3">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold small">Languages</label>
+                        <input type="text" class="form-control form-control-sm mb-1" placeholder="Language 1">
+                        <input type="text" class="form-control form-control-sm mb-1" placeholder="Language 2">
+                        <input type="text" class="form-control form-control-sm mb-1" placeholder="Language 3">
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold small">Other Requirements</label>
+                        <input type="text" class="form-control form-control-sm mb-1" placeholder="Requirement 1">
+                        <input type="text" class="form-control form-control-sm mb-1" placeholder="Requirement 2">
+                        <input type="text" class="form-control form-control-sm mb-1" placeholder="Requirement 3">
+                    </div>
+                </div>
+
+                <div class="row mb-3 border-top pt-3">
+                    <label class="fw-bold small mb-2">Slots Information</label>
+                    <div class="col-md-6">
+                        <div class="slot-box">
+                            <h6 class="small mb-2 fw-bold" style="color: #037EF3;">Slot 1</h6>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="small">Start Date <span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control form-control-sm" name="opp_${oppCount}_slot1StartDate" required>
+                                </div>
+                                <div class="col-6">
+                                    <label class="small">Number of Opens <span class="text-danger">*</span></label>
+                                    <input type="number" class="form-control form-control-sm" name="opp_${oppCount}_slot1Opens" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="slot-box">
+                            <h6 class="small mb-2 fw-bold" style="color: #037EF3;">Slot 2</h6>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label class="small">Start Date</label>
+                                    <input type="date" class="form-control form-control-sm" name="opp_${oppCount}_slot2StartDate">
+                                </div>
+                                <div class="col-6">
+                                    <label class="small">Number of Opens</label>
+                                    <input type="number" class="form-control form-control-sm" name="opp_${oppCount}_slot2Opens">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Working Hours <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="opp_${oppCount}_workingHours" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Salary (Monthly) <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="opp_${oppCount}_salary" required style="display: block !important; visibility: visible !important;">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Weekend Days <span class="text-danger">*</span></label>
+                        <div class="weekend-days-container" data-required="true">
+                        <div class="weekend-days-container">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-friday" value="Friday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-friday">Friday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-saturday" value="Saturday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-saturday">Saturday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-sunday" value="Sunday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-sunday">Sunday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-monday" value="Monday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-monday">Monday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-tuesday" value="Tuesday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-tuesday">Tuesday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-wednesday" value="Wednesday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-wednesday">Wednesday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-thursday" value="Thursday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-thursday">Thursday</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3 border-top pt-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Accommodation <span class="text-danger">*</span></label>
+                        <select class="form-select" name="opp_${oppCount}_accommodation" required>
+                            <option value="">Select option...</option>
+                            <option>None</option>
+                            <option>Provided</option>
+                            <option>Covered</option>
+                            <option>Provided & Covered</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Transportation <span class="text-danger">*</span></label>
+                        <select class="form-select" name="opp_${oppCount}_transportation" required>
+                            <option value="">Select option...</option>
+                            <option>None</option>
+                            <option>Provided</option>
+                            <option>Covered</option>
+                            <option>Provided & Covered</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Meals provided (Specify if any) <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="opp_${oppCount}_meals" required>
+                    </div>
+                </div>
+            </div>`;
+        } else {
+            // iGV Opportunity Template
+            const oppTypeLabel = isMixed ? ' <span class="badge" style="background: linear-gradient(90deg, #037EF3, #8a2be2); color: white; font-size: 0.7rem; margin-left: 8px;">iGV</span>' : '';
+            oppHtml = `
+            <div class="opp-card" id="opp-${oppCount}">
+                <h5 class="mb-3">Opportunity #${oppCount}${oppTypeLabel}</h5>
+                
+                <div class="mb-3">
+                    <label class="form-label">Role Title <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="opp_${oppCount}_title" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Project Type <span class="text-danger">*</span></label>
+                    <select class="form-select" name="opp_${oppCount}_projectType" required>
+                        <option value="" selected disabled>Select project type...</option>
+                        <option>Heartbeat - SDG3.4</option>
+                        <option>Global classroom - SDG4.6</option>
+                        <option>Youth 4 Impact - SDG4.7</option>
+                        <option>Discover yourself - SDG4.7</option>
+                        <option>Raise your Voice - SDG5.1</option>
+                        <option>Eco city - SDG12.8</option>
+                        <option>Skill Up! - SDG8.6</option>
+                        <option>Equify - SDG10.2</option>
+                        <option>Green Leaders - SDG13.3</option>
+                        <option>Eat4change - SDG12.8</option>
+                        <option>Rooted - SDG15.5</option>
+                        <option>Scale up - SDG17.17</option>
+                        <option>Fingertips - SDG4.4</option>
+                        <option>Happy Bus - SDG4.2</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Field of Work <span class="text-danger">*</span></label>
+                    <select class="form-select" name="opp_${oppCount}_fieldOfWork" onchange="toggleOther(this, ${oppCount})" required>
+                        <option value="" selected disabled>Select field...</option>
+                        <option>Health</option>
+                        <option>Gender Equality</option>
+                        <option>Environment</option>
+                        <option>Education</option>
+                        <option>Other</option>
+                    </select>
+                    <input type="text" class="form-control mt-2 d-none" id="opp_${oppCount}_other_field" placeholder="Please specify field...">
+                </div>
+
+                <label class="form-label fw-bold">Required Skills <span class="text-danger">*</span></label>
+                <div class="row mb-2">
+                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Skill 1" required></div>
+                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Skill 2" required></div>
+                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Skill 3" required></div>
+                </div>
+
+                <label class="form-label fw-bold">Required Backgrounds <span class="text-danger">*</span></label>
+                <div class="row mb-2">
+                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Background 1" required></div>
+                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Background 2" required></div>
+                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Background 3" required></div>
+                </div>
+                
+                <label class="form-label fw-bold">Required Languages <span class="text-danger">*</span></label>
+                <div class="row mb-2">
+                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Language 1" required></div>
+                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Language 2" required></div>
+                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Language 3" required></div>
+                </div>
+                
+                <label class="form-label fw-bold">Specific Requirements <span class="text-danger">*</span></label>
+                <div class="row mb-2">
+                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Req 1" required></div>
+                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Req 2" required></div>
+                    <div class="col-md-4"><input type="text" class="form-control" placeholder="Req 3" required></div>
+                </div>
+
+                <div class="row mb-3 mt-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Duration <span class="text-danger">*</span></label>
+                        <select class="form-select" name="opp_${oppCount}_duration" required>
+                            ${igvDurationOptionsHtml}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Working Hours <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="opp_${oppCount}_workingHours" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3 border-top pt-3">
+                    <div class="col-md-6">
+                        <h6>Slot 1</h6>
+                        <label class="small">Min Start <span class="text-danger">*</span></label><input type="date" class="form-control mb-1" name="opp_${oppCount}_slot1MinStart" required>
+                        <label class="small">Max Start <span class="text-danger">*</span></label><input type="date" class="form-control mb-1" name="opp_${oppCount}_slot1MaxStart" required>
+                        <label class="small">Number of Opens <span class="text-danger">*</span></label><input type="number" class="form-control" name="opp_${oppCount}_slot1Opens" required>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Slot 2</h6>
+                        <label class="small">Min Start</label><input type="date" class="form-control mb-1" name="opp_${oppCount}_slot2MinStart">
+                        <label class="small">Max Start</label><input type="date" class="form-control mb-1" name="opp_${oppCount}_slot2MaxStart">
+                        <label class="small">Number of Opens</label><input type="number" class="form-control" name="opp_${oppCount}_slot2Opens">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                     <div class="col-md-4">
+                        <label class="form-label">Weekend Days <span class="text-danger">*</span></label>
+                        <div class="weekend-days-container">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-friday" value="Friday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-friday">Friday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-saturday" value="Saturday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-saturday">Saturday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-sunday" value="Sunday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-sunday">Sunday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-monday" value="Monday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-monday">Monday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-tuesday" value="Tuesday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-tuesday">Tuesday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-wednesday" value="Wednesday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-wednesday">Wednesday</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="opp_${oppCount}_weekend-thursday" value="Thursday">
+                                <label class="form-check-label" for="opp_${oppCount}_weekend-thursday">Thursday</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Transportation <span class="text-danger">*</span></label>
+                         <select class="form-select" name="opp_${oppCount}_transportation" required>
+                            <option value="" selected disabled>Select option...</option>
+                            <option>None</option>
+                            <option>Provided</option>
+                            <option>Covered</option>
+                            <option>Provided and Covered</option>
+                        </select>
+                    </div>
+                     <div class="col-md-4">
+                        <label class="form-label">Meals <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="opp_${oppCount}_meals" required>
+                    </div>
+                </div>
+                 <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Accommodation Provided By <span class="text-danger">*</span></label>
+                         <select class="form-select" name="opp_${oppCount}_accommodationProvidedBy" required>
+                            <option value="" selected disabled>Select option...</option>
+                            <option>AIESEC</option>
+                            <option>Partner</option>
+                            <option>None</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Accommodation Covered By <span class="text-danger">*</span></label>
+                         <select class="form-select" name="opp_${oppCount}_accommodationCoveredBy" required>
+                            <option value="" selected disabled>Select option...</option>
+                            <option>AIESEC</option>
+                            <option>Partner</option>
+                            <option>None</option>
+                        </select>
+                    </div>
+                </div>
+            </div>`;
+        }
+        
+        container.insertAdjacentHTML('beforeend', oppHtml);
+        
+        // Set default accommodation values for iGV opportunities based on contract type
+        if (!shouldUseIGTaFormat) {
+            const accommodationProvidedSelect = document.querySelector(`select[name="opp_${oppCount}_accommodationProvidedBy"]`);
+            const accommodationCoveredSelect = document.querySelector(`select[name="opp_${oppCount}_accommodationCoveredBy"]`);
+            
+            if (accommodationProvidedSelect && accommodationCoveredSelect) {
+                const isAccommodationNotCovered = selectedContractType.includes('Accommodation Not Covered');
+                const isAccommodationCovered = selectedContractType.includes('Accommodation Covered');
+                
+                if (isAccommodationNotCovered) {
+                    // For "Accommodation Not Covered" contracts: set both to "Partner"
+                    Array.from(accommodationProvidedSelect.options).forEach((opt, idx) => {
+                        if (opt.text === 'Partner') {
+                            accommodationProvidedSelect.selectedIndex = idx;
+                            accommodationProvidedSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    });
+                    Array.from(accommodationCoveredSelect.options).forEach((opt, idx) => {
+                        if (opt.text === 'Partner') {
+                            accommodationCoveredSelect.selectedIndex = idx;
+                            accommodationCoveredSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    });
+                    console.log(`[addOpportunity] Opportunity ${oppCount} - Set accommodation to Partner (Not Covered contract)`);
+                } else if (isAccommodationCovered) {
+                    // For "Accommodation Covered" contracts: set both to "AIESEC"
+                    Array.from(accommodationProvidedSelect.options).forEach((opt, idx) => {
+                        if (opt.text === 'AIESEC') {
+                            accommodationProvidedSelect.selectedIndex = idx;
+                            accommodationProvidedSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    });
+                    Array.from(accommodationCoveredSelect.options).forEach((opt, idx) => {
+                        if (opt.text === 'AIESEC') {
+                            accommodationCoveredSelect.selectedIndex = idx;
+                            accommodationCoveredSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                    });
+                    console.log(`[addOpportunity] Opportunity ${oppCount} - Set accommodation to AIESEC (Covered contract)`);
+                }
+            }
+        }
+        
+        // Update button visibility
+        const addOppBtn = document.getElementById('addOppBtn');
+        if (oppCount >= maxOpps) {
+            if (addOppBtn) {
+                addOppBtn.style.display = 'none';
+            }
+        } else {
+            if (addOppBtn) {
+                addOppBtn.style.display = 'block';
+            }
+        }
+        
+        // Update max display in button
+        const maxOppsDisplay = document.getElementById('maxOppsDisplay');
+        if (maxOppsDisplay) {
+            maxOppsDisplay.textContent = maxOpps;
+        }
+        
+        // Update progress for section 3
+        setTimeout(updateSectionProgress, 100, 3);
+    }
+
+    function toggleOther(selectElem, id) {
+        const input = document.getElementById(`opp_${id}_other_field`);
+        if (selectElem.value === "Other") {
+            input.classList.remove('d-none');
+        } else {
+            input.classList.add('d-none');
+        }
+    }
+
+    // Progress tracking functions
+    function updateSectionProgress(sectionNumber) {
+        const progressBar = document.getElementById('section' + sectionNumber + '-progress-bar');
+        const progressText = document.getElementById('section' + sectionNumber + '-progress-text');
+        
+        if (!progressBar || !progressText) return;
+        
+        let filled = 0;
+        let total = 0;
+        
+        if (sectionNumber === 1) {
+            // Section 1: AIESECer Information - find all fields in first section
+            const section1Header = document.querySelector('h4.section-header');
+            if (section1Header) {
+                // Skip progress container and text, get to the actual form fields
+                let currentElement = section1Header.nextElementSibling.nextElementSibling.nextElementSibling;
+                while (currentElement && !currentElement.classList.contains('section-header')) {
+                    const inputs = currentElement.querySelectorAll('input[type="text"], input[type="email"], select');
+                    inputs.forEach(input => {
+                        total++;
+                        if (input.tagName === 'SELECT') {
+                            // Check if a real option is selected (not the disabled placeholder)
+                            const selectedOption = input.options[input.selectedIndex];
+                            if (selectedOption && !selectedOption.disabled && input.value && input.value.trim() !== '' && input.value !== 'Choose role...' && input.value !== 'Choose LC...') {
+                                filled++;
+                            }
+                        } else {
+                            // For text/email inputs, check if they have a value
+                            const value = input.value ? input.value.trim() : '';
+                            if (value) {
+                                filled++;
+                            }
+                        }
+                    });
+                    currentElement = currentElement.nextElementSibling;
+                    if (!currentElement || currentElement.classList.contains('section-header')) break;
+                }
+            }
+        } else if (sectionNumber === 2) {
+            // Section 2: Organization Information
+            const section2Headers = document.querySelectorAll('h4.section-header.mt-5');
+            if (section2Headers.length > 0) {
+                const section2Header = section2Headers[0];
+                // Skip progress container and text
+                let currentElement = section2Header.nextElementSibling.nextElementSibling.nextElementSibling;
+                while (currentElement && !currentElement.classList.contains('section-header')) {
+                    // Skip if this is the Industry field and it's hidden
+                    if (currentElement.id === 'industryField' && currentElement.style.display === 'none') {
+                        currentElement = currentElement.nextElementSibling;
+                        continue;
+                    }
+                    
+                    const inputs = currentElement.querySelectorAll('input[type="text"], input[type="email"], input[type="url"], input[type="tel"], select, textarea');
+                    inputs.forEach(input => {
+                        // Skip if input is inside hidden Industry field
+                        if (input.closest('#industryField') && document.getElementById('industryField').style.display === 'none') {
+                            return;
+                        }
+                        
+                        // Skip contract type if not selected
+                        if (input.id === 'contractType') {
+                            if (input.value && input.value !== 'Select contract type...') {
+                                total++;
+                                filled++;
+                            }
+                        } else {
+                            total++;
+                            const value = input.value ? input.value.trim() : '';
+                            // Check if it's a select with placeholder
+                            if (input.tagName === 'SELECT') {
+                                const selectedOption = input.options[input.selectedIndex];
+                                if (selectedOption && !selectedOption.disabled && value && value !== 'Select organization size...') {
+                                    filled++;
+                                }
+                            } else if (value) {
+                                filled++;
+                            }
+                        }
+                    });
+                    currentElement = currentElement.nextElementSibling;
+                    if (!currentElement || currentElement.classList.contains('section-header')) break;
+                }
+            }
+        } else if (sectionNumber === 3) {
+            // Section 3: Opportunity Details
+            const oppCards = document.querySelectorAll('.opp-card');
+            total = maxOpps > 0 ? maxOpps : 1;
+            filled = oppCards.length;
+        }
+        
+        const percentage = total > 0 ? Math.round((filled / total) * 100) : 0;
+        progressBar.style.width = percentage + '%';
+        progressText.textContent = percentage + '% Complete';
+    }
+    
+    function updateAllProgress() {
+        updateSectionProgress(1);
+        updateSectionProgress(2);
+        updateSectionProgress(3);
+    }
+    
+    // Add event listeners to form fields
+    function attachProgressListeners() {
+        const form = document.getElementById('b2bForm');
+        if (form) {
+            form.addEventListener('input', updateAllProgress);
+            form.addEventListener('change', updateAllProgress);
+        }
+    }
+
+    // Initialize - no default contract type selected, no opportunities added
+    const contractTypeSelect = document.getElementById('contractType');
+    const industryField = document.getElementById('industryField');
+    const industrySelect = industryField?.querySelector('select[name="industry"]');
+    if (industryField) {
+        industryField.style.display = 'none';
+        // Remove required attribute when hidden initially
+        if (industrySelect) {
+            industrySelect.removeAttribute('required');
+        }
+    }
+    
+    // Hide add button initially until contract type is selected
+    const addOppBtn = document.getElementById('addOppBtn');
+    if (addOppBtn) {
+        addOppBtn.style.display = 'none';
+    }
+    
+    // Initialize progress bars
+    updateAllProgress();
+    attachProgressListeners();
+    
+    /**
+     * Fill form with mockup data for "3 iGV + 1 iGTa" contract
+     */
+    function fillMockupData() {
+        console.log('[fillMockupData] Starting to fill mockup data...');
+        
+        // Clear existing opportunities
+        const container = document.getElementById('opportunities-container');
+        if (container) {
+            container.innerHTML = '';
+        }
+        oppCount = 0;
+        
+        // Fill AIESECer Information
+        const nameInput = document.querySelector('input[placeholder*="Full Name"]');
+        if (nameInput) nameInput.value = 'Ahmed Mohamed Ali';
+        
+        const emailInput = document.querySelector('input[type="email"][placeholder*="aiesec.net"]');
+        if (emailInput) emailInput.value = 'ahmed.mohamed@aiesec.net';
+        
+        const roleSelect = document.querySelectorAll('select')[0];
+        if (roleSelect) {
+            Array.from(roleSelect.options).forEach((opt, idx) => {
+                if (opt.text === 'Coordinator') {
+                    roleSelect.selectedIndex = idx;
+                }
+            });
+        }
+        
+        const lcSelect = document.querySelectorAll('select')[1];
+        if (lcSelect) {
+            Array.from(lcSelect.options).forEach((opt, idx) => {
+                if (opt.text === 'Cairo University') {
+                    lcSelect.selectedIndex = idx;
+                }
+            });
+        }
+        
+        // Select Contract Type: "3 iGV + 1 iGTa"
+        const contractTypeSelect = document.getElementById('contractType');
+        if (contractTypeSelect) {
+            Array.from(contractTypeSelect.options).forEach((opt, idx) => {
+                if (opt.text === '3 iGV + 1 iGTa') {
+                    contractTypeSelect.selectedIndex = idx;
+                    contractTypeSelect.dispatchEvent(new Event('change'));
+                }
+            });
+        }
+        
+        // Fill Organization Information
+        const orgInputs = document.querySelectorAll('input[type="text"]');
+        const orgNameInput = Array.from(orgInputs).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Organization Name') || 
+            inp.placeholder?.includes('Organization Name'));
+        if (orgNameInput) orgNameInput.value = 'Green Future NGO';
+        
+        const orgEmailInput = document.querySelector('input[type="email"][placeholder*="Organization Email"]') ||
+                              Array.from(document.querySelectorAll('input[type="email"]')).find(inp => 
+                                  inp.previousElementSibling?.textContent?.includes('Organization Email'));
+        if (orgEmailInput) orgEmailInput.value = 'contact@greenfuture.org';
+        
+        const websiteInput = document.querySelector('input[type="url"]');
+        if (websiteInput) websiteInput.value = 'https://www.greenfuture.org';
+        
+        const phoneInput = document.querySelector('input[type="tel"]');
+        if (phoneInput) phoneInput.value = '20 123 456 7890';
+        
+        const addressTextarea = document.querySelector('textarea');
+        if (addressTextarea && !addressTextarea.name?.includes('description')) {
+            addressTextarea.value = '123 Green Street, Maadi, Cairo, Egypt';
+        }
+        
+        // Fill Contact Person
+        const contactNameInput = Array.from(document.querySelectorAll('input[type="text"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Contact Name'));
+        if (contactNameInput) contactNameInput.value = 'Sarah Hassan';
+        
+        const contactEmailInput = Array.from(document.querySelectorAll('input[type="email"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Contact Email'));
+        if (contactEmailInput) contactEmailInput.value = 'sarah.hassan@greenfuture.org';
+        
+        const contactPositionInput = Array.from(document.querySelectorAll('input[type="text"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Contact Position'));
+        if (contactPositionInput) contactPositionInput.value = 'Program Manager';
+        
+        const contactPhoneInput = Array.from(document.querySelectorAll('input[type="tel"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Contact Phone'));
+        if (contactPhoneInput) contactPhoneInput.value = '20 111 222 3333';
+        
+        // Fill Organization Size
+        const orgSizeSelect = Array.from(document.querySelectorAll('select')).find(sel => 
+            sel.previousElementSibling?.textContent?.includes('Organization Size'));
+        if (orgSizeSelect) {
+            Array.from(orgSizeSelect.options).forEach((opt, idx) => {
+                if (opt.text === '51–200') {
+                    orgSizeSelect.selectedIndex = idx;
+                }
+            });
+        }
+        
+        // Wait a bit for contract type change to process, then add opportunities
+        setTimeout(() => {
+            // Add 3 iGV opportunities
+            for (let i = 1; i <= 3; i++) {
+                addOpportunity();
+                
+                // Increase delay to ensure DOM is fully updated
+                setTimeout(() => {
+                    const oppCard = document.getElementById(`opp-${i}`);
+                    console.log(`[fillMockupData] Processing opportunity ${i}, card found:`, !!oppCard);
+                    if (oppCard) {
+                        // Fill Role Title
+                        const titleInput = oppCard.querySelector('input[name*="title"]');
+                        if (titleInput) {
+                            titleInput.value = `iGV Opportunity ${i} - Community Development Volunteer`;
+                        }
+                        
+                        // Select Project Type
+                        const projectTypeSelect = Array.from(oppCard.querySelectorAll('select')).find(sel => 
+                            sel.previousElementSibling?.textContent?.includes('Project Type'));
+                        if (projectTypeSelect) {
+                            const projectTypes = [
+                                'Heartbeat - SDG3.4',
+                                'Global classroom - SDG4.6',
+                                'Youth 4 Impact - SDG4.7'
+                            ];
+                            Array.from(projectTypeSelect.options).forEach((opt, idx) => {
+                                if (opt.text === projectTypes[i - 1]) {
+                                    projectTypeSelect.selectedIndex = idx;
+                                }
+                            });
+                        }
+                        
+                        // Select Field of Work
+                        const fieldSelect = Array.from(oppCard.querySelectorAll('select')).find(sel => 
+                            sel.previousElementSibling?.textContent?.includes('Field of Work'));
+                        if (fieldSelect) {
+                            const fields = ['Environment', 'Health', 'Education'];
+                            Array.from(fieldSelect.options).forEach((opt, idx) => {
+                                if (opt.text === fields[i - 1]) {
+                                    fieldSelect.selectedIndex = idx;
+                                }
+                            });
+                        }
+                        
+                        // Fill Job Description - find textarea that's not for "other" field
+                        const allTextareas = Array.from(oppCard.querySelectorAll('textarea'));
+                        const descTextarea = allTextareas.find(ta => 
+                            !ta.id || !ta.id.includes('other') && !ta.placeholder?.includes('specify'));
+                        if (descTextarea) {
+                            descTextarea.value = `Main activities for opportunity ${i}:\n- Conduct workshops and training sessions\n- Engage with local community members\n- Collect data and feedback\n- Organize awareness campaigns\n- Support project implementation`;
+                            descTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+                            descTextarea.dispatchEvent(new Event('change', { bubbles: true }));
+                            console.log(`[fillMockupData] Opportunity ${i} - Set job description`);
+                        } else {
+                            console.warn(`[fillMockupData] Opportunity ${i} - Job description textarea not found`);
+                        }
+                        
+                        // Fill Skills - use more specific selector based on label
+                        const skillsLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Required Skills'));
+                        // Find the row containing the skill inputs (could be next sibling or parent's next sibling)
+                        let skillsRow = null;
+                        if (skillsLabel) {
+                            skillsRow = skillsLabel.nextElementSibling;
+                            if (!skillsRow || !skillsRow.querySelector('input[placeholder*="Skill"]')) {
+                                skillsRow = skillsLabel.parentElement?.nextElementSibling;
+                            }
+                            if (!skillsRow || !skillsRow.querySelector('input[placeholder*="Skill"]')) {
+                                // Fallback: find any row with skill inputs after the label
+                                let current = skillsLabel.parentElement;
+                                while (current && current !== oppCard) {
+                                    const next = current.nextElementSibling;
+                                    if (next && next.querySelector('input[placeholder*="Skill"]')) {
+                                        skillsRow = next;
+                                        break;
+                                    }
+                                    current = current.parentElement;
+                                }
+                            }
+                        }
+                        const skillInputs = skillsRow ? Array.from(skillsRow.querySelectorAll('input[placeholder*="Skill"]')) : 
+                                             Array.from(oppCard.querySelectorAll('input[placeholder*="Skill"]')).slice(0, 3);
+                        console.log(`[fillMockupData] Opportunity ${i} - Found ${skillInputs.length} skill inputs`);
+                        const skills = [
+                            ['Communication', 'Project Management', 'Public Speaking'],
+                            ['Health Education', 'Workshop Facilitation', 'Data Collection'],
+                            ['Teaching', 'Curriculum Development', 'Youth Engagement']
+                        ];
+                        skillInputs.forEach((inp, idx) => {
+                            if (skills[i - 1] && skills[i - 1][idx]) {
+                                inp.value = skills[i - 1][idx];
+                                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                                inp.dispatchEvent(new Event('change', { bubbles: true }));
+                                console.log(`[fillMockupData] Opportunity ${i} - Set skill ${idx + 1}: ${skills[i - 1][idx]} (value: ${inp.value})`);
+                            }
+                        });
+                        
+                        // Fill Backgrounds - use more specific selector based on label
+                        const bgLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Required Backgrounds'));
+                        let bgRow = null;
+                        if (bgLabel) {
+                            bgRow = bgLabel.nextElementSibling;
+                            if (!bgRow || !bgRow.querySelector('input[placeholder*="Background"]')) {
+                                bgRow = bgLabel.parentElement?.nextElementSibling;
+                            }
+                            if (!bgRow || !bgRow.querySelector('input[placeholder*="Background"]')) {
+                                let current = bgLabel.parentElement;
+                                while (current && current !== oppCard) {
+                                    const next = current.nextElementSibling;
+                                    if (next && next.querySelector('input[placeholder*="Background"]')) {
+                                        bgRow = next;
+                                        break;
+                                    }
+                                    current = current.parentElement;
+                                }
+                            }
+                        }
+                        const bgInputs = bgRow ? Array.from(bgRow.querySelectorAll('input[placeholder*="Background"]')) : 
+                                         Array.from(oppCard.querySelectorAll('input[placeholder*="Background"]')).slice(0, 3);
+                        console.log(`[fillMockupData] Opportunity ${i} - Found ${bgInputs.length} background inputs`);
+                        const backgrounds = [
+                            ['Environmental Studies', 'Social Work', 'Community Development'],
+                            ['Public Health', 'Nursing', 'Health Sciences'],
+                            ['Education', 'Teaching', 'Youth Work']
+                        ];
+                        bgInputs.forEach((inp, idx) => {
+                            if (backgrounds[i - 1] && backgrounds[i - 1][idx]) {
+                                inp.value = backgrounds[i - 1][idx];
+                                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                                inp.dispatchEvent(new Event('change', { bubbles: true }));
+                                console.log(`[fillMockupData] Opportunity ${i} - Set background ${idx + 1}: ${backgrounds[i - 1][idx]} (value: ${inp.value})`);
+                            }
+                        });
+                        
+                        // Fill Languages
+                        const langLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && (lbl.textContent.includes('Required Languages') || lbl.textContent.includes('Languages')));
+                        let langRow = null;
+                        if (langLabel) {
+                            langRow = langLabel.nextElementSibling;
+                            if (!langRow || !langRow.querySelector('input[placeholder*="Language"]')) {
+                                langRow = langLabel.parentElement?.nextElementSibling;
+                            }
+                        }
+                        const langInputs = langRow ? Array.from(langRow.querySelectorAll('input[placeholder*="Language"]')) : 
+                                             Array.from(oppCard.querySelectorAll('input[placeholder*="Language"]')).slice(0, 3);
+                        const languages = [
+                            ['English', 'Arabic', 'French'],
+                            ['English', 'Spanish', 'Portuguese'],
+                            ['English', 'French', 'German']
+                        ];
+                        langInputs.forEach((inp, idx) => {
+                            if (languages[i - 1] && languages[i - 1][idx]) {
+                                inp.value = languages[i - 1][idx];
+                                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                                inp.dispatchEvent(new Event('change', { bubbles: true }));
+                                console.log(`[fillMockupData] Opportunity ${i} - Set language ${idx + 1}: ${languages[i - 1][idx]} (value: ${inp.value})`);
+                            }
+                        });
+                        
+                        // Fill Requirements - use more specific selector based on label
+                        const reqLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Specific Requirements'));
+                        let reqRow = null;
+                        if (reqLabel) {
+                            reqRow = reqLabel.nextElementSibling;
+                            if (!reqRow || !reqRow.querySelector('input[placeholder*="Req"]')) {
+                                reqRow = reqLabel.parentElement?.nextElementSibling;
+                            }
+                            if (!reqRow || !reqRow.querySelector('input[placeholder*="Req"]')) {
+                                let current = reqLabel.parentElement;
+                                while (current && current !== oppCard) {
+                                    const next = current.nextElementSibling;
+                                    if (next && next.querySelector('input[placeholder*="Req"]')) {
+                                        reqRow = next;
+                                        break;
+                                    }
+                                    current = current.parentElement;
+                                }
+                            }
+                        }
+                        const reqInputs = reqRow ? Array.from(reqRow.querySelectorAll('input[placeholder*="Req"]')) : 
+                                          Array.from(oppCard.querySelectorAll('input[placeholder*="Req"]')).slice(0, 3);
+                        console.log(`[fillMockupData] Opportunity ${i} - Found ${reqInputs.length} requirement inputs`);
+                        const requirements = [
+                            ['Passion for sustainability', 'Good communication skills', 'Team player'],
+                            ['Health awareness', 'Empathy', 'Cultural sensitivity'],
+                            ['Teaching experience', 'Patience', 'Creative thinking']
+                        ];
+                        reqInputs.forEach((inp, idx) => {
+                            if (requirements[i - 1] && requirements[i - 1][idx]) {
+                                inp.value = requirements[i - 1][idx];
+                                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                                inp.dispatchEvent(new Event('change', { bubbles: true }));
+                                console.log(`[fillMockupData] Opportunity ${i} - Set requirement ${idx + 1}: ${requirements[i - 1][idx]} (value: ${inp.value})`);
+                            }
+                        });
+                        
+                        // Verify values were set correctly
+                        setTimeout(() => {
+                            console.log(`[fillMockupData] Verification for Opportunity ${i}:`);
+                            skillInputs.forEach((inp, idx) => {
+                                console.log(`  Skill ${idx + 1}: "${inp.value}"`);
+                            });
+                            bgInputs.forEach((inp, idx) => {
+                                console.log(`  Background ${idx + 1}: "${inp.value}"`);
+                            });
+                            reqInputs.forEach((inp, idx) => {
+                                console.log(`  Requirement ${idx + 1}: "${inp.value}"`);
+                            });
+                        }, 100);
+                        
+                        // Fill Duration
+                        const durationSelect = Array.from(oppCard.querySelectorAll('select')).find(sel => 
+                            sel.previousElementSibling?.textContent?.includes('Duration'));
+                        if (durationSelect) {
+                            Array.from(durationSelect.options).forEach((opt, idx) => {
+                                if (opt.text === '6 weeks') {
+                                    durationSelect.selectedIndex = idx;
+                                }
+                            });
+                        }
+                        
+                        // Fill Slot 1 dates
+                        const dateInputs = oppCard.querySelectorAll('input[type="date"]');
+                        if (dateInputs[0]) {
+                            const minDate = new Date();
+                            minDate.setMonth(minDate.getMonth() + 2);
+                            dateInputs[0].value = minDate.toISOString().split('T')[0];
+                        }
+                        if (dateInputs[1]) {
+                            const maxDate = new Date();
+                            maxDate.setMonth(maxDate.getMonth() + 3);
+                            dateInputs[1].value = maxDate.toISOString().split('T')[0];
+                        }
+                        
+                        // Fill Slot 1 openings
+                        const numberInputs = oppCard.querySelectorAll('input[type="number"]');
+                        if (numberInputs[0]) {
+                            numberInputs[0].value = 5;
+                            numberInputs[0].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        
+                        // Fill Slot 2 dates
+                        if (dateInputs[2]) {
+                            const minDate2 = new Date();
+                            minDate2.setMonth(minDate2.getMonth() + 4);
+                            dateInputs[2].value = minDate2.toISOString().split('T')[0];
+                        }
+                        if (dateInputs[3]) {
+                            const maxDate2 = new Date();
+                            maxDate2.setMonth(maxDate2.getMonth() + 5);
+                            dateInputs[3].value = maxDate2.toISOString().split('T')[0];
+                        }
+                        
+                        // Fill Slot 2 openings
+                        if (numberInputs[1]) {
+                            numberInputs[1].value = 3;
+                            numberInputs[1].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        
+                        // Fill Working Hours
+                        const workingHoursInput = Array.from(oppCard.querySelectorAll('input[type="text"]')).find(inp => 
+                            inp.previousElementSibling?.textContent?.includes('Working Hours'));
+                        if (workingHoursInput) {
+                            workingHoursInput.value = '30 hours/week';
+                        }
+                        
+                        // Select Weekend Days (checkboxes)
+                        const weekendCheckboxes = oppCard.querySelectorAll('input[type="checkbox"]');
+                        if (weekendCheckboxes[0]) weekendCheckboxes[0].checked = true; // Friday
+                        if (weekendCheckboxes[1]) weekendCheckboxes[1].checked = true; // Saturday
+                        
+                        // Select Accommodation Provided By
+                        const accommodationProvidedSelect = Array.from(oppCard.querySelectorAll('select')).find(sel => 
+                            sel.previousElementSibling?.textContent?.includes('Accommodation Provided'));
+                        if (accommodationProvidedSelect) {
+                            Array.from(accommodationProvidedSelect.options).forEach((opt, idx) => {
+                                if (opt.text === 'Partner') {
+                                    accommodationProvidedSelect.selectedIndex = idx;
+                                    accommodationProvidedSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                        }
+                        
+                        // Select Accommodation Covered By
+                        const accommodationCoveredSelect = Array.from(oppCard.querySelectorAll('select')).find(sel => 
+                            sel.previousElementSibling?.textContent?.includes('Accommodation Covered'));
+                        if (accommodationCoveredSelect) {
+                            Array.from(accommodationCoveredSelect.options).forEach((opt, idx) => {
+                                if (opt.text === 'AIESEC') {
+                                    accommodationCoveredSelect.selectedIndex = idx;
+                                    accommodationCoveredSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                        }
+                        
+                        // Select Transportation
+                        const transportationSelect = Array.from(oppCard.querySelectorAll('select')).find(sel => 
+                            sel.previousElementSibling?.textContent?.includes('Transportation'));
+                        if (transportationSelect) {
+                            Array.from(transportationSelect.options).forEach((opt, idx) => {
+                                if (opt.text === 'Provided') {
+                                    transportationSelect.selectedIndex = idx;
+                                }
+                            });
+                        }
+                        
+                        // Fill Meals
+                        const mealsInput = Array.from(oppCard.querySelectorAll('input[type="text"]')).find(inp => 
+                            inp.previousElementSibling?.textContent?.includes('Meals'));
+                        if (mealsInput) {
+                            mealsInput.value = 'Lunch provided on working days';
+                        }
+                    } else {
+                        console.error(`[fillMockupData] Opportunity ${i} card not found!`);
+                    }
+                }, 300 * i); // Increased delay for each opportunity to ensure DOM is ready
+            }
+            
+            // Add 1 iGTa opportunity (4th opportunity)
+            setTimeout(() => {
+                addOpportunity();
+                
+                setTimeout(() => {
+                    const oppCard = document.getElementById('opp-4');
+                    if (oppCard) {
+                        // Fill Role Title
+                        const titleInput = oppCard.querySelector('input[name*="title"]');
+                        if (titleInput) {
+                            titleInput.value = 'Marketing Intern - Digital Marketing Specialist';
+                        }
+                        
+                        // Select Duration - find by label
+                        const durationLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Duration'));
+                        const durationSelect = durationLabel ? 
+                            durationLabel.parentElement?.querySelector('select') ||
+                            durationLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('select'))[0];
+                        if (durationSelect) {
+                            Array.from(durationSelect.options).forEach((opt, idx) => {
+                                if (opt.text === '9-12 Weeks') {
+                                    durationSelect.selectedIndex = idx;
+                                    durationSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                            console.log('[fillMockupData] Opportunity 4 (iGTa) - Set duration: 9-12 Weeks');
+                        }
+                        
+                        // Select Field(s) of Work - find by label
+                        const fieldLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && (lbl.textContent.includes('Field(s) of Work') || lbl.textContent.includes('Field of Work')));
+                        const fieldSelect = fieldLabel ? 
+                            fieldLabel.parentElement?.querySelector('select') ||
+                            fieldLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('select'))[1];
+                        if (fieldSelect) {
+                            Array.from(fieldSelect.options).forEach((opt, idx) => {
+                                if (opt.text === 'Marketing') {
+                                    fieldSelect.selectedIndex = idx;
+                                    fieldSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                            console.log('[fillMockupData] Opportunity 4 (iGTa) - Set field of work: Marketing');
+                        }
+                        
+                        // Fill Job Description - find textarea for job description
+                        const jobDescLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && (lbl.textContent.includes('Job Description') || lbl.textContent.includes('Main Activities')));
+                        const descTextarea = jobDescLabel ? jobDescLabel.nextElementSibling?.querySelector('textarea') || 
+                                            jobDescLabel.parentElement?.querySelector('textarea') :
+                                            oppCard.querySelector('textarea[name*="description"]') || 
+                                            Array.from(oppCard.querySelectorAll('textarea')).find(ta => !ta.id?.includes('other'));
+                        if (descTextarea) {
+                            descTextarea.value = 'Main activities:\n- Develop social media content\n- Manage social media accounts\n- Create marketing campaigns\n- Analyze marketing metrics\n- Support brand development';
+                            descTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+                            descTextarea.dispatchEvent(new Event('change', { bubbles: true }));
+                            console.log('[fillMockupData] Opportunity 4 (iGTa) - Set job description');
+                        }
+                        
+                        // Fill Skills - use label-based selector
+                        const skillsLabel4 = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Skills'));
+                        const skillsRow4 = skillsLabel4 ? (skillsLabel4.nextElementSibling || skillsLabel4.parentElement?.nextElementSibling) : null;
+                        const skillInputs4 = skillsRow4 ? Array.from(skillsRow4.querySelectorAll('input[placeholder*="Skill"]')) : 
+                                             Array.from(oppCard.querySelectorAll('input[placeholder*="Skill"]'));
+                        console.log('[fillMockupData] Opportunity 4 (iGTa) - Found', skillInputs4.length, 'skill inputs');
+                        if (skillInputs4[0]) {
+                            skillInputs4[0].value = 'Social Media Management';
+                            skillInputs4[0].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if (skillInputs4[1]) {
+                            skillInputs4[1].value = 'Content Creation';
+                            skillInputs4[1].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if (skillInputs4[2]) {
+                            skillInputs4[2].value = 'Analytics';
+                            skillInputs4[2].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        
+                        // Fill Backgrounds - use label-based selector
+                        const bgLabel4 = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Background'));
+                        const bgRow4 = bgLabel4 ? (bgLabel4.nextElementSibling || bgLabel4.parentElement?.nextElementSibling) : null;
+                        const bgInputs4 = bgRow4 ? Array.from(bgRow4.querySelectorAll('input[placeholder*="Background"]')) : 
+                                         Array.from(oppCard.querySelectorAll('input[placeholder*="Background"]'));
+                        console.log('[fillMockupData] Opportunity 4 (iGTa) - Found', bgInputs4.length, 'background inputs');
+                        if (bgInputs4[0]) {
+                            bgInputs4[0].value = 'Marketing';
+                            bgInputs4[0].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if (bgInputs4[1]) {
+                            bgInputs4[1].value = 'Business';
+                            bgInputs4[1].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if (bgInputs4[2]) {
+                            bgInputs4[2].value = 'Communications';
+                            bgInputs4[2].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        
+                        // Fill Languages - use label-based selector
+                        const langLabel4 = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Language'));
+                        const langRow4 = langLabel4 ? (langLabel4.nextElementSibling || langLabel4.parentElement?.nextElementSibling) : null;
+                        const langInputs4 = langRow4 ? Array.from(langRow4.querySelectorAll('input[placeholder*="Language"]')) : 
+                                           Array.from(oppCard.querySelectorAll('input[placeholder*="Language"]'));
+                        console.log('[fillMockupData] Opportunity 4 (iGTa) - Found', langInputs4.length, 'language inputs');
+                        if (langInputs4[0]) {
+                            langInputs4[0].value = 'English';
+                            langInputs4[0].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if (langInputs4[1]) {
+                            langInputs4[1].value = 'Arabic';
+                            langInputs4[1].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if (langInputs4[2]) {
+                            langInputs4[2].value = 'French';
+                            langInputs4[2].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        
+                        // Fill Requirements - use label-based selector
+                        const reqLabel4 = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && (lbl.textContent.includes('Requirement') || lbl.textContent.includes('Other Requirements')));
+                        const reqRow4 = reqLabel4 ? (reqLabel4.nextElementSibling || reqLabel4.parentElement?.nextElementSibling) : null;
+                        const reqInputs4 = reqRow4 ? Array.from(reqRow4.querySelectorAll('input[placeholder*="Requirement"]')) : 
+                                          Array.from(oppCard.querySelectorAll('input[placeholder*="Requirement"]'));
+                        console.log('[fillMockupData] Opportunity 4 (iGTa) - Found', reqInputs4.length, 'requirement inputs');
+                        if (reqInputs4[0]) {
+                            reqInputs4[0].value = 'Marketing experience';
+                            reqInputs4[0].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if (reqInputs4[1]) {
+                            reqInputs4[1].value = 'Creative thinking';
+                            reqInputs4[1].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if (reqInputs4[2]) {
+                            reqInputs4[2].value = 'Team collaboration';
+                            reqInputs4[2].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        
+                        // Fill Slot dates
+                        const dateInputs = oppCard.querySelectorAll('input[type="date"]');
+                        if (dateInputs[0]) {
+                            const slot1Date = new Date();
+                            slot1Date.setMonth(slot1Date.getMonth() + 2);
+                            dateInputs[0].value = slot1Date.toISOString().split('T')[0];
+                        }
+                        if (dateInputs[1]) {
+                            const slot2Date = new Date();
+                            slot2Date.setMonth(slot2Date.getMonth() + 4);
+                            dateInputs[1].value = slot2Date.toISOString().split('T')[0];
+                        }
+                        
+                        // Fill Openings
+                        const numberInputs = oppCard.querySelectorAll('input[type="number"]');
+                        if (numberInputs[0]) numberInputs[0].value = 2;
+                        if (numberInputs[1]) numberInputs[1].value = 2;
+                        
+                        // Fill Working Hours - find by label
+                        const workingHoursLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Working Hours'));
+                        const workingHoursInput = workingHoursLabel ? 
+                            workingHoursLabel.parentElement?.querySelector('input[type="text"]') ||
+                            workingHoursLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('input[type="text"]')).find(inp => {
+                                const label = inp.previousElementSibling;
+                                return label && label.textContent && label.textContent.includes('Working Hours');
+                            });
+                        if (workingHoursInput) {
+                            workingHoursInput.value = '40 hours/week';
+                            workingHoursInput.dispatchEvent(new Event('input', { bubbles: true }));
+                            console.log('[fillMockupData] Opportunity 4 (iGTa) - Set working hours: 40 hours/week');
+                        }
+                        
+                        // Fill Salary - find by label
+                        const salaryLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && (lbl.textContent.includes('Salary') || lbl.textContent.includes('Salary (Monthly)')));
+                        const salaryInput = salaryLabel ? 
+                            salaryLabel.parentElement?.querySelector('input[type="text"]') ||
+                            salaryLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('input[type="text"]')).find(inp => {
+                                const label = inp.previousElementSibling;
+                                return label && label.textContent && label.textContent.includes('Salary');
+                            });
+                        if (salaryInput) {
+                            salaryInput.value = '500 USD/month';
+                            salaryInput.dispatchEvent(new Event('input', { bubbles: true }));
+                            console.log('[fillMockupData] Opportunity 4 (iGTa) - Set salary: 500 USD/month');
+                        }
+                        
+                        // Select Weekend Days - find all checkboxes in weekend-days-container
+                        const weekendContainer = oppCard.querySelector('.weekend-days-container');
+                        const weekendCheckboxes = weekendContainer ? 
+                            Array.from(weekendContainer.querySelectorAll('input[type="checkbox"]')) :
+                            Array.from(oppCard.querySelectorAll('input[type="checkbox"]'));
+                        console.log('[fillMockupData] Opportunity 4 (iGTa) - Found', weekendCheckboxes.length, 'weekend checkboxes');
+                        // Check Friday and Saturday (first two checkboxes in weekend container)
+                        if (weekendCheckboxes.length > 0) {
+                            // Find Friday and Saturday by value
+                            weekendCheckboxes.forEach(cb => {
+                                if (cb.value === 'Friday' || cb.value === 'Saturday') {
+                                    cb.checked = true;
+                                    cb.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                            console.log('[fillMockupData] Opportunity 4 (iGTa) - Set weekend days: Friday, Saturday');
+                        }
+                        
+                        // Select Accommodation - find by label
+                        const accommodationLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Accommodation'));
+                        const accommodationSelect = accommodationLabel ? 
+                            accommodationLabel.parentElement?.querySelector('select') ||
+                            accommodationLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('select')).find(sel => {
+                                const label = sel.previousElementSibling;
+                                return label && label.textContent && label.textContent.includes('Accommodation');
+                            });
+                        if (accommodationSelect) {
+                            Array.from(accommodationSelect.options).forEach((opt, idx) => {
+                                if (opt.text === 'None') {
+                                    accommodationSelect.selectedIndex = idx;
+                                    accommodationSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                            console.log('[fillMockupData] Opportunity 4 (iGTa) - Set accommodation: None');
+                        }
+                        
+                        // Select Transportation - find by label
+                        const transportationLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Transportation'));
+                        const transportationSelect = transportationLabel ? 
+                            transportationLabel.parentElement?.querySelector('select') ||
+                            transportationLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('select')).find(sel => {
+                                const label = sel.previousElementSibling;
+                                return label && label.textContent && label.textContent.includes('Transportation');
+                            });
+                        if (transportationSelect) {
+                            Array.from(transportationSelect.options).forEach((opt, idx) => {
+                                if (opt.text === 'Covered') {
+                                    transportationSelect.selectedIndex = idx;
+                                    transportationSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                            console.log('[fillMockupData] Opportunity 4 (iGTa) - Set transportation: Covered');
+                        }
+                        
+                        // Fill Meals - leave empty as per user's data
+                        const mealsLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Meals'));
+                        const mealsInput = mealsLabel ? 
+                            mealsLabel.parentElement?.querySelector('input[type="text"]') ||
+                            mealsLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('input[type="text"]')).find(inp => {
+                                const label = inp.previousElementSibling;
+                                return label && label.textContent && label.textContent.includes('Meals');
+                            });
+                        if (mealsInput) {
+                            mealsInput.value = ''; // Leave empty as per user's data
+                            mealsInput.dispatchEvent(new Event('input', { bubbles: true }));
+                            console.log('[fillMockupData] Opportunity 4 (iGTa) - Set meals: (empty)');
+                        }
+                    }
+                    
+                    // Update progress bars
+                    updateAllProgress();
+                    console.log('[fillMockupData] Mockup data filled successfully!');
+                }, 500);
+            }, 400);
+        }, 300);
+    }
+
+    /**
+     * Fill form with mockup data for "10+5 iGV" contract
+     */
+    function fillMockupData10Plus5() {
+        console.log('[fillMockupData10Plus5] Starting to fill mockup data for 10+5 iGV...');
+        
+        // Clear existing opportunities
+        const container = document.getElementById('opportunities-container');
+        if (container) {
+            container.innerHTML = '';
+        }
+        oppCount = 0;
+        
+        // Fill AIESECer Information
+        const nameInput = document.querySelector('input[placeholder*="Full Name"]');
+        if (nameInput) nameInput.value = 'Sarah Hassan Ibrahim';
+        
+        const emailInput = document.querySelector('input[type="email"][placeholder*="aiesec.net"]');
+        if (emailInput) emailInput.value = 'sarah.hassan@aiesec.net';
+        
+        const roleSelect = document.querySelectorAll('select')[0];
+        if (roleSelect) {
+            Array.from(roleSelect.options).forEach((opt, idx) => {
+                if (opt.text === 'Coordinator') {
+                    roleSelect.selectedIndex = idx;
+                }
+            });
+        }
+        
+        const lcSelect = document.querySelectorAll('select')[1];
+        if (lcSelect) {
+            Array.from(lcSelect.options).forEach((opt, idx) => {
+                if (opt.text === 'Cairo University') {
+                    lcSelect.selectedIndex = idx;
+                }
+            });
+        }
+        
+        // Fill Organization Information
+        const contractTypeSelect = document.getElementById('contractType');
+        if (contractTypeSelect) {
+            Array.from(contractTypeSelect.options).forEach((opt, idx) => {
+                if (opt.text === 'iGV 10+5 - (Accommodation Covered)') {
+                    contractTypeSelect.selectedIndex = idx;
+                    contractTypeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            });
+        }
+        
+        const orgNameInput = document.querySelector('input[placeholder*="Organization Name"]');
+        if (orgNameInput) orgNameInput.value = 'Global Impact Foundation';
+        
+        const orgEmailInput = document.querySelector('input[placeholder*="Organization Email"]');
+        if (orgEmailInput) orgEmailInput.value = 'info@globalimpact.org';
+        
+        const websiteInput = Array.from(document.querySelectorAll('input[type="url"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Website'));
+        if (websiteInput) websiteInput.value = 'https://www.globalimpact.org';
+        
+        const phoneInput = Array.from(document.querySelectorAll('input[type="tel"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Phone'));
+        if (phoneInput) phoneInput.value = '20 2 1234 5678';
+        
+        const addressTextarea = Array.from(document.querySelectorAll('textarea')).find(ta => 
+            ta.previousElementSibling?.textContent?.includes('Address'));
+        if (addressTextarea) addressTextarea.value = '123 Main Street, Cairo, Egypt';
+        
+        const contactNameInput = Array.from(document.querySelectorAll('input[type="text"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Contact Name'));
+        if (contactNameInput) contactNameInput.value = 'Mohamed El-Sayed';
+        
+        const contactEmailInput = Array.from(document.querySelectorAll('input[type="email"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Contact Email'));
+        if (contactEmailInput) contactEmailInput.value = 'mohamed@globalimpact.org';
+        
+        const contactPositionInput = Array.from(document.querySelectorAll('input[type="text"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Contact Position'));
+        if (contactPositionInput) contactPositionInput.value = 'Program Director';
+        
+        const contactPhoneInput = Array.from(document.querySelectorAll('input[type="tel"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Contact Phone'));
+        if (contactPhoneInput) contactPhoneInput.value = '20 100 123 4567';
+        
+        // Fill Organization Size
+        const orgSizeSelect = Array.from(document.querySelectorAll('select')).find(sel => 
+            sel.previousElementSibling?.textContent?.includes('Organization Size'));
+        if (orgSizeSelect) {
+            Array.from(orgSizeSelect.options).forEach((opt, idx) => {
+                if (opt.text === '201–500') {
+                    orgSizeSelect.selectedIndex = idx;
+                }
+            });
+        }
+        
+        // Wait a bit for contract type change to process, then add opportunities
+        setTimeout(() => {
+            // Add 15 iGV opportunities (10+5)
+            for (let i = 1; i <= 15; i++) {
+                addOpportunity();
+                
+                // Increase delay to ensure DOM is fully updated
+                setTimeout(() => {
+                    const oppCard = document.getElementById(`opp-${i}`);
+                    console.log(`[fillMockupData10Plus5] Processing opportunity ${i}, card found:`, !!oppCard);
+                    if (oppCard) {
+                        // Fill Role Title
+                        const titleInput = oppCard.querySelector('input[name*="title"]');
+                        if (titleInput) {
+                            titleInput.value = `iGV Opportunity ${i} - Global Volunteer`;
+                        }
+                        
+                        // Select Project Type
+                        const projectTypeSelect = Array.from(oppCard.querySelectorAll('select')).find(sel => 
+                            sel.previousElementSibling?.textContent?.includes('Project Type'));
+                        if (projectTypeSelect) {
+                            const projectTypes = [
+                                'Heartbeat - SDG3.4',
+                                'Global classroom - SDG4.6',
+                                'Youth 4 Impact - SDG4.7',
+                                'Raise your Voice - SDG5.1',
+                                'Eco city - SDG12.8',
+                                'Skill Up! - SDG8.6',
+                                'Equify - SDG10.2',
+                                'Green Leaders - SDG13.3',
+                                'Eat4change - SDG12.8',
+                                'Rooted - SDG15.5',
+                                'Scale up - SDG17.17',
+                                'Fingertips - SDG4.4',
+                                'Happy Bus - SDG4.2',
+                                'Heartbeat - SDG3.4' // Repeat for 15th opportunity
+                            ];
+                            Array.from(projectTypeSelect.options).forEach((opt, idx) => {
+                                if (opt.text === projectTypes[i - 1]) {
+                                    projectTypeSelect.selectedIndex = idx;
+                                    projectTypeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                        }
+                        
+                        // Select Field of Work
+                        const fieldSelect = Array.from(oppCard.querySelectorAll('select')).find(sel => 
+                            sel.previousElementSibling?.textContent?.includes('Field of Work'));
+                        if (fieldSelect) {
+                            const fields = ['Environment', 'Health', 'Education', 'Education', 'Gender Equality', 
+                                          'Environment', 'Education', 'Education', 'Environment', 'Environment',
+                                          'Environment', 'Education', 'Education', 'Education', 'Environment'];
+                            Array.from(fieldSelect.options).forEach((opt, idx) => {
+                                if (opt.text === fields[i - 1]) {
+                                    fieldSelect.selectedIndex = idx;
+                                }
+                            });
+                        }
+                        
+                        // Fill Job Description
+                        const descTextarea = oppCard.querySelector('textarea[name*="description"]') || 
+                                            Array.from(oppCard.querySelectorAll('textarea')).find(ta => 
+                                                !ta.id?.includes('other'));
+                        if (descTextarea) {
+                            descTextarea.value = `Main activities for Opportunity ${i}:\n- Conduct workshops and training sessions\n- Engage with local communities\n- Support project implementation\n- Collect and analyze data\n- Facilitate educational activities`;
+                            descTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+                            descTextarea.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                        
+                        // Fill Skills
+                        const skillsLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Required Skills'));
+                        let skillsRow = null;
+                        if (skillsLabel) {
+                            skillsRow = skillsLabel.nextElementSibling;
+                            if (!skillsRow || !skillsRow.querySelector('input[placeholder*="Skill"]')) {
+                                skillsRow = skillsLabel.parentElement?.nextElementSibling;
+                            }
+                        }
+                        const skillInputs = skillsRow ? Array.from(skillsRow.querySelectorAll('input[placeholder*="Skill"]')) : 
+                                             Array.from(oppCard.querySelectorAll('input[placeholder*="Skill"]')).slice(0, 3);
+                        const skills = [
+                            ['Communication', 'Project Management', 'Public Speaking'],
+                            ['Health Education', 'Workshop Facilitation', 'Data Collection'],
+                            ['Teaching', 'Curriculum Development', 'Youth Engagement'],
+                            ['SDG Awareness', 'Community Engagement', 'Facilitation'],
+                            ['Gender Equality', 'Advocacy', 'Workshop Design'],
+                            ['Sustainability', 'Environmental Education', 'Community Outreach'],
+                            ['Career Guidance', 'Soft Skills Training', 'Mentoring'],
+                            ['Social Inclusion', 'Human Rights', 'Community Building'],
+                            ['Climate Action', 'Environmental Awareness', 'Education'],
+                            ['Sustainable Diets', 'Environmental Education', 'Workshop Facilitation'],
+                            ['Wildlife Protection', 'Conservation', 'Environmental Research'],
+                            ['NGO Management', 'Partnership Building', 'Strategic Planning'],
+                            ['Art Education', 'Creative Thinking', 'Problem Solving'],
+                            ['Early Childhood Education', 'Cultural Exchange', 'Language Teaching'],
+                            ['Tourism Development', 'Cultural Preservation', 'Community Engagement']
+                        ];
+                        skillInputs.forEach((inp, idx) => {
+                            if (skills[i - 1] && skills[i - 1][idx]) {
+                                inp.value = skills[i - 1][idx];
+                                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                        });
+                        
+                        // Fill Backgrounds
+                        const bgLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Required Backgrounds'));
+                        let bgRow = null;
+                        if (bgLabel) {
+                            bgRow = bgLabel.nextElementSibling;
+                            if (!bgRow || !bgRow.querySelector('input[placeholder*="Background"]')) {
+                                bgRow = bgLabel.parentElement?.nextElementSibling;
+                            }
+                        }
+                        const bgInputs = bgRow ? Array.from(bgRow.querySelectorAll('input[placeholder*="Background"]')) : 
+                                         Array.from(oppCard.querySelectorAll('input[placeholder*="Background"]')).slice(0, 3);
+                        const backgrounds = [
+                            ['Environmental Studies', 'Social Work', 'Community Development'],
+                            ['Public Health', 'Nursing', 'Health Sciences'],
+                            ['Education', 'Teaching', 'Youth Work'],
+                            ['Education', 'Social Sciences', 'International Relations'],
+                            ['Gender Studies', 'Social Work', 'Human Rights'],
+                            ['Environmental Science', 'Sustainability', 'Ecology'],
+                            ['Business', 'Education', 'Career Counseling'],
+                            ['Social Work', 'Human Rights', 'Community Development'],
+                            ['Environmental Studies', 'Climate Science', 'Education'],
+                            ['Nutrition', 'Environmental Science', 'Education'],
+                            ['Biology', 'Conservation', 'Environmental Science'],
+                            ['Business Administration', 'Non-profit Management', 'Social Sciences'],
+                            ['Arts', 'Education', 'Psychology'],
+                            ['Early Childhood Education', 'Languages', 'Education'],
+                            ['Tourism', 'Hospitality', 'Cultural Studies']
+                        ];
+                        bgInputs.forEach((inp, idx) => {
+                            if (backgrounds[i - 1] && backgrounds[i - 1][idx]) {
+                                inp.value = backgrounds[i - 1][idx];
+                                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                        });
+                        
+                        // Fill Languages
+                        const langLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && (lbl.textContent.includes('Required Languages') || lbl.textContent.includes('Languages')));
+                        let langRow = null;
+                        if (langLabel) {
+                            langRow = langLabel.nextElementSibling;
+                            if (!langRow || !langRow.querySelector('input[placeholder*="Language"]')) {
+                                langRow = langLabel.parentElement?.nextElementSibling;
+                            }
+                        }
+                        const langInputs = langRow ? Array.from(langRow.querySelectorAll('input[placeholder*="Language"]')) : 
+                                             Array.from(oppCard.querySelectorAll('input[placeholder*="Language"]')).slice(0, 3);
+                        const languages = [
+                            ['English', 'Arabic', 'French'],
+                            ['English', 'Spanish', 'Portuguese'],
+                            ['English', 'French', 'German'],
+                            ['English', 'Arabic', 'Spanish'],
+                            ['English', 'French', 'Italian'],
+                            ['English', 'Spanish', 'Portuguese'],
+                            ['English', 'French', 'German'],
+                            ['English', 'Arabic', 'Spanish'],
+                            ['English', 'French', 'Italian'],
+                            ['English', 'Spanish', 'Portuguese'],
+                            ['English', 'French', 'German'],
+                            ['English', 'Arabic', 'Spanish'],
+                            ['English', 'French', 'Italian'],
+                            ['English', 'Spanish', 'Portuguese'],
+                            ['English', 'Arabic', 'French']
+                        ];
+                        langInputs.forEach((inp, idx) => {
+                            if (languages[i - 1] && languages[i - 1][idx]) {
+                                inp.value = languages[i - 1][idx];
+                                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                        });
+                        
+                        // Fill Requirements
+                        const reqLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Specific Requirements'));
+                        let reqRow = null;
+                        if (reqLabel) {
+                            reqRow = reqLabel.nextElementSibling;
+                            if (!reqRow || !reqRow.querySelector('input[placeholder*="Req"]')) {
+                                reqRow = reqLabel.parentElement?.nextElementSibling;
+                            }
+                        }
+                        const reqInputs = reqRow ? Array.from(reqRow.querySelectorAll('input[placeholder*="Req"]')) : 
+                                      Array.from(oppCard.querySelectorAll('input[placeholder*="Req"]')).slice(0, 3);
+                        const requirements = [
+                            ['Passion for sustainability', 'Good communication skills', 'Team player'],
+                            ['Health awareness', 'Empathy', 'Cultural sensitivity'],
+                            ['Teaching experience', 'Patience', 'Creative thinking'],
+                            ['SDG knowledge', 'Community engagement', 'Flexibility'],
+                            ['Gender equality commitment', 'Advocacy skills', 'Open-mindedness'],
+                            ['Environmental passion', 'Community outreach', 'Problem-solving'],
+                            ['Career guidance experience', 'Mentoring skills', 'Professional development'],
+                            ['Social inclusion focus', 'Human rights awareness', 'Community building'],
+                            ['Climate action commitment', 'Environmental education', 'Passion for change'],
+                            ['Nutrition knowledge', 'Sustainability focus', 'Educational skills'],
+                            ['Wildlife conservation interest', 'Field research skills', 'Environmental passion'],
+                            ['NGO experience', 'Partnership building', 'Strategic thinking'],
+                            ['Artistic skills', 'Creative expression', 'Educational background'],
+                            ['Early childhood experience', 'Cultural sensitivity', 'Language skills'],
+                            ['Tourism knowledge', 'Cultural appreciation', 'Community engagement']
+                        ];
+                        reqInputs.forEach((inp, idx) => {
+                            if (requirements[i - 1] && requirements[i - 1][idx]) {
+                                inp.value = requirements[i - 1][idx];
+                                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                        });
+                        
+                        // Fill Slot 1 dates
+                        const dateInputs = oppCard.querySelectorAll('input[type="date"]');
+                        if (dateInputs[0]) {
+                            const minDate1 = new Date();
+                            minDate1.setMonth(minDate1.getMonth() + 2 + (i % 3));
+                            dateInputs[0].value = minDate1.toISOString().split('T')[0];
+                        }
+                        if (dateInputs[1]) {
+                            const maxDate1 = new Date();
+                            maxDate1.setMonth(maxDate1.getMonth() + 3 + (i % 3));
+                            dateInputs[1].value = maxDate1.toISOString().split('T')[0];
+                        }
+                        
+                        // Fill Slot 2 dates
+                        if (dateInputs[2]) {
+                            const minDate2 = new Date();
+                            minDate2.setMonth(minDate2.getMonth() + 4 + (i % 3));
+                            dateInputs[2].value = minDate2.toISOString().split('T')[0];
+                        }
+                        if (dateInputs[3]) {
+                            const maxDate2 = new Date();
+                            maxDate2.setMonth(maxDate2.getMonth() + 5 + (i % 3));
+                            dateInputs[3].value = maxDate2.toISOString().split('T')[0];
+                        }
+                        
+                        // Fill Slot 1 openings
+                        const numberInputs = oppCard.querySelectorAll('input[type="number"]');
+                        if (numberInputs[0]) {
+                            numberInputs[0].value = 2 + (i % 3);
+                            numberInputs[0].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        
+                        // Fill Slot 2 openings
+                        if (numberInputs[1]) {
+                            numberInputs[1].value = 2 + (i % 3);
+                            numberInputs[1].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        
+                        // Fill Duration (iGV)
+                        const durationSelect = Array.from(oppCard.querySelectorAll('select')).find(sel => 
+                            sel.previousElementSibling?.textContent?.includes('Duration') && 
+                            sel.name && sel.name.includes('duration'));
+                        if (durationSelect) {
+                            const durations = ['6 weeks', '8 weeks', '6 weeks', '6 - 8 weeks', '8 weeks', 
+                                             '6 weeks', '6 - 8 weeks', '8 weeks', '6 weeks', '6 - 8 weeks',
+                                             '8 weeks', '6 weeks', '6 - 8 weeks', '8 weeks', '6 weeks'];
+                            const durationValue = durations[i - 1] || '6 weeks';
+                            Array.from(durationSelect.options).forEach((opt, idx) => {
+                                if (opt.text === durationValue) {
+                                    durationSelect.selectedIndex = idx;
+                                    durationSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                    console.log(`[fillMockupData10Plus5] Opportunity ${i} - Set duration: ${durationValue}`);
+                                }
+                            });
+                        }
+                        
+                        // Fill Working Hours
+                        const workingHoursInput = Array.from(oppCard.querySelectorAll('input[type="text"]')).find(inp => 
+                            inp.previousElementSibling?.textContent?.includes('Working Hours'));
+                        if (workingHoursInput) {
+                            workingHoursInput.value = '30 hours/week';
+                        }
+                        
+                        // Select Weekend Days
+                        const weekendCheckboxes = oppCard.querySelectorAll('input[type="checkbox"]');
+                        if (weekendCheckboxes[0]) weekendCheckboxes[0].checked = true; // Friday
+                        if (weekendCheckboxes[1]) weekendCheckboxes[1].checked = true; // Saturday
+                        
+                        // Select Accommodation Provided By
+                        const accommodationProvidedSelect = Array.from(oppCard.querySelectorAll('select')).find(sel => 
+                            sel.previousElementSibling?.textContent?.includes('Accommodation Provided'));
+                        if (accommodationProvidedSelect) {
+                            Array.from(accommodationProvidedSelect.options).forEach((opt, idx) => {
+                                if (opt.text === 'Partner') {
+                                    accommodationProvidedSelect.selectedIndex = idx;
+                                    accommodationProvidedSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                        }
+                        
+                        // Select Accommodation Covered By
+                        const accommodationCoveredSelect = Array.from(oppCard.querySelectorAll('select')).find(sel => 
+                            sel.previousElementSibling?.textContent?.includes('Accommodation Covered'));
+                        if (accommodationCoveredSelect) {
+                            Array.from(accommodationCoveredSelect.options).forEach((opt, idx) => {
+                                if (opt.text === 'AIESEC') {
+                                    accommodationCoveredSelect.selectedIndex = idx;
+                                    accommodationCoveredSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                        }
+                        
+                        // Select Transportation
+                        const transportationSelect = Array.from(oppCard.querySelectorAll('select')).find(sel => 
+                            sel.previousElementSibling?.textContent?.includes('Transportation'));
+                        if (transportationSelect) {
+                            Array.from(transportationSelect.options).forEach((opt, idx) => {
+                                if (opt.text === 'Provided') {
+                                    transportationSelect.selectedIndex = idx;
+                                }
+                            });
+                        }
+                        
+                        // Fill Meals
+                        const mealsInput = Array.from(oppCard.querySelectorAll('input[type="text"]')).find(inp => 
+                            inp.previousElementSibling?.textContent?.includes('Meals'));
+                        if (mealsInput) {
+                            mealsInput.value = 'Lunch provided on working days';
+                        }
+                    } else {
+                        console.error(`[fillMockupData10Plus5] Opportunity ${i} card not found!`);
+                    }
+                }, 300 * i); // Delay for each opportunity to ensure DOM is ready
+            }
+            
+            // Update progress bars after all opportunities are added
+            setTimeout(() => {
+                updateAllProgress();
+                console.log('[fillMockupData10Plus5] Mockup data filled successfully for 15 iGV opportunities (10+5)!');
+            }, 5000); // Increased delay to accommodate 15 opportunities
+        }, 400);
+    }
+
+    /**
+     * Fill form with mockup data for "7+3 iGTa" contract
+     */
+    function fillMockupData7Plus3IGTa() {
+        console.log('[fillMockupData7Plus3IGTa] Starting to fill mockup data for 7+3 iGTa...');
+        
+        // Clear existing opportunities
+        const container = document.getElementById('opportunities-container');
+        if (container) {
+            container.innerHTML = '';
+        }
+        oppCount = 0;
+        
+        // Fill AIESECer Information
+        const nameInput = document.querySelector('input[placeholder*="Full Name"]');
+        if (nameInput) nameInput.value = 'Mariam Ahmed Hassan';
+        
+        const emailInput = document.querySelector('input[type="email"][placeholder*="aiesec.net"]');
+        if (emailInput) emailInput.value = 'mariam.ahmed@aiesec.net';
+        
+        const roleSelect = document.querySelectorAll('select')[0];
+        if (roleSelect) {
+            Array.from(roleSelect.options).forEach((opt, idx) => {
+                if (opt.text === 'Team Leader') {
+                    roleSelect.selectedIndex = idx;
+                }
+            });
+        }
+        
+        const lcSelect = document.querySelectorAll('select')[1];
+        if (lcSelect) {
+            Array.from(lcSelect.options).forEach((opt, idx) => {
+                if (opt.text === 'AUC') {
+                    lcSelect.selectedIndex = idx;
+                }
+            });
+        }
+        
+        // Fill Organization Information
+        const contractTypeSelect = document.getElementById('contractType');
+        if (contractTypeSelect) {
+            Array.from(contractTypeSelect.options).forEach((opt, idx) => {
+                if (opt.text === 'iGTa 7+3') {
+                    contractTypeSelect.selectedIndex = idx;
+                    contractTypeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            });
+        }
+        
+        const orgNameInput = document.querySelector('input[placeholder*="Organization Name"]');
+        if (orgNameInput) orgNameInput.value = 'Tech Solutions International';
+        
+        const orgEmailInput = document.querySelector('input[placeholder*="Organization Email"]');
+        if (orgEmailInput) orgEmailInput.value = 'hr@techsolutions.com';
+        
+        const websiteInput = Array.from(document.querySelectorAll('input[type="url"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Website'));
+        if (websiteInput) websiteInput.value = 'https://www.techsolutions.com';
+        
+        const phoneInput = Array.from(document.querySelectorAll('input[type="tel"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Phone'));
+        if (phoneInput) phoneInput.value = '20 2 9876 5432';
+        
+        const addressTextarea = Array.from(document.querySelectorAll('textarea')).find(ta => 
+            ta.previousElementSibling?.textContent?.includes('Address'));
+        if (addressTextarea) addressTextarea.value = '456 Business District, New Cairo, Egypt';
+        
+        const contactNameInput = Array.from(document.querySelectorAll('input[type="text"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Contact Name'));
+        if (contactNameInput) contactNameInput.value = 'Omar Khaled';
+        
+        const contactEmailInput = Array.from(document.querySelectorAll('input[type="email"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Contact Email'));
+        if (contactEmailInput) contactEmailInput.value = 'omar.khaled@techsolutions.com';
+        
+        const contactPositionInput = Array.from(document.querySelectorAll('input[type="text"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Contact Position'));
+        if (contactPositionInput) contactPositionInput.value = 'HR Manager';
+        
+        const contactPhoneInput = Array.from(document.querySelectorAll('input[type="tel"]')).find(inp => 
+            inp.previousElementSibling?.textContent?.includes('Contact Phone'));
+        if (contactPhoneInput) contactPhoneInput.value = '20 100 987 6543';
+        
+        // Fill Organization Size
+        const orgSizeSelect = Array.from(document.querySelectorAll('select')).find(sel => 
+            sel.previousElementSibling?.textContent?.includes('Organization Size'));
+        if (orgSizeSelect) {
+            Array.from(orgSizeSelect.options).forEach((opt, idx) => {
+                if (opt.text === '1,000–5,000') {
+                    orgSizeSelect.selectedIndex = idx;
+                }
+            });
+        }
+        
+        // Fill Industry
+        const industrySelect = Array.from(document.querySelectorAll('select')).find(sel => 
+            sel.previousElementSibling?.textContent?.includes('Industry'));
+        if (industrySelect) {
+            Array.from(industrySelect.options).forEach((opt, idx) => {
+                if (opt.text === 'IT') {
+                    industrySelect.selectedIndex = idx;
+                    industrySelect.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+            });
+        }
+        
+        // Wait a bit for contract type change to process, then add opportunities
+        setTimeout(() => {
+            // Add 10 iGTa opportunities (7+3)
+            for (let i = 1; i <= 10; i++) {
+                addOpportunity();
+                
+                // Increase delay to ensure DOM is fully updated
+                setTimeout(() => {
+                    const oppCard = document.getElementById(`opp-${i}`);
+                    console.log(`[fillMockupData7Plus3IGTa] Processing opportunity ${i}, card found:`, !!oppCard);
+                    if (oppCard) {
+                        // Fill Role Title
+                        const titleInput = oppCard.querySelector('input[name*="title"]');
+                        if (titleInput) {
+                            const titles = [
+                                'Software Development Intern',
+                                'Marketing Specialist',
+                                'Business Development Associate',
+                                'Data Analyst Intern',
+                                'Graphic Designer',
+                                'Content Writer',
+                                'HR Assistant',
+                                'Finance Intern',
+                                'Project Coordinator',
+                                'Customer Success Intern'
+                            ];
+                            titleInput.value = titles[i - 1] || `iGTa Opportunity ${i}`;
+                        }
+                        
+                        // Select Duration
+                        const durationLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Duration'));
+                        const durationSelect = durationLabel ? 
+                            durationLabel.parentElement?.querySelector('select') ||
+                            durationLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('select'))[0];
+                        if (durationSelect) {
+                            // iGTa duration: only 9-12 Weeks
+                            Array.from(durationSelect.options).forEach((opt, idx) => {
+                                if (opt.text === '9-12 Weeks') {
+                                    durationSelect.selectedIndex = idx;
+                                    durationSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                    console.log(`[fillMockupData7Plus3IGTa] Opportunity ${i} - Set duration: 9-12 Weeks`);
+                                }
+                            });
+                        }
+                        
+                        // Select Field(s) of Work
+                        const fieldLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && (lbl.textContent.includes('Field(s) of Work') || lbl.textContent.includes('Field of Work')));
+                        const fieldSelect = fieldLabel ? 
+                            fieldLabel.parentElement?.querySelector('select') ||
+                            fieldLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('select'))[1];
+                        if (fieldSelect) {
+                            const fields = ['IT', 'Marketing', 'Business Development', 'IT', 'Marketing', 
+                                         'Marketing', 'Business Administration', 'Finance', 'Business Development', 'Business Administration'];
+                            Array.from(fieldSelect.options).forEach((opt, idx) => {
+                                if (opt.text === fields[i - 1]) {
+                                    fieldSelect.selectedIndex = idx;
+                                    fieldSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                        }
+                        
+                        // Fill Job Description
+                        const jobDescLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && (lbl.textContent.includes('Job Description') || lbl.textContent.includes('Main Activities')));
+                        const descTextarea = jobDescLabel ? 
+                            jobDescLabel.nextElementSibling?.querySelector('textarea') || 
+                            jobDescLabel.parentElement?.querySelector('textarea') :
+                            oppCard.querySelector('textarea[name*="description"]') || 
+                            Array.from(oppCard.querySelectorAll('textarea')).find(ta => !ta.id?.includes('other'));
+                        if (descTextarea) {
+                            const descriptions = [
+                                'Main activities:\n- Develop web applications\n- Write clean code\n- Test software\n- Collaborate with team\n- Learn new technologies',
+                                'Main activities:\n- Create marketing campaigns\n- Manage social media\n- Analyze market trends\n- Support brand development\n- Content creation',
+                                'Main activities:\n- Identify business opportunities\n- Build client relationships\n- Conduct market research\n- Prepare proposals\n- Support sales activities',
+                                'Main activities:\n- Analyze data sets\n- Create reports\n- Visualize data\n- Support decision making\n- Database management',
+                                'Main activities:\n- Design graphics\n- Create visual content\n- Brand identity design\n- Support marketing materials\n- Creative projects',
+                                'Main activities:\n- Write articles\n- Create content\n- Edit materials\n- SEO optimization\n- Content strategy',
+                                'Main activities:\n- Support recruitment\n- Employee onboarding\n- Maintain records\n- Assist HR processes\n- Administrative tasks',
+                                'Main activities:\n- Financial analysis\n- Bookkeeping\n- Budget preparation\n- Financial reporting\n- Support finance team',
+                                'Main activities:\n- Coordinate projects\n- Track progress\n- Organize meetings\n- Documentation\n- Team support',
+                                'Main activities:\n- Customer support\n- Handle inquiries\n- Build relationships\n- Feedback collection\n- Service improvement'
+                            ];
+                            descTextarea.value = descriptions[i - 1] || `Main activities for Opportunity ${i}`;
+                            descTextarea.dispatchEvent(new Event('input', { bubbles: true }));
+                            descTextarea.dispatchEvent(new Event('change', { bubbles: true }));
+                        }
+                        
+                        // Fill Skills
+                        const skillsLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Skills'));
+                        const skillsContainer = skillsLabel ? skillsLabel.closest('.col-md-3') : null;
+                        const skillInputs = skillsContainer ? 
+                            Array.from(skillsContainer.querySelectorAll('input[placeholder*="Skill"]')) :
+                            Array.from(oppCard.querySelectorAll('input[placeholder*="Skill"]')).slice(0, 3);
+                        const skills = [
+                            ['JavaScript', 'React', 'Node.js'],
+                            ['Social Media', 'Content Creation', 'Analytics'],
+                            ['Sales', 'Negotiation', 'Communication'],
+                            ['Python', 'SQL', 'Data Visualization'],
+                            ['Adobe Photoshop', 'Illustrator', 'Design'],
+                            ['Writing', 'SEO', 'Content Strategy'],
+                            ['HR Management', 'Recruitment', 'Administration'],
+                            ['Excel', 'Financial Analysis', 'Accounting'],
+                            ['Project Management', 'Organization', 'Communication'],
+                            ['Customer Service', 'Communication', 'Problem Solving']
+                        ];
+                        skillInputs.forEach((inp, idx) => {
+                            if (skills[i - 1] && skills[i - 1][idx]) {
+                                inp.value = skills[i - 1][idx];
+                                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                        });
+                        
+                        // Fill Backgrounds
+                        const bgLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Backgrounds'));
+                        const bgContainer = bgLabel ? bgLabel.closest('.col-md-3') : null;
+                        const bgInputs = bgContainer ? 
+                            Array.from(bgContainer.querySelectorAll('input[placeholder*="Background"]')) :
+                            Array.from(oppCard.querySelectorAll('input[placeholder*="Background"]')).slice(0, 3);
+                        const backgrounds = [
+                            ['Computer Science', 'Software Engineering', 'IT'],
+                            ['Marketing', 'Business', 'Communications'],
+                            ['Business', 'Sales', 'Management'],
+                            ['Data Science', 'Statistics', 'IT'],
+                            ['Graphic Design', 'Fine Arts', 'Visual Arts'],
+                            ['Journalism', 'Communications', 'English'],
+                            ['Human Resources', 'Business Administration', 'Management'],
+                            ['Finance', 'Accounting', 'Business'],
+                            ['Business Administration', 'Management', 'Project Management'],
+                            ['Business', 'Customer Service', 'Management']
+                        ];
+                        bgInputs.forEach((inp, idx) => {
+                            if (backgrounds[i - 1] && backgrounds[i - 1][idx]) {
+                                inp.value = backgrounds[i - 1][idx];
+                                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                        });
+                        
+                        // Fill Languages
+                        const langLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Languages'));
+                        const langContainer = langLabel ? langLabel.closest('.col-md-3') : null;
+                        const langInputs = langContainer ? 
+                            Array.from(langContainer.querySelectorAll('input[placeholder*="Language"]')) :
+                            Array.from(oppCard.querySelectorAll('input[placeholder*="Language"]')).slice(0, 3);
+                        const languages = [
+                            ['English', 'Arabic', 'French'],
+                            ['English', 'Arabic', ''],
+                            ['English', 'Arabic', 'German'],
+                            ['English', 'Arabic', ''],
+                            ['English', 'Arabic', ''],
+                            ['English', 'Arabic', 'Spanish'],
+                            ['English', 'Arabic', ''],
+                            ['English', 'Arabic', ''],
+                            ['English', 'Arabic', ''],
+                            ['English', 'Arabic', '']
+                        ];
+                        langInputs.forEach((inp, idx) => {
+                            if (languages[i - 1] && languages[i - 1][idx]) {
+                                inp.value = languages[i - 1][idx];
+                                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                        });
+                        
+                        // Fill Requirements
+                        const reqLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && (lbl.textContent.includes('Other Requirements') || lbl.textContent.includes('Requirements')));
+                        const reqContainer = reqLabel ? reqLabel.closest('.col-md-3') : null;
+                        const reqInputs = reqContainer ? 
+                            Array.from(reqContainer.querySelectorAll('input[placeholder*="Requirement"]')) :
+                            Array.from(oppCard.querySelectorAll('input[placeholder*="Requirement"]')).slice(0, 3);
+                        const requirements = [
+                            ['Programming experience', 'Problem-solving skills', 'Team collaboration'],
+                            ['Marketing knowledge', 'Creative thinking', 'Social media expertise'],
+                            ['Sales experience', 'Communication skills', 'Business acumen'],
+                            ['Data analysis skills', 'Statistical knowledge', 'Technical skills'],
+                            ['Design portfolio', 'Creative skills', 'Visual thinking'],
+                            ['Writing experience', 'Research skills', 'Content creation'],
+                            ['HR knowledge', 'Administrative skills', 'People skills'],
+                            ['Financial knowledge', 'Analytical skills', 'Attention to detail'],
+                            ['Project management', 'Organization skills', 'Leadership'],
+                            ['Customer service', 'Communication', 'Patience']
+                        ];
+                        reqInputs.forEach((inp, idx) => {
+                            if (requirements[i - 1] && requirements[i - 1][idx]) {
+                                inp.value = requirements[i - 1][idx];
+                                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                        });
+                        
+                        // Fill Slot dates
+                        const dateInputs = oppCard.querySelectorAll('input[type="date"]');
+                        if (dateInputs[0]) {
+                            const slot1Date = new Date();
+                            slot1Date.setMonth(slot1Date.getMonth() + 2 + (i % 3));
+                            dateInputs[0].value = slot1Date.toISOString().split('T')[0];
+                        }
+                        if (dateInputs[1]) {
+                            const slot2Date = new Date();
+                            slot2Date.setMonth(slot2Date.getMonth() + 4 + (i % 3));
+                            dateInputs[1].value = slot2Date.toISOString().split('T')[0];
+                        }
+                        
+                        // Fill Openings
+                        const numberInputs = oppCard.querySelectorAll('input[type="number"]');
+                        if (numberInputs[0]) {
+                            numberInputs[0].value = 2 + (i % 3);
+                            numberInputs[0].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        if (numberInputs[1]) {
+                            numberInputs[1].value = 2 + (i % 3);
+                            numberInputs[1].dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        
+                        // Fill Working Hours
+                        const workingHoursLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Working Hours'));
+                        const workingHoursInput = workingHoursLabel ? 
+                            workingHoursLabel.parentElement?.querySelector('input[type="text"]') ||
+                            workingHoursLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('input[type="text"]')).find(inp => {
+                                const label = inp.previousElementSibling;
+                                return label && label.textContent && label.textContent.includes('Working Hours');
+                            });
+                        if (workingHoursInput) {
+                            workingHoursInput.value = '40 hours/week';
+                            workingHoursInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        
+                        // Fill Salary
+                        const salaryLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && (lbl.textContent.includes('Salary') || lbl.textContent.includes('Salary (Monthly)')));
+                        const salaryInput = salaryLabel ? 
+                            salaryLabel.parentElement?.querySelector('input[type="text"]') ||
+                            salaryLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('input[type="text"]')).find(inp => {
+                                const label = inp.previousElementSibling;
+                                return label && label.textContent && label.textContent.includes('Salary');
+                            });
+                        if (salaryInput) {
+                            const salaries = ['800 USD/month', '600 USD/month', '700 USD/month', '750 USD/month', '650 USD/month',
+                                            '600 USD/month', '700 USD/month', '800 USD/month', '750 USD/month', '650 USD/month'];
+                            salaryInput.value = salaries[i - 1] || '700 USD/month';
+                            salaryInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                        
+                        // Select Weekend Days
+                        const weekendContainer = oppCard.querySelector('.weekend-days-container');
+                        const weekendCheckboxes = weekendContainer ? 
+                            Array.from(weekendContainer.querySelectorAll('input[type="checkbox"]')) :
+                            Array.from(oppCard.querySelectorAll('input[type="checkbox"]'));
+                        // Check Friday and Saturday
+                        if (weekendCheckboxes.length > 0) {
+                            weekendCheckboxes.forEach(cb => {
+                                if (cb.value === 'Friday' || cb.value === 'Saturday') {
+                                    cb.checked = true;
+                                    cb.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                        }
+                        
+                        // Select Accommodation
+                        const accommodationLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Accommodation'));
+                        const accommodationSelect = accommodationLabel ? 
+                            accommodationLabel.parentElement?.querySelector('select') ||
+                            accommodationLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('select')).find(sel => {
+                                const label = sel.previousElementSibling;
+                                return label && label.textContent && label.textContent.includes('Accommodation');
+                            });
+                        if (accommodationSelect) {
+                            Array.from(accommodationSelect.options).forEach((opt, idx) => {
+                                if (opt.text === 'None') {
+                                    accommodationSelect.selectedIndex = idx;
+                                    accommodationSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                        }
+                        
+                        // Select Transportation
+                        const transportationLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Transportation'));
+                        const transportationSelect = transportationLabel ? 
+                            transportationLabel.parentElement?.querySelector('select') ||
+                            transportationLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('select')).find(sel => {
+                                const label = sel.previousElementSibling;
+                                return label && label.textContent && label.textContent.includes('Transportation');
+                            });
+                        if (transportationSelect) {
+                            Array.from(transportationSelect.options).forEach((opt, idx) => {
+                                if (opt.text === 'Covered') {
+                                    transportationSelect.selectedIndex = idx;
+                                    transportationSelect.dispatchEvent(new Event('change', { bubbles: true }));
+                                }
+                            });
+                        }
+                        
+                        // Fill Meals
+                        const mealsLabel = Array.from(oppCard.querySelectorAll('label')).find(lbl => 
+                            lbl.textContent && lbl.textContent.includes('Meals'));
+                        const mealsInput = mealsLabel ? 
+                            mealsLabel.parentElement?.querySelector('input[type="text"]') ||
+                            mealsLabel.nextElementSibling :
+                            Array.from(oppCard.querySelectorAll('input[type="text"]')).find(inp => {
+                                const label = inp.previousElementSibling;
+                                return label && label.textContent && label.textContent.includes('Meals');
+                            });
+                        if (mealsInput) {
+                            mealsInput.value = 'Lunch provided on working days';
+                            mealsInput.dispatchEvent(new Event('input', { bubbles: true }));
+                        }
+                    } else {
+                        console.error(`[fillMockupData7Plus3IGTa] Opportunity ${i} card not found!`);
+                    }
+                }, 300 * i); // Delay for each opportunity to ensure DOM is ready
+            }
+            
+            // Update progress bars after all opportunities are added
+            setTimeout(() => {
+                updateAllProgress();
+                console.log('[fillMockupData7Plus3IGTa] Mockup data filled successfully for 10 iGTa opportunities (7+3)!');
+            }, 3500);
+        }, 400);
+    }
+</script>
+
+<!-- B2B Contracts Form Submission Handler -->
+<script src="b2b-contracts-submit.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

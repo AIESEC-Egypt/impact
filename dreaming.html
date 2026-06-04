@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreaming - AIESEC in Egypt</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #882d33;
+            color: #d4cfb5;
+            min-height: 100vh;
+            display: block;
+            font-family: 'Unbounded', sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Navbar Styles */
+        .dreaming-navbar {
+            background-color: #d4cfb5;
+            padding: 4px 28px;
+            border-bottom: 2px solid rgba(136, 45, 51, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .dreaming-navbar .container-fluid {
+            display: flex;
+            align-items: center;
+        }
+
+        .dreaming-navbar .navbar-nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .dreaming-navbar .navbar-brand img {
+            height: 72px;
+            filter: drop-shadow(0 2px 8px rgba(136, 45, 51, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .dreaming-navbar .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        .dreaming-navbar .nav-link {
+            color: #882d33 !important;
+            font-size: 18px;
+            margin: 0 12px;
+            transition: color 0.3s ease;
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+
+        .dreaming-navbar .nav-link:hover {
+            color: #5a1d22 !important;
+        }
+
+        .dreaming-navbar .navbar-toggler {
+            background-color: rgba(136, 45, 51, 0.2);
+            border: 1px solid rgba(136, 45, 51, 0.4);
+        }
+
+        .dreaming-navbar .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(136, 45, 51, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .dreaming-navbar .navbar-collapse {
+            background-color: #d4cfb5;
+        }
+
+        @media (max-width: 991px) {
+            .dreaming-navbar .navbar-collapse {
+                background-color: #d4cfb5;
+                padding: 16px 0;
+                margin-top: 12px;
+                border-radius: 8px;
+            }
+        }
+
+        .scroll-down-arrow {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 56px;
+            height: 56px;
+            background: #d4cfb5;
+            color: #882d33;
+            border: 2px solid rgba(136, 45, 51, 0.3);
+            border-radius: 50%;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(136, 45, 51, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            z-index: 999;
+            opacity: 1;
+            pointer-events: auto;
+            animation: bounceArrow 2s ease-in-out infinite;
+        }
+
+        @keyframes bounceArrow {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(8px);
+            }
+        }
+
+        .scroll-down-arrow.scrolled {
+            background: linear-gradient(135deg, #882d33, #a33d43);
+            color: #d4cfb5;
+            border-color: transparent;
+            animation: none;
+        }
+
+        .scroll-down-arrow:hover {
+            transform: translateY(4px) !important;
+            box-shadow: 0 8px 24px rgba(136, 45, 51, 0.4);
+            background-color: rgba(212, 207, 181, 0.9);
+        }
+
+        .scroll-down-arrow.scrolled:hover {
+            background: linear-gradient(135deg, #a33d43, #c24d53);
+        }
+
+        .scroll-down-arrow:active {
+            transform: translateY(2px) !important;
+        }
+
+        @media (max-width: 768px) {
+            .scroll-down-arrow {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+                bottom: 24px;
+                right: 24px;
+            }
+        }
+
+        /* Hero Section */
+        .hero-wrapper {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 24px 40px;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .dreaming-hero {
+            width: min(60vw, 560px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-hint {
+            position: absolute;
+            bottom: clamp(18px, 5vh, 42px);
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            border-radius: 999px;
+            background: rgba(212, 207, 181, 0.85);
+            color: #882d33;
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(0.85rem, 1.8vw, 1rem);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            animation: floatHint 3.6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .hero-hint span {
+            display: inline-block;
+        }
+
+        .hero-hint__icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid rgba(136, 45, 51, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(136, 45, 51, 0.08);
+            font-size: 1.2rem;
+        }
+
+        @keyframes floatHint {
+            0%, 100% {
+                transform: translate(-50%, 0);
+            }
+            50% {
+                transform: translate(-50%, -12px);
+            }
+        }
+
+        .mercedes {
+            position: relative;
+            width: clamp(360px, 60vw, 560px);
+            height: clamp(360px, 60vw, 560px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            --radius: clamp(120px, 18vw, 180px);
+            --arm-size: clamp(140px, 24vw, 220px);
+            transition: transform 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform;
+        }
+
+        .mercedes::before {
+            content: '';
+            position: absolute;
+            inset: 18%;
+            border: 2px solid rgba(212, 207, 181, 0.62);
+            border-radius: 999px;
+            opacity: 0.8;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dreaming-overview {
+            background-color: #d4cfb5;
+            color: #882d33;
+            padding: 72px 24px 88px;
+        }
+
+        .dreaming-overview__inner {
+            max-width: 960px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .dreaming-overview__title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(2.4rem, 4.4vw, 3.3rem);
+            font-weight: 700;
+            margin-bottom: 18px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .dreaming-overview__intro {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            margin-bottom: 28px;
+        }
+
+        .dreaming-overview__body {
+            font-family: 'Roboto', sans-serif;
+            font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+            line-height: 1.85;
+            letter-spacing: 0.01em;
+            margin: 0;
+        }
+
+        .dreaming-overview__body + .dreaming-overview__body {
+            margin-top: 22px;
+        }
+
+        .dreaming-overview__visuals {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 28px;
+            margin-top: 48px;
+        }
+
+        .dreaming-overview__card {
+            background: rgba(136, 45, 51, 0.12);
+            border: 1px solid rgba(136, 45, 51, 0.25);
+            border-radius: 20px;
+            padding: 28px 24px;
+            text-align: left;
+            backdrop-filter: blur(6px);
+        }
+
+        .dreaming-overview__card-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(136, 45, 51, 0.85), rgba(92, 28, 33, 0.9));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4cfb5;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.35rem;
+            margin-bottom: 20px;
+        }
+
+        .dreaming-overview__card-title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .dreaming-overview__card-text {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.65;
+            margin: 0;
+        }
+
+        .dreaming-countdown {
+            background: linear-gradient(135deg, #882d33, #5e1f24);
+            color: #d4cfb5;
+            padding: 80px 24px 96px;
+            text-align: center;
+        }
+
+        .dreaming-countdown__inner {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .dreaming-countdown__title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(2.1rem, 4vw, 3rem);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 32px;
+        }
+
+        .dreaming-countdown__timer {
+            display: flex;
+            justify-content: center;
+            gap: clamp(14px, 3.5vw, 28px);
+            flex-wrap: wrap;
+        }
+
+        .dreaming-countdown__unit {
+            background: rgba(212, 207, 181, 0.12);
+            border: 1px solid rgba(212, 207, 181, 0.4);
+            border-radius: 18px;
+            min-width: 110px;
+            padding: 24px 16px;
+            backdrop-filter: blur(4px);
+        }
+
+        .dreaming-countdown__value {
+            display: block;
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(2.1rem, 4vw, 3rem);
+            font-weight: 600;
+        }
+
+        .dreaming-countdown__label {
+            display: block;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .core {
+            position: relative;
+            z-index: 1;
+            max-width: clamp(240px, 34vw, 420px);
+            width: 100%;
+            box-shadow: none;
+            border: none;
+            background: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform;
+        }
+
+        .core img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .arm {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: var(--arm-size);
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            background-color: rgba(136, 45, 51, 0.86);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) scale(0.6);
+            transition:
+                opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.9s cubic-bezier(0.19, 1, 0.22, 1),
+                background-color 0.35s ease,
+                color 0.35s ease;
+            overflow: visible;
+            color: #d4cfb5;
+            z-index: 1;
+            opacity: 0.2;
+            will-change: transform, opacity;
+        }
+
+        .arm img {
+            width: 68%;
+            height: 68%;
+            object-fit: contain;
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .arm::before {
+            content: attr(data-title);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(calc(-50% + var(--bubble-shift-x)), calc(-50% + var(--bubble-shift-y) - var(--radius) * 0.9));
+            font-size: clamp(0.85rem, 1.45vw, 1.05rem);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            background-color: #882d33;
+            color: #d4cfb5;
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: 1px solid rgba(212, 207, 181, 0.6);
+            opacity: 0;
+            transition:
+                opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.35s ease,
+                color 0.35s ease,
+                border-color 0.35s ease;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 6;
+        }
+
+        .arm.belong {
+            --tx: 0px;
+            --ty: calc(var(--radius) * -1.55);
+            --bubble-shift-x: 0px;
+            --bubble-shift-y: calc(var(--radius) * 1.55);
+        }
+
+        .arm.act {
+            --tx: calc(var(--radius) * -1.1);
+            --ty: calc(var(--radius) * 0.95);
+            --bubble-shift-x: calc(var(--radius) * 1.1);
+            --bubble-shift-y: calc(var(--radius) * -0.95);
+        }
+
+        .arm.influence {
+            --tx: calc(var(--radius) * 1.1);
+            --ty: calc(var(--radius) * 0.95);
+            --bubble-shift-x: calc(var(--radius) * -1.1);
+            --bubble-shift-y: calc(var(--radius) * -0.95);
+        }
+
+        .mercedes:hover .arm,
+        .core:hover ~ .arm,
+        .core:focus-visible ~ .arm {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) scale(1);
+        }
+
+        @media (max-width: 680px) {
+            .arm {
+                opacity: 0.2;
+                pointer-events: auto;
+            }
+
+            .mercedes:hover .arm,
+            .core:hover ~ .arm,
+            .core:focus-visible ~ .arm,
+            .mercedes:active .arm,
+            .core:active ~ .arm {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) scale(1);
+            }
+
+            .arm:active,
+            .arm:focus {
+                opacity: 1;
+                transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) scale(1);
+            }
+        }
+
+        .arm:hover,
+        .arm:focus-visible {
+            background-color: #d4cfb5;
+            color: #882d33;
+            z-index: 3;
+        }
+
+        .arm:hover img,
+        .arm:focus-visible img {
+            transform: scale(1.1);
+        }
+
+        .arm:hover::before,
+        .arm:focus-visible::before {
+            opacity: 1;
+            background-color: #882d33;
+            color: #d4cfb5;
+            border-color: rgba(136, 45, 51, 0.45);
+        }
+
+        .arm {
+            --bubble-size: clamp(260px, 42vw, 460px);
+            --bubble-shift-x: 0px;
+            --bubble-shift-y: 0px;
+        }
+
+        .arm .info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: var(--bubble-size);
+            height: var(--bubble-size);
+            border-radius: 50%;
+            background-color: rgba(212, 207, 181, 0.95);
+            color: #882d33;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(28px, 7vw, 72px);
+            pointer-events: none;
+            opacity: 0;
+            transform: translate(calc(-50% + var(--bubble-shift-x)), calc(-50% + var(--bubble-shift-y))) scale(0.05);
+            transform-origin: center;
+            transition:
+                opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            z-index: 2;
+            text-align: center;
+        }
+
+        .arm .info .caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: clamp(360px, 56vw, 760px);
+            font-size: clamp(1.35rem, 3vw, 2.4rem);
+            line-height: 1.6;
+            letter-spacing: 0.02em;
+            text-align: center;
+        }
+
+        .arm.belong {
+            --bubble-size: max(90vmax, 900px);
+            --bubble-shift-x: 0px;
+            --bubble-shift-y: calc(var(--radius) * 1.55);
+        }
+
+        .arm.act {
+            --bubble-size: max(85vmax, 720px);
+            --bubble-shift-x: calc(var(--radius) * 1.1);
+            --bubble-shift-y: calc(var(--radius) * -0.95);
+        }
+
+        .arm.act .info .caption {
+            text-align: center;
+        }
+
+        .arm.influence {
+            --bubble-size: max(85vmax, 720px);
+            --bubble-shift-x: calc(var(--radius) * -1.1);
+            --bubble-shift-y: calc(var(--radius) * -0.95);
+        }
+
+        .arm.influence .info .caption {
+            text-align: center;
+        }
+
+        .arm:hover .info,
+        .arm:focus-visible .info {
+            opacity: 1;
+            transform: translate(calc(-50% + var(--bubble-shift-x)), calc(-50% + var(--bubble-shift-y))) scale(1);
+            z-index: 4;
+        }
+
+        @media (max-width: 680px) {
+            body {
+                padding: 48px 18px;
+            }
+
+            .dreaming-hero {
+                width: min(90vw, 640px);
+            }
+
+            .mercedes {
+                width: clamp(320px, 70vw, 480px);
+                height: clamp(320px, 70vw, 480px);
+                display: flex;
+            }
+
+            .mercedes::before {
+                display: block;
+            }
+
+            .core {
+                margin: 0;
+            }
+
+            .arm {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                opacity: 0.2;
+                pointer-events: auto;
+                transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) scale(1);
+                width: var(--arm-size);
+                margin: 0;
+                background-color: rgba(136, 45, 51, 0.86);
+            }
+
+            .arm::before {
+                position: absolute;
+                transform: translate(calc(-50% + var(--bubble-shift-x)), calc(-50% + var(--bubble-shift-y) - var(--radius) * 0.9));
+                opacity: 0;
+                background-color: #882d33;
+                border-color: rgba(212, 207, 181, 0.6);
+                color: #d4cfb5;
+                margin-bottom: 0;
+                white-space: nowrap;
+                text-align: center;
+            }
+
+            .arm {
+                --bubble-size: clamp(220px, 70vw, 320px);
+                --bubble-shift-x: 0px;
+                --bubble-shift-y: 0px;
+            }
+
+            .arm .info {
+                position: absolute;
+                width: var(--bubble-size);
+                height: var(--bubble-size);
+                margin-top: 0;
+                padding: clamp(28px, 7vw, 72px);
+                border-radius: 50%;
+                background-color: rgba(212, 207, 181, 0.95);
+                color: #882d33;
+                opacity: 0;
+                transform: translate(calc(-50% + var(--bubble-shift-x)), calc(-50% + var(--bubble-shift-y))) scale(0.05);
+                pointer-events: none;
+            }
+
+            .arm .info .caption {
+                position: absolute;
+                max-width: clamp(320px, 80vw, 720px);
+                text-align: center;
+                transform: translate(-50%, -50%);
+                font-size: clamp(1.15rem, 4vw, 2rem);
+            }
+
+            .dreaming-overview {
+                padding: 56px 18px 64px;
+            }
+
+            .dreaming-overview__inner {
+                text-align: center;
+            }
+
+            .dreaming-overview__visuals {
+                grid-template-columns: 1fr;
+            }
+
+            .dreaming-overview__card {
+                text-align: center;
+            }
+
+            .hero-hint {
+                position: absolute;
+                bottom: clamp(18px, 5vh, 36px);
+                transform: translateX(-50%);
+                margin-top: 0;
+                animation: floatHint 3.6s ease-in-out infinite;
+            }
+
+            .hero-hint span:last-child {
+                display: none;
+            }
+
+            .hero-hint::after {
+                content: 'Press each circle to explore';
+                font-family: 'Roboto', sans-serif;
+                font-size: 15px;
+            }
+
+            .dreaming-countdown {
+                padding: 64px 18px 80px;
+            }
+
+            .dreaming-countdown__timer {
+                gap: 14px;
+            }
+
+            .dreaming-countdown__unit {
+                min-width: 110px;
+                padding: 22px 16px;
+            }
+        }
+
+        /* PDF Section Styles */
+        .pdf-section {
+            background-color: #d4cfb5;
+            padding: 80px 20px;
+            min-height: 50vh;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: #882d33;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .session-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .session {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: rgba(136, 45, 51, 0.86);
+            border: 2px solid rgba(136, 45, 51, 0.96);
+            width: clamp(360px, 80vw, 900px);
+            max-width: 100%;
+        }
+
+        .session:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(136, 45, 51, 0.3);
+            border-color: rgba(136, 45, 51, 0.6);
+        }
+
+        .session img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .footer-text {
+            background: rgba(136, 45, 51, 0.86);
+            color: #d4cfb5;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 0;
+            border-top: 2px solid rgba(212, 207, 181, 0.3);
+        }
+
+        .footer-text a {
+            color: #d4cfb5;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .dreaming-navbar {
+                padding: 4px 20px;
+            }
+
+            .dreaming-navbar .navbar-brand img {
+                height: 56px;
+            }
+
+            .dreaming-navbar .nav-link {
+                font-size: 15px;
+                padding-top: 6px;
+                padding-bottom: 6px;
+            }
+
+            .hero-wrapper {
+                min-height: 85vh;
+                padding: 48px 16px 40px;
+            }
+
+            .dreaming-hero {
+                width: 100%;
+            }
+
+            .dreaming-overview {
+                padding: 56px 18px 64px;
+            }
+
+            .dreaming-overview__inner {
+                text-align: center;
+            }
+
+            .dreaming-overview__title {
+                letter-spacing: 0.04em;
+            }
+
+            .session {
+                width: 100%;
+                max-width: 500px;
+            }
+
+            .session img {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .core,
+            .arm,
+            .arm img {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg dreaming-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <img src="image/Dream%20Team/eye.png" alt="Dreaming Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="AiE/History.html">AIESEC in Egypt History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="membership-ranking.html">Member Ranking</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Scroll Down Arrow -->
+    <button id="scrollDownBtn" class="scroll-down-arrow" aria-label="Scroll down">
+        &#8681;
+    </button>
+
+    <!-- Hero Section -->
+    <div class="hero-wrapper">
+        <main class="dreaming-hero" aria-labelledby="dreaming-title">
+        <div class="mercedes">
+            <div class="core" tabindex="0" aria-describedby="dreaming-intro">
+                <img src="image/Dream%20Team/howia.png" alt="El Haweya Dreaming Process">
+            </div>
+
+            <div class="arm belong" tabindex="0" data-title="To Belong">
+                <img src="image/Dream%20Team/belong.png" alt="Belong">
+                <div class="info">
+                    <p class="caption">and have ownership to AIESEC, understanding its relevance to Egypt, and your relevance to the entity.</p>
+                </div>
+            </div>
+
+            <div class="arm act" tabindex="0" data-title="To Act">
+                <img src="image/Dream%20Team/act.png" alt="Act">
+                <div class="info">
+                    <p class="caption">and be proactive for the entity,<br>whatever you see you can change.</p>
+                </div>
+            </div>
+
+            <div class="arm influence" tabindex="0" data-title="To Influence">
+                <img src="image/Dream%20Team/influence.png" alt="Influence">
+                <div class="info">
+                    <p class="caption">the people around you to do the same, create leaders that will take el Haweya forward.</p>
+                </div>
+            </div>
+        </div>
+        </main>
+        <div class="hero-hint" aria-hidden="true">
+            <span class="hero-hint__icon">⇆</span>
+            <span>Hover each circle to explore</span>
+        </div>
+    </div>
+
+    <section class="dreaming-overview" aria-labelledby="dreaming-overview-title">
+        <div class="dreaming-overview__inner">
+            <h2 id="dreaming-overview-title" class="dreaming-overview__title">AIESEC in Egypt Dreaming Process</h2>
+            <p class="dreaming-overview__intro">
+                A three-year commitment to crystallize our identity, sustain our momentum, and bring every bold idea to life.
+            </p>
+            <p class="dreaming-overview__body">
+                Launched at Activate 25 and stretching through Activate 28, the Dreaming Process aligns the ambitions of every
+                national team, LC, and function around a single shared vision. It turns imagination into structure—so the
+                strategies we design become the systems we live by.
+            </p>
+            <p class="dreaming-overview__body">
+                At each national conference we pause to measure our traction, to celebrate what is working, and to close the
+                gaps that hold us back. These checkpoints keep us collectively responsible for the roadmap we drew together.
+            </p>
+            <p class="dreaming-overview__body">
+                By the time Activate 28 arrives, our aim is continuity: plans that outlive terms, leadership that passes on
+                stronger foundations, and impact that is felt across every exchange, partnership, and experience. When we dream
+                as one entity, implementation stops being a hope and becomes our legacy.
+            </p>
+            <div class="dreaming-overview__visuals" role="presentation">
+                <article class="dreaming-overview__card">
+                    <div class="dreaming-overview__card-icon">01</div>
+                    <h3 class="dreaming-overview__card-title">Imagine with Intention</h3>
+                    <p class="dreaming-overview__card-text">
+                        Activate 25 activated the vision. We mapped the entity’s non-negotiables and defined what belonging,
+                        acting, and influencing will look like for the next generation of leaders.
+                    </p>
+                </article>
+                <article class="dreaming-overview__card">
+                    <div class="dreaming-overview__card-icon">02</div>
+                    <h3 class="dreaming-overview__card-title">Build and Test</h3>
+                    <p class="dreaming-overview__card-text">
+                        Every national conference validates progress with data, stories, and accountability. The blueprint gets
+                        sharper as LCs translate direction into daily rhythm.
+                    </p>
+                </article>
+                <article class="dreaming-overview__card">
+                    <div class="dreaming-overview__card-icon">03</div>
+                    <h3 class="dreaming-overview__card-title">Anchor the Legacy</h3>
+                    <p class="dreaming-overview__card-text">
+                        Activate 28 marks full adoption: sustained systems, empowered teams, and a national culture confident in
+                        its identity. Our dreaming cycle resets with deeper roots.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="dreaming-countdown" aria-labelledby="dreaming-countdown-title">
+        <div class="dreaming-countdown__inner">
+            <h2 id="dreaming-countdown-title" class="dreaming-countdown__title"><b>Countdown till Activate 28</b></h2>
+            <div class="dreaming-countdown__timer" id="dreaming-countdown">
+                <div class="dreaming-countdown__unit">
+                    <span class="dreaming-countdown__value" data-countdown-segment="years">00</span>
+                    <span class="dreaming-countdown__label">Years</span>
+                </div>
+                <div class="dreaming-countdown__unit">
+                    <span class="dreaming-countdown__value" data-countdown-segment="months">00</span>
+                    <span class="dreaming-countdown__label">Months</span>
+                </div>
+                <div class="dreaming-countdown__unit">
+                    <span class="dreaming-countdown__value" data-countdown-segment="days">00</span>
+                    <span class="dreaming-countdown__label">Days</span>
+                </div>
+                <div class="dreaming-countdown__unit">
+                    <span class="dreaming-countdown__value" data-countdown-segment="hours">00</span>
+                    <span class="dreaming-countdown__label">Hours</span>
+                </div>
+                <div class="dreaming-countdown__unit">
+                    <span class="dreaming-countdown__value" data-countdown-segment="minutes">00</span>
+                    <span class="dreaming-countdown__label">Minutes</span>
+                </div>
+                <div class="dreaming-countdown__unit">
+                    <span class="dreaming-countdown__value" data-countdown-segment="seconds">00</span>
+                    <span class="dreaming-countdown__label">Seconds</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PDF Resources Section -->
+    <section class="pdf-section">
+        <h2 class="section-title">Dreaming Resources</h2>
+        <div class="session-container">
+            <!-- Add your PDF sessions here -->
+            <!-- Example structure - replace with actual PDF files -->
+            <div class="session" onclick="openPDF('sample-dreaming-guide')">
+                <img src="Academy/pdf/Dreaming Process I.png" alt="Dreaming Guide"">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">
+            Made with ❤️, Powered by AIESEC in Egypt. © 2025 <br>
+            Developed by <a href="https://www.linkedin.com/in/mohamed-wael-46050b280/" target="_blank">Mohamed Wael</a>
+        </p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- PDF Modal Script -->
+    <script>
+        function openPDF(fileName) {
+            const url = `Academy/pdf/Dreaming Process I.pdf`;
+            window.open(url, '_blank');
+        }
+    </script>
+
+    <script>
+        (function () {
+            var targetDate = new Date('2028-10-01T00:00:00+02:00');
+            var countdownEl = document.getElementById('dreaming-countdown');
+            if (!countdownEl) {
+                return;
+            }
+
+            function updateCountdown() {
+                var now = new Date();
+                if (now >= targetDate) {
+                    countdownEl.querySelectorAll('[data-countdown-segment]').forEach(function (el) {
+                        el.textContent = '00';
+                    });
+                    return;
+                }
+
+                var years = targetDate.getFullYear() - now.getFullYear();
+                var months = targetDate.getMonth() - now.getMonth();
+
+                if (months < 0) {
+                    years -= 1;
+                    months += 12;
+                }
+
+                var intermediate = new Date(now.getTime());
+                intermediate.setFullYear(intermediate.getFullYear() + years);
+                intermediate.setMonth(intermediate.getMonth() + months);
+
+                if (intermediate > targetDate) {
+                    months -= 1;
+                    if (months < 0) {
+                        years -= 1;
+                        months += 12;
+                    }
+                    intermediate = new Date(now.getTime());
+                    intermediate.setFullYear(intermediate.getFullYear() + years);
+                    intermediate.setMonth(intermediate.getMonth() + months);
+                }
+
+                var distance = targetDate.getTime() - intermediate.getTime();
+
+                if (distance <= 0) {
+                    countdownEl.querySelectorAll('[data-countdown-segment]').forEach(function (el) {
+                        el.textContent = '00';
+                    });
+                    return;
+                }
+
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownEl.querySelector('[data-countdown-segment="years"]').textContent = String(Math.max(years, 0)).padStart(2, '0');
+                countdownEl.querySelector('[data-countdown-segment="months"]').textContent = String(Math.max(months, 0)).padStart(2, '0');
+                countdownEl.querySelector('[data-countdown-segment="days"]').textContent = String(days).padStart(2, '0');
+                countdownEl.querySelector('[data-countdown-segment="hours"]').textContent = String(hours).padStart(2, '0');
+                countdownEl.querySelector('[data-countdown-segment="minutes"]').textContent = String(minutes).padStart(2, '0');
+                countdownEl.querySelector('[data-countdown-segment="seconds"]').textContent = String(seconds).padStart(2, '0');
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        })();
+    </script>
+
+    <script>
+        // Scroll Down Arrow functionality
+        (function () {
+            var scrollDownBtn = document.getElementById('scrollDownBtn');
+            if (!scrollDownBtn) return;
+
+            // Change button style after user scrolls
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 200) {
+                    scrollDownBtn.classList.add('scrolled');
+                } else {
+                    scrollDownBtn.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth scroll down when clicked
+            scrollDownBtn.addEventListener('click', function () {
+                var viewportHeight = window.innerHeight;
+                window.scrollBy({
+                    top: viewportHeight,
+                    behavior: 'smooth'
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
+

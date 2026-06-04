@@ -1,0 +1,8 @@
+{% if user.is_authenticated %}
+<div style="position:fixed; top:14px; right:16px; z-index:11000; display:flex; align-items:center; gap:10px;
+            background:rgba(3,126,243,.95); color:#fff; padding:8px 16px; border-radius:999px;
+            font-family:'Unbounded',sans-serif; font-size:.78rem; box-shadow:0 6px 18px rgba(0,0,0,.18);">
+  <span>{{ user.full_name|default:user.username }}</span>
+  <a href="{% url 'accounts:logout' %}" style="color:#fff; text-decoration:underline;">Logout</a>
+</div>
+{% endif %}

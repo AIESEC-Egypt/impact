@@ -1,0 +1,530 @@
+  <!DOCTYPE html>
+<html lang="en">
+    <head>
+          <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700&display=swap" rel="stylesheet">
+        <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+ <link rel="icon" href="../aspects/icon.png">
+     <title>B2B Academy - IMPACT</title>
+
+        <link rel="stylesheet" href="style.css">
+        <style>
+            .modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+}
+.home-section {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Full screen height */
+    background: linear-gradient(135deg, #0e33af, #2651dc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  color: white;
+  padding: 20px;
+  animation: gradientMove 2s infinite alternate;
+              background-size: 200% 200%;
+
+
+}
+      @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+.modal-content {
+  position: relative;
+  margin: 5vh auto;
+  width: 90%;
+  height: 90%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content iframe {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #444;
+  cursor: pointer;
+  z-index: 10000;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    height: 85%;
+  }
+
+  .close-button {
+    font-size: 28px;
+    right: 14px;
+  }
+}
+.modal-content {
+  width: 90%;
+  height: 90vh;
+  max-width: 800px;
+}
+
+object, iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.footer-text {
+    background: linear-gradient(135deg, #0e33af, #2651dc);
+    color: white;
+    padding: 10px 0;
+    font-size: 14px;
+    margin-top: 10px;
+}
+.navbar-toggler {
+    background: linear-gradient(135deg, #0e33af, #2651dc);
+  border: none;
+  border-radius: 6px;
+}
+
+    .session-title {
+        text-align: center ;
+        align-content: center;
+        width: 1253px;
+        height: 130px;
+        font-size: 40PX;
+        font-family: 'Unbounded', sans-serif;  
+        color: #0e33af;
+        margin: 20px;
+        border: 10px solid #0e33af;  
+        border-radius: 20px;  
+    }
+    
+    /* Override session sizes to make PDFs bigger - matching dreaming.html size */
+    .session, .session2 {
+        width: 900px !important;
+        height: 400px !important;
+        max-width: none !important;
+        min-width: 800px !important;
+    }
+    
+    .session-container, .session-container2 {
+        gap: 50px !important;
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        padding: 40px 20px !important;
+    }
+    
+    .session img, .session2 img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+    }
+    
+    @media screen and (max-width: 1600px) {
+        .session, .session2 {
+            width: 800px !important;
+            height: 360px !important;
+            min-width: 700px !important;
+        }
+    }
+    
+    @media screen and (max-width: 1400px) {
+        .session, .session2 {
+            width: 700px !important;
+            height: 320px !important;
+            min-width: 600px !important;
+        }
+    }
+    
+    @media screen and (max-width: 1200px) {
+        .session, .session2 {
+            width: 600px !important;
+            height: 280px !important;
+            min-width: 500px !important;
+        }
+    }
+    
+    @media screen and (max-width: 900px) {
+        .session, .session2 {
+            width: 100% !important;
+            max-width: 500px !important;
+            height: auto !important;
+            min-width: unset !important;
+            aspect-ratio: 16/9 !important;
+        }
+    }
+  .pre-loader {
+    position: fixed;
+    background-color: #ffffff;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pre-loader img {
+    width: 200px;
+  }
+
+    html.loading, body.loading {
+    overflow: hidden;
+  }
+
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    </head>
+    <body>
+                  <div class="pre-loader">
+            <img style="width:200px" src="../aspects/circle.gif" alt="">
+          </div>
+    <nav class="navbar navbar-expand-lg">
+        <a href="../index.html" class="logo">
+            <img class = "navbar-brand"src="../aspects/impact.png" alt="AIESEC">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="w-100 text-center d-lg-none mb-3 mt-2">
+        <img src="../aspects/impact.png" alt="AIESEC" class="menu-logo" />
+      </div>
+
+            <ul class="navbar-nav nav-links">
+                <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="../AiE/History.html">AIESEC in Egypt History</a></li>
+                
+                <!-- Functional Academies Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Functional Academies ⌵</a>
+                    <ul class="dropdown-menu" style="width: 100%;">
+                        <li><a class="dropdown-item" href="../Academy/oGV.html">oGV Academy</a></li>
+                        <li><a class="dropdown-item" href="../Academy/iGV.html">iGV Academy</a></li>
+                        <li><a class="dropdown-item" href="../Academy/oGT.html">oGT Academy</a></li>
+                        <li><a class="dropdown-item" href="../Academy/iGT.html">iGT Academy</a></li>
+                        <li><a class="dropdown-item" href="../Academy/B2C.html">B2C Academy</a></li>
+                        <li><a class="dropdown-item" href="../Academy/B2B.html">B2B Academy</a></li>
+                        <li><a class="dropdown-item" href="../Academy/MXP.html">MXP Academy</a></li>
+                        <li><a class="dropdown-item" href="../Academy/F&L.html">F&L Academy</a></li>
+                    </ul>
+                </li>
+            <li class="nav-item dropdown">
+
+                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" >Contracts Systems ⌵</a>
+
+                <ul class="dropdown-menu" style="width: 250px; white-space: normal;">
+                    <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+       onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+       onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://docs.google.com/forms/d/1n54SOC6Tz-rGqfeytC8x5-GgN59JHQiDegTf-gRak_8/" target="_blank">iGV Contracts System</a></li>
+                    <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                        onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                        onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://docs.google.com/forms/d/e/1FAIpQLScLOJfJ3YN6oTwKHs030-jB2RkIerVdileWt3XZcAh0swNgrQ/viewform?usp=sf_link" target="_blank">iGTa/e Contracts System</a></li>
+                    <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                        onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                        onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://forms.gle/SjbiVE4NwLxZ3KML8" target="_blank">oGX Contracts System</a></li>
+                    <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                        onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                        onmouseout="this.style.background='transparent'; this.style.color='black';" href="../b2b-contracts.html">B2B Contracts System</a></li>
+                </ul>
+            </li> 
+                <!-- Conference Outputs Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Conference Outputs ⌵</a>
+                    <ul class="dropdown-menu" style="width: 100%;">
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/16YWyC5145B376VjVhrO3_nF6aS9Od_8k?usp=drive_link" target="_blank">Fusion</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/1MYHeFNWYYIFhgRrhzQl2sVwJQK_4MZMM?usp=drive_link" target="_blank">Activate</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/1RN-P9HI6QlKPtp80xm6GH78D5NiVZ0ez?usp=drive_link" target="_blank">Mahd</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
+                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
+                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/1zFYJ-dJVQXwRFozoqWgNrU7E7Sq8A-91?usp=drive_link" target="_blank">Momentum</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+        <div class="home-section">
+            <div class="content-section">
+            <p class="background-text">Academy</p>
+            <h1 class="foreground-text" style="font-weight:100;">B2B</h1>
+            </div>
+          
+        </div>
+        
+        <section class="image-grid">
+            <div class="grid">
+                <img src="img/WhatsApp Image 2025-06-15 at 11.45.44_4b59d32e.webp" alt="Image 1">
+                <img src="img/WhatsApp Image 2025-06-15 at 11.40.37_6211e4e3.webp" alt="Image 2">
+                <div class="stacked-images">
+                    <img class="img3" src="img/85ea419d-08c5-41eb-95fc-2e9bc30501e1.webp" alt="Image 3">
+                    <img class="img4" src="img/WhatsApp Image 2025-06-15 at 11.53.29_e6b0961c.webp" alt="Image 4">
+                </div>
+            </div>
+        </section>
+        <!--Sessions(2)-->
+        <section class="session-section">
+            <div class="session-title">B2B</div>
+            <div class="session-container">
+                <div class="session" onclick="openPDF('B2B academy')">
+                    <img src="pdf/B2B academy.svg" alt="Session 1">
+                </div>
+                <div class="session" onclick="openPDF('B2B ACADEMY (1)')">
+                    <img src="pdf/B2B ACADEMY (1).svg" alt="Session 1">
+                </div>
+                
+            </div>
+          <!--  <div class="session-container">
+                <div class="session" onclick="openPDF('SOPs')">
+                    <img src="pdf/SOPs.pdf.svg" alt="Session 1">
+                </div>
+                
+                
+            </div> -->
+                        <div class="session-title">BD</div>
+
+            <div class="session-container">
+                <div class="session" onclick="openPDF('_BD academy')">
+                    <img src="pdf/_BD academy.svg" alt="Session 1">
+                </div>
+                
+                <div class="session" onclick="openPDF('BD aacdemy ')">
+                    <img src="pdf/BD aacdemy .svg" alt="Session 1">
+                </div>
+                
+            </div>
+                     <!--   <div class="session-container">
+                <div class="session" onclick="openPDF('IR__CLUSTERIZATION')">
+                    <img src="pdf/IR__CLUSTERIZATION.pdf.svg" alt="Session 1">
+                </div>
+                
+                
+            </div>
+                                    <div class="session-title">CXP</div>
+
+            <div class="session-container">
+                <div class="session" onclick="openPDF('Exchange Standards (aies.ec_exchangestandards)')">
+                    <img src="pdf/Exchange Standards (aies.ec_exchangestandards).pdf.svg" alt="Session 1">
+                </div>
+                
+                <div class="session" onclick="openPDF('Visa Booklet')">
+                    <img src="pdf/FIRST IR CALL__.pdf (2).svg" alt="Session 1">
+                </div>
+                
+            </div>
+                        <div class="session-container">
+                <div class="session" >
+                  <a href="https://drive.google.com/drive/u/4/folders/1q99k8bBI5w9lWPbRKAaTbNLxj8MwQzrE" target="_blank">  <img src="pdf/FIRST IR CALL__.pdf (1).svg" alt="Session 1"></a>
+                </div>
+                
+                
+            </div>
+
+</div>
+
+
+
+                
+            </div>
+        </section>
+        
+        
+<!--
+        <section class="session-section">
+            <div class="session-title">IRs</div>
+            <div class="session-container2">
+                <div class="session2">
+                    <img src="img/session.png" alt="Session 1">
+                    <span class="session-text">SESSION 1</span>
+                </div>
+                <div class="session2">
+                    <img src="img/session.png" alt="Session 2">
+                    <span class="session-text">SESSION 2</span>
+                </div>
+                
+            </div>
+        </section>
+        
+
+        <section class="session-section">
+            <div class="session-title">SUPPLY & DEMAND</div>
+            <div class="session-container">
+                <div class="session">
+                    <img src="img/session.png" alt="Session 1">
+                    <span class="session-text">SESSION 1</span>
+                </div>
+                <div class="session">
+                    <img src="img/session.png" alt="Session 2">
+                    <span class="session-text">SESSION 2</span>
+                </div>
+            </div>
+        </section>
+        <section class="session-section">
+            <div class="session-container">
+                <div class="session">
+                    <img src="img/session.png" alt="Session 1">
+                    <span class="session-text">SESSION 1</span>
+                </div>
+                <div class="session">
+                    <img src="img/session.png" alt="Session 2">
+                    <span class="session-text">SESSION 2</span>
+                </div>
+            </div>
+        </section>
+                <section class="session-section">
+                    <div class="session-title">IRs</div>
+                    <div class="session-container2">
+                        <div class="session2">
+                            <img src="img/session.png" alt="Session 1">
+                            <span class="session-text">SESSION 1</span>
+                        </div>
+                        <div class="session2">
+                            <img src="img/session.png" alt="Session 2">
+                            <span class="session-text">SESSION 2</span>
+                        </div>
+                        
+                    </div>
+                </section>
+                <section class="session-section">
+                    <div class="session-container">
+                        <div class="session">
+                            <img src="img/session.png" alt="Session 1">
+                            <span class="session-text">SESSION 1</span>
+                        </div>
+                        <div class="session">
+                            <img src="img/session.png" alt="Session 2">
+                            <span class="session-text">SESSION 2</span>
+                        </div>
+                    </div>
+                </section>
+                <section class="session-section">
+                    <div class="session-title">IRs</div>
+                    <div class="session-container2">
+                        <div class="session2">
+                            <img src="img/session.png" alt="Session 1">
+                            <span class="session-text">SESSION 1</span>
+                        </div>
+                        <div class="session2">
+                            <img src="img/session.png" alt="Session 2">
+                            <span class="session-text">SESSION 2</span>
+                        </div>
+                       
+                    </div>
+                </section>
+                <section class="session-section">
+                    <div class="session-container2">
+                        <div class="session2">
+                            <img src="img/session.png" alt="Session 1">
+                            <span class="session-text">SESSION 1</span>
+                        </div>
+                        <div class="session2">
+                            <img src="img/session.png" alt="Session 2">
+                            <span class="session-text">SESSION 2</span>
+                        </div>
+                       
+                    </div>-->
+                </section>
+
+               <!-- <section class="Quiz-Section">
+                    <h2>QUIZ TIME!</h2>
+                    <P>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi repellat nobis, exercitationem molestiae deserunt aliquam similique harum tempore!</P>
+                    <button>Try No</button>
+
+                </section> -->
+
+                
+                <footer>
+  <p class="footer-text">
+            Made with ❤️, Powered by AIESEC in Egypt. © 2025 <br>
+Developed by <a href="https://www.linkedin.com/in/ibraheem-a-nassar/" target="_blank" style="color: white; font-weight: lighter;">Ibraheem Nassar</p>                </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script>
+    gsap.to(".marquee", {
+        x: "-100%",
+        duration: 10,
+        repeat: -1,
+        ease: "linear"
+    });
+</script>
+<!-- PDF Modal -->
+<!-- PDF Modal -->
+<!-- Session Modal -->
+<div id="pdfModal" class="modal">
+  <div class="modal-content">
+    <span class="close-button" onclick="closePDF()">&times;</span>
+    <iframe id="pdfIframe" src="" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
+
+  
+  
+<script>
+function openPDF(fileName) {
+  const url = `pdf/${fileName}.pdf`;
+  window.open(url, '_blank');
+}
+</script>
+
+<script>
+  window.addEventListener("load", function () {
+    const loader = document.querySelector(".pre-loader");
+    loader.style.transition = "opacity 0.5s ease";
+    loader.style.opacity = "0";
+    setTimeout(() => loader.remove(), 500);
+  });
+</script>
+<script>
+  document.documentElement.classList.add("loading");
+  window.addEventListener("load", function () {
+    document.documentElement.classList.remove("loading");
+  });
+</script>
+
+
+<!-- Bootstrap JS Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</html>

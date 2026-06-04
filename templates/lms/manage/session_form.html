@@ -1,0 +1,54 @@
+{% extends "lms/manage/base_manage.html" %}
+
+{% block title %}{% if editing %}Edit{% else %}Add{% endif %} session{% endblock %}
+
+{% block content %}
+<div class="manage-hero" style="background: linear-gradient(135deg, #1b1b2f, var(--manage-accent)); padding: 20px 28px;">
+  <h1>{% if editing %}Edit session{% else %}New session{% endif %}</h1>
+  <p>{{ academy.title }}</p>
+</div>
+
+<div class="manage-section manage-form">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="row g-3">
+      <div class="col-md-8">
+        <label class="form-label" for="{{ form.title.id_for_label }}">Title</label>
+        {{ form.title }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.order.id_for_label }}">Sort order</label>
+        {{ form.order }}
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="{{ form.video_url.id_for_label }}">Video URL</label>
+        {{ form.video_url }}
+        <div class="form-text">YouTube watch link or Google Drive video link.</div>
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="{{ form.description.id_for_label }}">Description (optional)</label>
+        {{ form.description }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.thumbnail.id_for_label }}">Thumbnail (optional)</label>
+        {{ form.thumbnail }}
+      </div>
+      <div class="col-md-6 d-flex align-items-end">
+        <div class="form-check">
+          {{ form.is_published }}
+          <label class="form-check-label" for="{{ form.is_published.id_for_label }}">Published on live academy page</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 d-flex gap-2 flex-wrap">
+      <button type="submit" class="btn-manage">Save</button>
+      <a class="btn-manage-outline" href="{% url 'lms:manage_dashboard' academy.key %}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

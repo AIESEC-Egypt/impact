@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Session Viewer</title>
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+        iframe {
+            width: 100%;
+            height: 100vh;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="pdfFrame" src=""></iframe>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const file = params.get("file");
+        const url = `pdf/${file}.pdf`; // assuming stored in /pdf/ folder
+        document.getElementById("pdfFrame").src = url;
+    </script>
+</body>
+</html>

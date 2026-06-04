@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Function Academies | IMPACT{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{% static 'styles.css' %}" />
+<style>
+  body { background: #fff !important; }
+  .impact-wrap { max-width: none; margin: 0; padding: 0; }
+  .impact-topbar { margin-bottom: 0; }
+  .academy-chooser-page .section-title { margin-top: 0; }
+
+  .academy-chooser-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 8px 0 32px;
+  }
+
+  .academy-chooser-grid .academy-grid-card {
+    width: 100%;
+    max-width: none;
+    height: 200px;
+    margin: 0;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .academy-chooser-grid .academy-grid-card:hover {
+    transform: scale(1.03);
+  }
+
+  .academy-chooser-grid .card-title {
+    margin: 0;
+    line-height: 1.15;
+  }
+
+  .academy-chooser-grid .card-title .custom-font {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+  }
+
+  @media (min-width: 768px) {
+    .academy-chooser-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .academy-chooser-grid .academy-grid-card {
+      height: 220px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .academy-chooser-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Full-width marquee below the grid (outside narrow impact-wrap) */
+  .academy-chooser-scroll {
+    width: 100%;
+    overflow: hidden;
+    margin: 48px 0 24px;
+  }
+  .academy-chooser-scroll .scrolling-bar-container {
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="academy-chooser-page">
+  <section class="academy-section" style="margin-top: 48px;">
+    <h2 class="section-title"><span class="highlight">Function</span> Academies</h2>
+    <p class="section-description">
+      Select the function you want to learn from today. You can open any academy you have access to.
+    </p>
+
+    <div class="academy-chooser-grid">
+      {% for card in academy_cards %}
+      {% include "lms/_academy_grid_card.html" %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <p class="text-center py-3">
+    <a href="/" style="font-size: 0.85rem; color: #6c6c80; text-decoration: none;">← Back to IMPACT home</a>
+  </p>
+</div>
+{% endblock %}
+
+{% block after_wrap %}
+<div class="academy-chooser-scroll">
+  {% include "lms/_scrolling_learn_lead_impact.html" %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<script src="{% static 'lms/learn-lead-marquee.js' %}"></script>
+{% endblock %}

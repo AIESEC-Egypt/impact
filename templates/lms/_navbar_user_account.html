@@ -1,0 +1,16 @@
+{# Account chip for the white home-page navbar (index-style). #}
+<li class="nav-item impact-nav-account-wrap">
+  <div class="impact-nav-account-box{% if not user.is_authenticated %} impact-nav-account-box--guest{% endif %}">
+    {% if user.is_authenticated %}
+      <span class="impact-nav-account-box__name">{{ user.full_name|default:user.get_full_name|default:user.username }}</span>
+      {% if user.is_staff %}
+      <span class="impact-nav-account-box__sep" aria-hidden="true">|</span>
+      <a class="impact-nav-account-box__action" href="{% url 'admin:index' %}">Admin</a>
+      {% endif %}
+      <span class="impact-nav-account-box__sep" aria-hidden="true">|</span>
+      <a class="impact-nav-account-box__action" href="{% url 'accounts:logout' %}">Logout</a>
+    {% else %}
+      <a class="impact-nav-account-box__login" href="{% url 'accounts:login' %}">Login</a>
+    {% endif %}
+  </div>
+</li>

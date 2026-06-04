@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICX APDs Submissions - AIESEC Egypt</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <a href="/" class="logo">
+            <img class="navbar-brand" src="/static/aspects/impact.png" alt="AIESEC">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav nav-links">
+                {% include "lms/_site_nav_home.html" %}
+                <li class="nav-item"><a class="nav-link" href="/history/">History</a></li>
+                
+                <!-- Functional Academies Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Academies</a>
+                    <ul class="dropdown-menu" style="width: 100%;">
+                        <li><a class="dropdown-item" href="/academy/ogv/">oGV Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/igv/">iGV Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/ogt/">oGT Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/igt/">iGT Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/b2c/">B2C Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/b2b/">B2B Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/tm/">TM Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/fl/">F&L Academy</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Contracts</a>
+                    <ul class="dropdown-menu" style="width: 250px; white-space: normal;">
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://docs.google.com/forms/d/1n54SOC6Tz-rGqfeytC8x5-GgN59JHQiDegTf-gRak_8/" target="_blank">iGV Contracts System</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://docs.google.com/forms/d/e/1FAIpQLScLOJfJ3YN6oTwKHs030-jB2RkIerVdileWt3XZcAh0swNgrQ/viewform?usp=sf_link" target="_blank">iGTa/e Contracts System</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://forms.gle/SjbiVE4NwLxZ3KML8" target="_blank">oGX Contracts System</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="/b2b-contracts/">B2B Contracts System</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Conference Outputs Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Conferences</a>
+                    <ul class="dropdown-menu" style="width: 100%;">
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/16YWyC5145B376VjVhrO3_nF6aS9Od_8k?usp=drive_link" target="_blank">Fusion</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/1MYHeFNWYYIFhgRrhzQl2sVwJQK_4MZMM?usp=drive_link" target="_blank">Activate</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/1RN-P9HI6QlKPtp80xm6GH78D5NiVZ0ez?usp=drive_link" target="_blank">Mahd</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/1zFYJ-dJVQXwRFozoqWgNrU7E7Sq8A-91?usp=drive_link" target="_blank">Momentum</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item"><a class="nav-link" href="/membership-ranking/">Ranking</a></li>
+                <li class="nav-item"><a class="nav-link active" href="/icx-apds-submissions/">ICX APDs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="submission-hero">
+        <div class="hero-bg">
+            <div class="hero-bg-gradient"></div>
+            <div class="hero-bg-grid"></div>
+        </div>
+        
+        <div class="container">
+            <div class="submission-hero-content">
+                <h1 class="submission-title">
+                    <span class="title-line-1">ICX APDs Submissions</span>
+                    <span class="title-line-2">Incoming Exchange APDs</span>
+                    <span class="title-accent">Track Your Performance</span>
+                </h1>
+                
+                <p class="submission-description">
+                    Submit your ICX APD (Incoming Exchange APD) performance data for IGV and IGT products to track your contributions.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Submission Form -->
+    <section class="submission-form-section">
+        <div class="container">
+            <div class="form-container">
+                <div id="apdForm" class="form-content active">
+                    <div class="form-header">
+                        <h2>Submit ICX APD</h2>
+                        <p>Submit your APD data for incoming exchange products (IGV and IGT only)</p>
+                    </div>
+                    
+                    <form id="icxAPDForm" class="submission-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="epID">EP ID *</label>
+                                <input type="text" id="epID" name="epID" placeholder="e.g., 5892862" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="opID">OP ID *</label>
+                                <input type="text" id="opID" name="opID" placeholder="e.g., 1298626" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="apdProduct">Product *</label>
+                                <select id="apdProduct" name="product" required>
+                                    <option value="">Select Product</option>
+                                    <option value="iGV">iGV (Incoming Global Volunteer)</option>
+                                    <option value="iGTa">iGTa (Incoming Global Talent)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="aiesecMail">AIESEC Mail *</label>
+                                <input type="email" id="aiesecMail" name="aiesecMail" placeholder="e.g., member@aiesec.net" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="apdNotes">Additional Notes</label>
+                            <textarea id="apdNotes" name="notes" rows="4" placeholder="Any additional information (optional)..."></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="clearAPDForm()">Clear Form</button>
+                            <button type="submit" class="btn-primary">Submit APD</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AIESEC Egypt</h3>
+                    <p>Empowering youth through international exchange programs and leadership development.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/membership-ranking/">Ranking</a></li>
+                        <li><a href="/static/ogx-submissions.html">OGX Submissions</a></li>
+                        <li><a href="/static/icx-submissions.html">ICX Submissions</a></li>
+                        <li><a href="/icx-apds-submissions/">ICX APDs Submissions</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-text">
+                    Made with ❤️, Powered by AIESEC in Egypt. © 2025 <br>
+                    Developed by <a href="https://www.linkedin.com/in/mohamed-wael-407945228/" target="_blank" style="color: white; font-weight: lighter;">Mohamed Wael</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/script.js"></script>
+    <script src="/static/icx-apds-submissions.js"></script>
+</body>
+</html>
+

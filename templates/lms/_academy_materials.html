@@ -1,0 +1,48 @@
+{% load static %}
+{% if material_sections %}
+<section class="session-section academy-materials" aria-labelledby="materials-heading">
+  <div id="materials-heading" class="session-title academy-materials__title">Materials</div>
+
+  {% for section in material_sections %}
+    {% if section.title %}
+    <div class="session-title academy-materials__section">{{ section.title }}</div>
+    {% endif %}
+    <div class="materials-grid">
+      {% for m in section.materials %}
+      <article class="material-item">
+        {% if m.link_url %}
+        <a
+          href="{{ m.link_url }}"
+          class="session material-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="{{ m.title }}"
+        >
+          {% if m.card_image %}
+          <img src="{% static m.card_image %}" alt="{{ m.title }}">
+          {% elif m.thumbnail %}
+          <img src="{{ m.thumbnail.url }}" alt="{{ m.title }}">
+          {% else %}
+          <div class="material-placeholder">{{ m.title }}</div>
+          {% endif %}
+        </a>
+        {% else %}
+        <div class="session material-card" title="{{ m.title }}">
+          {% if m.card_image %}
+          <img src="{% static m.card_image %}" alt="{{ m.title }}">
+          {% elif m.thumbnail %}
+          <img src="{{ m.thumbnail.url }}" alt="{{ m.title }}">
+          {% else %}
+          <div class="material-placeholder">{{ m.title }}</div>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% if m.subtitle %}
+        <p class="material-caption">{{ m.subtitle }}</p>
+        {% endif %}
+      </article>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</section>
+{% endif %}

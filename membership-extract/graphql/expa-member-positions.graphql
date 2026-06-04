@@ -1,0 +1,37 @@
+# Bulk roster fetch (server-side with ExpaConfig access_token – general/expa_client.py)
+query MemberPositionList(
+  $perPage: Int!
+  $page: Int!
+  $officeId: Int!
+  $dateFrom: DateTime!
+  $dateTo: DateTime!
+) {
+  memberPositions(
+    per_page: $perPage
+    page: $page
+    filters: {
+      office_id: $officeId
+      start_date: { from: $dateFrom, to: $dateTo }
+    }
+    sort: "created_at"
+  ) {
+    data {
+      id
+      role { name }
+      person {
+        id
+        full_name
+        home_lc { id name }
+        email
+        dob
+      }
+      function { name }
+      is_ixp
+      no_of_ixps
+    }
+    paging {
+      current_page
+      total_pages
+    }
+  }
+}

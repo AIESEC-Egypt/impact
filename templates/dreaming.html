@@ -1,0 +1,1349 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreaming - AIESEC in Egypt</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Unbounded:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dreaming-topbar-height: 64px;
+        }
+
+        body.dreaming-page {
+            background-color: #882d33;
+            color: #d4cfb5;
+            min-height: 100vh;
+            display: block;
+            font-family: 'Unbounded', sans-serif;
+            padding: 0;
+            margin: 0;
+            padding-top: var(--dreaming-topbar-height);
+            overflow-x: clip;
+        }
+
+        /* IMPACT-style topbar — Dreaming palette (fixed = always visible on scroll) */
+        .dreaming-topbar {
+            background: linear-gradient(135deg, #882d33 0%, #6a2328 55%, #5e1f24 100%);
+            padding: 14px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1100;
+            border-bottom: 1px solid rgba(212, 207, 181, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .dreaming-topbar a.brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #d4cfb5;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1.2rem;
+            letter-spacing: 0.02em;
+        }
+
+        .dreaming-topbar a.brand img {
+            height: 36px;
+            width: auto;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+        }
+
+        .dreaming-topbar a.brand:hover {
+            color: #fff;
+        }
+
+        .dreaming-topbar .brand__label {
+            line-height: 1.1;
+        }
+
+        .dreaming-topbar .brand__sublabel {
+            display: block;
+            font-size: 0.62rem;
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            opacity: 0.85;
+            margin-top: 2px;
+        }
+
+        .dreaming-topbar .userbox {
+            color: #d4cfb5;
+            font-size: 0.85rem;
+            font-weight: 300;
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .dreaming-topbar .userbox a {
+            color: #d4cfb5;
+            text-decoration: underline;
+            margin-left: 12px;
+        }
+
+        .dreaming-topbar .userbox a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 520px) {
+            :root {
+                --dreaming-topbar-height: 56px;
+            }
+
+            .dreaming-topbar {
+                padding: 12px 16px;
+            }
+
+            .dreaming-topbar a.brand {
+                font-size: 1rem;
+                gap: 8px;
+            }
+
+            .dreaming-topbar a.brand img {
+                height: 30px;
+            }
+
+            .dreaming-topbar .brand__sublabel {
+                display: none;
+            }
+
+            .dreaming-topbar .userbox {
+                font-size: 0.75rem;
+            }
+        }
+
+        .scroll-down-arrow {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 56px;
+            height: 56px;
+            background: #d4cfb5;
+            color: #882d33;
+            border: 2px solid rgba(136, 45, 51, 0.3);
+            border-radius: 50%;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(136, 45, 51, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            z-index: 999;
+            opacity: 1;
+            pointer-events: auto;
+            animation: bounceArrow 2s ease-in-out infinite;
+        }
+
+        @keyframes bounceArrow {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(8px);
+            }
+        }
+
+        .scroll-down-arrow.scrolled {
+            background: linear-gradient(135deg, #882d33, #a33d43);
+            color: #d4cfb5;
+            border-color: transparent;
+            animation: none;
+        }
+
+        .scroll-down-arrow:hover {
+            transform: translateY(4px) !important;
+            box-shadow: 0 8px 24px rgba(136, 45, 51, 0.4);
+            background-color: rgba(212, 207, 181, 0.9);
+        }
+
+        .scroll-down-arrow.scrolled:hover {
+            background: linear-gradient(135deg, #a33d43, #c24d53);
+        }
+
+        .scroll-down-arrow:active {
+            transform: translateY(2px) !important;
+        }
+
+        @media (max-width: 768px) {
+            .scroll-down-arrow {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+                bottom: 24px;
+                right: 24px;
+            }
+        }
+
+        /* Hero Section */
+        .hero-wrapper {
+            min-height: calc(100vh - var(--dreaming-topbar-height));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 24px 40px;
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .dreaming-hero {
+            width: min(60vw, 560px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-hint {
+            position: absolute;
+            bottom: clamp(18px, 5vh, 42px);
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            border-radius: 999px;
+            background: rgba(212, 207, 181, 0.85);
+            color: #882d33;
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(0.85rem, 1.8vw, 1rem);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            animation: floatHint 3.6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .hero-hint span {
+            display: inline-block;
+        }
+
+        .hero-hint__icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid rgba(136, 45, 51, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(136, 45, 51, 0.08);
+            font-size: 1.2rem;
+        }
+
+        @keyframes floatHint {
+            0%, 100% {
+                transform: translate(-50%, 0);
+            }
+            50% {
+                transform: translate(-50%, -12px);
+            }
+        }
+
+        .mercedes {
+            position: relative;
+            width: clamp(360px, 60vw, 560px);
+            height: clamp(360px, 60vw, 560px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            --radius: clamp(120px, 18vw, 180px);
+            --arm-size: clamp(140px, 24vw, 220px);
+            transition: transform 0.85s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform;
+        }
+
+        .mercedes::before {
+            content: '';
+            position: absolute;
+            inset: 18%;
+            border: 2px solid rgba(212, 207, 181, 0.62);
+            border-radius: 999px;
+            opacity: 0.8;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dreaming-overview {
+            position: relative;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% 0%, rgba(136, 45, 51, 0.08), transparent 70%),
+                linear-gradient(180deg, #e8e4d4 0%, #d4cfb5 45%, #cfc9b8 100%);
+            color: #882d33;
+            padding: clamp(64px, 10vw, 100px) 24px clamp(80px, 12vw, 110px);
+            overflow: hidden;
+        }
+
+        .dreaming-overview::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(136, 45, 51, 0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        .dreaming-overview__inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1080px;
+            margin: 0 auto;
+        }
+
+        .dreaming-overview__header {
+            text-align: center;
+            max-width: 820px;
+            margin: 0 auto 48px;
+        }
+
+        .dreaming-overview__eyebrow {
+            display: inline-block;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(136, 45, 51, 0.75);
+            margin-bottom: 14px;
+            padding: 6px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(136, 45, 51, 0.2);
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        .dreaming-overview__title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(1.85rem, 4.2vw, 3rem);
+            font-weight: 700;
+            margin: 0 0 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            line-height: 1.15;
+        }
+
+        .dreaming-overview__divider {
+            width: 72px;
+            height: 4px;
+            margin: 0 auto 28px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, transparent, #882d33, transparent);
+        }
+
+        .dreaming-overview__intro {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            line-height: 1.55;
+            margin: 0;
+            padding: 28px 32px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(136, 45, 51, 0.92), rgba(110, 35, 40, 0.95));
+            color: #d4cfb5;
+            box-shadow: 0 16px 40px rgba(136, 45, 51, 0.22);
+            border: 1px solid rgba(212, 207, 181, 0.25);
+        }
+
+        .dreaming-overview__intro::before {
+            content: '“';
+            display: block;
+            font-size: 2.5rem;
+            line-height: 1;
+            opacity: 0.45;
+            margin-bottom: 8px;
+        }
+
+        .dreaming-overview__story {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 48px 0 56px;
+            padding-left: 8px;
+        }
+
+        .dreaming-overview__chapter {
+            display: grid;
+            grid-template-columns: 56px 1fr;
+            gap: 20px 28px;
+            padding: 28px 28px 28px 20px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.42);
+            border: 1px solid rgba(136, 45, 51, 0.12);
+            box-shadow: 0 6px 24px rgba(136, 45, 51, 0.06);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .dreaming-overview__chapter + .dreaming-overview__chapter {
+            margin-top: 20px;
+        }
+
+        .dreaming-overview__chapter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(136, 45, 51, 0.1);
+        }
+
+        .dreaming-overview__chapter-marker {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #882d33, #6a2328);
+            color: #d4cfb5;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 14px rgba(136, 45, 51, 0.25);
+        }
+
+        .dreaming-overview__chapter-label {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(136, 45, 51, 0.55);
+            margin: 0 0 8px;
+        }
+
+        .dreaming-overview__body {
+            font-family: 'Roboto', sans-serif;
+            font-size: clamp(1rem, 1.4vw, 1.12rem);
+            line-height: 1.8;
+            letter-spacing: 0.01em;
+            margin: 0;
+            color: #5a1d22;
+        }
+
+        .dreaming-overview__pillars-head {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .dreaming-overview__pillars-head h3 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 0 0 10px;
+        }
+
+        .dreaming-overview__pillars-head p {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.95rem;
+            margin: 0;
+            color: rgba(136, 45, 51, 0.7);
+        }
+
+        .dreaming-overview__visuals {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+            position: relative;
+        }
+
+        @media (min-width: 900px) {
+            .dreaming-overview__visuals::before {
+                content: '';
+                position: absolute;
+                top: 42px;
+                left: 12%;
+                right: 12%;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, rgba(136, 45, 51, 0.2), transparent);
+                z-index: 0;
+            }
+        }
+
+        .dreaming-overview__card {
+            position: relative;
+            z-index: 1;
+            background: #fff;
+            border: 1px solid rgba(136, 45, 51, 0.14);
+            border-radius: 22px;
+            padding: 32px 26px 28px;
+            text-align: left;
+            box-shadow: 0 10px 36px rgba(136, 45, 51, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .dreaming-overview__card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 48px rgba(136, 45, 51, 0.14);
+            border-color: rgba(136, 45, 51, 0.28);
+        }
+
+        .dreaming-overview__card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #882d33, #a33d43);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #d4cfb5;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .dreaming-overview__card-title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.35;
+        }
+
+        .dreaming-overview__card-text {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            margin: 0;
+            color: #5a1d22;
+        }
+
+        .dreaming-countdown {
+            background: linear-gradient(135deg, #882d33, #5e1f24);
+            color: #d4cfb5;
+            padding: 80px 24px 96px;
+            text-align: center;
+        }
+
+        .dreaming-countdown__inner {
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .dreaming-countdown__title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(2.1rem, 4vw, 3rem);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 32px;
+        }
+
+        .dreaming-countdown__timer {
+            display: flex;
+            justify-content: center;
+            gap: clamp(14px, 3.5vw, 28px);
+            flex-wrap: wrap;
+        }
+
+        .dreaming-countdown__unit {
+            background: rgba(212, 207, 181, 0.12);
+            border: 1px solid rgba(212, 207, 181, 0.4);
+            border-radius: 18px;
+            min-width: 110px;
+            padding: 24px 16px;
+            backdrop-filter: blur(4px);
+        }
+
+        .dreaming-countdown__value {
+            display: block;
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(2.1rem, 4vw, 3rem);
+            font-weight: 600;
+        }
+
+        .dreaming-countdown__label {
+            display: block;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .core {
+            position: relative;
+            z-index: 1;
+            max-width: clamp(240px, 34vw, 420px);
+            width: 100%;
+            box-shadow: none;
+            border: none;
+            background: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+            will-change: transform;
+        }
+
+        .core img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .arm {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: var(--arm-size);
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            background-color: rgba(136, 45, 51, 0.86);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) scale(0.6);
+            transition:
+                opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.9s cubic-bezier(0.19, 1, 0.22, 1),
+                background-color 0.35s ease,
+                color 0.35s ease;
+            overflow: visible;
+            color: #d4cfb5;
+            z-index: 1;
+            opacity: 0.2;
+            will-change: transform, opacity;
+        }
+
+        .arm img {
+            width: 68%;
+            height: 68%;
+            object-fit: contain;
+            transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .arm::before {
+            content: attr(data-title);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(calc(-50% + var(--bubble-shift-x)), calc(-50% + var(--bubble-shift-y) - var(--radius) * 0.9));
+            font-size: clamp(0.85rem, 1.45vw, 1.05rem);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            background-color: #882d33;
+            color: #d4cfb5;
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: 1px solid rgba(212, 207, 181, 0.6);
+            opacity: 0;
+            transition:
+                opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                background-color 0.35s ease,
+                color 0.35s ease,
+                border-color 0.35s ease;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 6;
+        }
+
+        .arm.belong {
+            --tx: 0px;
+            --ty: calc(var(--radius) * -1.55);
+            --bubble-shift-x: 0px;
+            --bubble-shift-y: calc(var(--radius) * 1.55);
+        }
+
+        .arm.act {
+            --tx: calc(var(--radius) * -1.1);
+            --ty: calc(var(--radius) * 0.95);
+            --bubble-shift-x: calc(var(--radius) * 1.1);
+            --bubble-shift-y: calc(var(--radius) * -0.95);
+        }
+
+        .arm.influence {
+            --tx: calc(var(--radius) * 1.1);
+            --ty: calc(var(--radius) * 0.95);
+            --bubble-shift-x: calc(var(--radius) * -1.1);
+            --bubble-shift-y: calc(var(--radius) * -0.95);
+        }
+
+        .mercedes:hover .arm,
+        .core:hover ~ .arm,
+        .core:focus-visible ~ .arm {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) scale(1);
+        }
+
+        @media (max-width: 680px) {
+            .arm {
+                opacity: 0.2;
+                pointer-events: auto;
+            }
+
+            .mercedes:hover .arm,
+            .core:hover ~ .arm,
+            .core:focus-visible ~ .arm,
+            .mercedes:active .arm,
+            .core:active ~ .arm {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) scale(1);
+            }
+
+            .arm:active,
+            .arm:focus {
+                opacity: 1;
+                transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) scale(1);
+            }
+        }
+
+        .arm:hover,
+        .arm:focus-visible {
+            background-color: #d4cfb5;
+            color: #882d33;
+            z-index: 3;
+        }
+
+        .arm:hover img,
+        .arm:focus-visible img {
+            transform: scale(1.1);
+        }
+
+        .arm:hover::before,
+        .arm:focus-visible::before {
+            opacity: 1;
+            background-color: #882d33;
+            color: #d4cfb5;
+            border-color: rgba(136, 45, 51, 0.45);
+        }
+
+        .arm {
+            --bubble-size: clamp(260px, 42vw, 460px);
+            --bubble-shift-x: 0px;
+            --bubble-shift-y: 0px;
+        }
+
+        .arm .info {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: var(--bubble-size);
+            height: var(--bubble-size);
+            border-radius: 50%;
+            background-color: rgba(212, 207, 181, 0.95);
+            color: #882d33;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(28px, 7vw, 72px);
+            pointer-events: none;
+            opacity: 0;
+            transform: translate(calc(-50% + var(--bubble-shift-x)), calc(-50% + var(--bubble-shift-y))) scale(0.05);
+            transform-origin: center;
+            transition:
+                opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            z-index: 2;
+            text-align: center;
+        }
+
+        .arm .info .caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: clamp(360px, 56vw, 760px);
+            font-size: clamp(1.35rem, 3vw, 2.4rem);
+            line-height: 1.6;
+            letter-spacing: 0.02em;
+            text-align: center;
+        }
+
+        .arm.belong {
+            --bubble-size: max(90vmax, 900px);
+            --bubble-shift-x: 0px;
+            --bubble-shift-y: calc(var(--radius) * 1.55);
+        }
+
+        .arm.act {
+            --bubble-size: max(85vmax, 720px);
+            --bubble-shift-x: calc(var(--radius) * 1.1);
+            --bubble-shift-y: calc(var(--radius) * -0.95);
+        }
+
+        .arm.act .info .caption {
+            text-align: center;
+        }
+
+        .arm.influence {
+            --bubble-size: max(85vmax, 720px);
+            --bubble-shift-x: calc(var(--radius) * -1.1);
+            --bubble-shift-y: calc(var(--radius) * -0.95);
+        }
+
+        .arm.influence .info .caption {
+            text-align: center;
+        }
+
+        .arm:hover .info,
+        .arm:focus-visible .info {
+            opacity: 1;
+            transform: translate(calc(-50% + var(--bubble-shift-x)), calc(-50% + var(--bubble-shift-y))) scale(1);
+            z-index: 4;
+        }
+
+        @media (max-width: 680px) {
+            body {
+                padding: 48px 18px;
+            }
+
+            .dreaming-hero {
+                width: min(90vw, 640px);
+            }
+
+            .mercedes {
+                width: clamp(320px, 70vw, 480px);
+                height: clamp(320px, 70vw, 480px);
+                display: flex;
+            }
+
+            .mercedes::before {
+                display: block;
+            }
+
+            .core {
+                margin: 0;
+            }
+
+            .arm {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                opacity: 0.2;
+                pointer-events: auto;
+                transform: translate(-50%, -50%) translate(var(--tx, 0), var(--ty, 0)) scale(1);
+                width: var(--arm-size);
+                margin: 0;
+                background-color: rgba(136, 45, 51, 0.86);
+            }
+
+            .arm::before {
+                position: absolute;
+                transform: translate(calc(-50% + var(--bubble-shift-x)), calc(-50% + var(--bubble-shift-y) - var(--radius) * 0.9));
+                opacity: 0;
+                background-color: #882d33;
+                border-color: rgba(212, 207, 181, 0.6);
+                color: #d4cfb5;
+                margin-bottom: 0;
+                white-space: nowrap;
+                text-align: center;
+            }
+
+            .arm {
+                --bubble-size: clamp(220px, 70vw, 320px);
+                --bubble-shift-x: 0px;
+                --bubble-shift-y: 0px;
+            }
+
+            .arm .info {
+                position: absolute;
+                width: var(--bubble-size);
+                height: var(--bubble-size);
+                margin-top: 0;
+                padding: clamp(28px, 7vw, 72px);
+                border-radius: 50%;
+                background-color: rgba(212, 207, 181, 0.95);
+                color: #882d33;
+                opacity: 0;
+                transform: translate(calc(-50% + var(--bubble-shift-x)), calc(-50% + var(--bubble-shift-y))) scale(0.05);
+                pointer-events: none;
+            }
+
+            .arm .info .caption {
+                position: absolute;
+                max-width: clamp(320px, 80vw, 720px);
+                text-align: center;
+                transform: translate(-50%, -50%);
+                font-size: clamp(1.15rem, 4vw, 2rem);
+            }
+
+            .dreaming-overview {
+                padding: 56px 18px 64px;
+            }
+
+            .dreaming-overview__header {
+                margin-bottom: 36px;
+            }
+
+            .dreaming-overview__intro {
+                padding: 22px 20px;
+                text-align: left;
+            }
+
+            .dreaming-overview__chapter {
+                grid-template-columns: 1fr;
+                gap: 14px;
+                padding: 22px 20px;
+                text-align: center;
+            }
+
+            .dreaming-overview__chapter-marker {
+                margin: 0 auto;
+            }
+
+            .dreaming-overview__visuals {
+                grid-template-columns: 1fr;
+            }
+
+            .dreaming-overview__card {
+                text-align: center;
+            }
+
+            .dreaming-overview__card-icon {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-hint {
+                position: absolute;
+                bottom: clamp(18px, 5vh, 36px);
+                transform: translateX(-50%);
+                margin-top: 0;
+                animation: floatHint 3.6s ease-in-out infinite;
+            }
+
+            .hero-hint span:last-child {
+                display: none;
+            }
+
+            .hero-hint::after {
+                content: 'Press each circle to explore';
+                font-family: 'Roboto', sans-serif;
+                font-size: 15px;
+            }
+
+            .dreaming-countdown {
+                padding: 64px 18px 80px;
+            }
+
+            .dreaming-countdown__timer {
+                gap: 14px;
+            }
+
+            .dreaming-countdown__unit {
+                min-width: 110px;
+                padding: 22px 16px;
+            }
+        }
+
+        /* PDF Section Styles */
+        .pdf-section {
+            background-color: #d4cfb5;
+            padding: 80px 20px;
+            min-height: 50vh;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: #882d33;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Unbounded', sans-serif;
+        }
+
+        .session-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .session {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: rgba(136, 45, 51, 0.86);
+            border: 2px solid rgba(136, 45, 51, 0.96);
+            width: clamp(360px, 80vw, 900px);
+            max-width: 100%;
+        }
+
+        .session:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(136, 45, 51, 0.3);
+            border-color: rgba(136, 45, 51, 0.6);
+        }
+
+        .session img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .footer-text {
+            background: rgba(136, 45, 51, 0.86);
+            color: #d4cfb5;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 0;
+            border-top: 2px solid rgba(212, 207, 181, 0.3);
+        }
+
+        .footer-text a {
+            color: #d4cfb5;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .hero-wrapper {
+                min-height: 85vh;
+                padding: 48px 16px 40px;
+            }
+
+            .dreaming-hero {
+                width: 100%;
+            }
+
+            .dreaming-overview {
+                padding: 56px 18px 64px;
+            }
+
+            .dreaming-overview__inner {
+                text-align: center;
+            }
+
+            .dreaming-overview__title {
+                letter-spacing: 0.04em;
+            }
+
+            .session {
+                width: 100%;
+                max-width: 500px;
+            }
+
+            .session img {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .core,
+            .arm,
+            .arm img {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body class="dreaming-page">
+    {% include "lms/_dreaming_topbar.html" %}
+
+    <!-- Scroll Down Arrow -->
+    <button id="scrollDownBtn" class="scroll-down-arrow" aria-label="Scroll down">
+        &#8681;
+    </button>
+
+    <!-- Hero Section -->
+    <div class="hero-wrapper">
+        <main class="dreaming-hero" aria-labelledby="dreaming-title">
+        <div class="mercedes">
+            <div class="core" tabindex="0" aria-describedby="dreaming-intro">
+                <img src="/static/image/Dream%20Team/howia.png" alt="El Haweya Dreaming Process">
+            </div>
+
+            <div class="arm belong" tabindex="0" data-title="To Belong">
+                <img src="/static/image/Dream%20Team/belong.png" alt="Belong">
+                <div class="info">
+                    <p class="caption">and have ownership to AIESEC, understanding its relevance to Egypt, and your relevance to the entity.</p>
+                </div>
+            </div>
+
+            <div class="arm act" tabindex="0" data-title="To Act">
+                <img src="/static/image/Dream%20Team/act.png" alt="Act">
+                <div class="info">
+                    <p class="caption">and be proactive for the entity,<br>whatever you see you can change.</p>
+                </div>
+            </div>
+
+            <div class="arm influence" tabindex="0" data-title="To Influence">
+                <img src="/static/image/Dream%20Team/influence.png" alt="Influence">
+                <div class="info">
+                    <p class="caption">the people around you to do the same, create leaders that will take el Haweya forward.</p>
+                </div>
+            </div>
+        </div>
+        </main>
+        <div class="hero-hint" aria-hidden="true">
+            <span class="hero-hint__icon">⇆</span>
+            <span>Hover each circle to explore</span>
+        </div>
+    </div>
+
+    <section class="dreaming-overview" aria-labelledby="dreaming-overview-title">
+        <div class="dreaming-overview__inner">
+            <header class="dreaming-overview__header">
+                <span class="dreaming-overview__eyebrow">Activate 25 → 28</span>
+                <h2 id="dreaming-overview-title" class="dreaming-overview__title">AIESEC in Egypt Dreaming Process</h2>
+                <div class="dreaming-overview__divider" aria-hidden="true"></div>
+                <p class="dreaming-overview__intro">
+                    A three-year commitment to crystallize our identity, sustain our momentum, and bring every bold idea to life.
+                </p>
+            </header>
+
+            <div class="dreaming-overview__story">
+                <article class="dreaming-overview__chapter">
+                    <div class="dreaming-overview__chapter-marker" aria-hidden="true">A25</div>
+                    <div>
+                        <p class="dreaming-overview__chapter-label">Vision &amp; alignment</p>
+                        <p class="dreaming-overview__body">
+                            Launched at Activate 25 and stretching through Activate 28, the Dreaming Process aligns the ambitions of every
+                            national team, LC, and function around a single shared vision. It turns imagination into structure—so the
+                            strategies we design become the systems we live by.
+                        </p>
+                    </div>
+                </article>
+                <article class="dreaming-overview__chapter">
+                    <div class="dreaming-overview__chapter-marker" aria-hidden="true">NC</div>
+                    <div>
+                        <p class="dreaming-overview__chapter-label">Checkpoints &amp; accountability</p>
+                        <p class="dreaming-overview__body">
+                            At each national conference we pause to measure our traction, to celebrate what is working, and to close the
+                            gaps that hold us back. These checkpoints keep us collectively responsible for the roadmap we drew together.
+                        </p>
+                    </div>
+                </article>
+                <article class="dreaming-overview__chapter">
+                    <div class="dreaming-overview__chapter-marker" aria-hidden="true">A28</div>
+                    <div>
+                        <p class="dreaming-overview__chapter-label">Legacy &amp; continuity</p>
+                        <p class="dreaming-overview__body">
+                            By the time Activate 28 arrives, our aim is continuity: plans that outlive terms, leadership that passes on
+                            stronger foundations, and impact that is felt across every exchange, partnership, and experience. When we dream
+                            as one entity, implementation stops being a hope and becomes our legacy.
+                        </p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="dreaming-overview__pillars-head">
+                <h3>Three phases of the journey</h3>
+                <p>From activation to adoption across the entity</p>
+            </div>
+            <div class="dreaming-overview__visuals" role="presentation">
+                <article class="dreaming-overview__card">
+                    <div class="dreaming-overview__card-icon">01</div>
+                    <h3 class="dreaming-overview__card-title">Imagine with Intention</h3>
+                    <p class="dreaming-overview__card-text">
+                        Activate 25 activated the vision. We mapped the entity’s non-negotiables and defined what belonging,
+                        acting, and influencing will look like for the next generation of leaders.
+                    </p>
+                </article>
+                <article class="dreaming-overview__card">
+                    <div class="dreaming-overview__card-icon">02</div>
+                    <h3 class="dreaming-overview__card-title">Build and Test</h3>
+                    <p class="dreaming-overview__card-text">
+                        Every national conference validates progress with data, stories, and accountability. The blueprint gets
+                        sharper as LCs translate direction into daily rhythm.
+                    </p>
+                </article>
+                <article class="dreaming-overview__card">
+                    <div class="dreaming-overview__card-icon">03</div>
+                    <h3 class="dreaming-overview__card-title">Anchor the Legacy</h3>
+                    <p class="dreaming-overview__card-text">
+                        Activate 28 marks full adoption: sustained systems, empowered teams, and a national culture confident in
+                        its identity. Our dreaming cycle resets with deeper roots.
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="dreaming-countdown" aria-labelledby="dreaming-countdown-title">
+        <div class="dreaming-countdown__inner">
+            <h2 id="dreaming-countdown-title" class="dreaming-countdown__title"><b>Countdown till Activate 28</b></h2>
+            <div class="dreaming-countdown__timer" id="dreaming-countdown">
+                <div class="dreaming-countdown__unit">
+                    <span class="dreaming-countdown__value" data-countdown-segment="years">00</span>
+                    <span class="dreaming-countdown__label">Years</span>
+                </div>
+                <div class="dreaming-countdown__unit">
+                    <span class="dreaming-countdown__value" data-countdown-segment="months">00</span>
+                    <span class="dreaming-countdown__label">Months</span>
+                </div>
+                <div class="dreaming-countdown__unit">
+                    <span class="dreaming-countdown__value" data-countdown-segment="days">00</span>
+                    <span class="dreaming-countdown__label">Days</span>
+                </div>
+                <div class="dreaming-countdown__unit">
+                    <span class="dreaming-countdown__value" data-countdown-segment="hours">00</span>
+                    <span class="dreaming-countdown__label">Hours</span>
+                </div>
+                <div class="dreaming-countdown__unit">
+                    <span class="dreaming-countdown__value" data-countdown-segment="minutes">00</span>
+                    <span class="dreaming-countdown__label">Minutes</span>
+                </div>
+                <div class="dreaming-countdown__unit">
+                    <span class="dreaming-countdown__value" data-countdown-segment="seconds">00</span>
+                    <span class="dreaming-countdown__label">Seconds</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PDF Resources Section -->
+    <section class="pdf-section">
+        <h2 class="section-title">Dreaming Resources</h2>
+        <div class="session-container">
+            <!-- Add your PDF sessions here -->
+            <!-- Example structure - replace with actual PDF files -->
+            <div class="session">
+                <img src="{% static 'Academy/pdf/Dreaming Process I.png' %}" alt="Dreaming Guide">
+            </div>
+        </div>
+    </section>
+
+    <!-- Knowledge Quizzes Section -->
+    {% load lms_extras %}
+    <section class="pdf-section" style="padding-top:20px;">
+        <h2 class="section-title">Knowledge Quizzes</h2>
+        {% if knowledge_quizzes %}
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; max-width:1100px; margin:0 auto;">
+            {% for quiz in knowledge_quizzes %}
+            <div style="background:#882d33; color:#d4cfb5; border-radius:16px; padding:24px; display:flex; flex-direction:column; gap:10px; border:2px solid rgba(212,207,181,.4);">
+                <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+                  <h3 style="font-size:1.1rem; margin:0;">{{ quiz.title }}</h3>
+                  {% if quiz|exam_mandatory_for_user:user %}
+                  <span style="font-size:.65rem; padding:3px 10px; border-radius:999px; background:#d4cfb5; color:#882d33; font-weight:600;">Mandatory{% with layers=quiz.get_mandatory_layers_list %}{% if layers %} · {{ layers|join:", " }}{% endif %}{% endwith %}</span>
+                  {% endif %}
+                </div>
+                {% if quiz.description %}<p style="font-size:.85rem; margin:0; opacity:.9;">{{ quiz.description }}</p>{% endif %}
+                <div style="font-size:.78rem; opacity:.85;">{{ quiz.questions.count }} question{{ quiz.questions.count|pluralize }} &middot; Pass mark {{ quiz.pass_mark }}%</div>
+                <a href="{% url 'lms:exam_take' academy.key quiz.id %}" style="margin-top:auto; background:#d4cfb5; color:#882d33; border-radius:50px; padding:10px 24px; text-decoration:none; font-size:.88rem; text-align:center; font-weight:600;">Start quiz</a>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p style="text-align:center; color:#882d33;">Knowledge quizzes will appear here soon.</p>
+        {% endif %}
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">
+            Made with ❤️, Powered by AIESEC in Egypt. © 2025 <br>
+            Developed by <a href="https://www.linkedin.com/in/mohamed-wael-46050b280/" target="_blank">Mohamed Wael</a>
+        </p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        (function () {
+            var targetDate = new Date('2028-10-01T00:00:00+02:00');
+            var countdownEl = document.getElementById('dreaming-countdown');
+            if (!countdownEl) {
+                return;
+            }
+
+            function updateCountdown() {
+                var now = new Date();
+                if (now >= targetDate) {
+                    countdownEl.querySelectorAll('[data-countdown-segment]').forEach(function (el) {
+                        el.textContent = '00';
+                    });
+                    return;
+                }
+
+                var years = targetDate.getFullYear() - now.getFullYear();
+                var months = targetDate.getMonth() - now.getMonth();
+
+                if (months < 0) {
+                    years -= 1;
+                    months += 12;
+                }
+
+                var intermediate = new Date(now.getTime());
+                intermediate.setFullYear(intermediate.getFullYear() + years);
+                intermediate.setMonth(intermediate.getMonth() + months);
+
+                if (intermediate > targetDate) {
+                    months -= 1;
+                    if (months < 0) {
+                        years -= 1;
+                        months += 12;
+                    }
+                    intermediate = new Date(now.getTime());
+                    intermediate.setFullYear(intermediate.getFullYear() + years);
+                    intermediate.setMonth(intermediate.getMonth() + months);
+                }
+
+                var distance = targetDate.getTime() - intermediate.getTime();
+
+                if (distance <= 0) {
+                    countdownEl.querySelectorAll('[data-countdown-segment]').forEach(function (el) {
+                        el.textContent = '00';
+                    });
+                    return;
+                }
+
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownEl.querySelector('[data-countdown-segment="years"]').textContent = String(Math.max(years, 0)).padStart(2, '0');
+                countdownEl.querySelector('[data-countdown-segment="months"]').textContent = String(Math.max(months, 0)).padStart(2, '0');
+                countdownEl.querySelector('[data-countdown-segment="days"]').textContent = String(days).padStart(2, '0');
+                countdownEl.querySelector('[data-countdown-segment="hours"]').textContent = String(hours).padStart(2, '0');
+                countdownEl.querySelector('[data-countdown-segment="minutes"]').textContent = String(minutes).padStart(2, '0');
+                countdownEl.querySelector('[data-countdown-segment="seconds"]').textContent = String(seconds).padStart(2, '0');
+            }
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        })();
+    </script>
+
+    <script>
+        // Scroll Down Arrow functionality
+        (function () {
+            var scrollDownBtn = document.getElementById('scrollDownBtn');
+            if (!scrollDownBtn) return;
+
+            // Change button style after user scrolls
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 200) {
+                    scrollDownBtn.classList.add('scrolled');
+                } else {
+                    scrollDownBtn.classList.remove('scrolled');
+                }
+            });
+
+            // Smooth scroll down when clicked
+            scrollDownBtn.addEventListener('click', function () {
+                var viewportHeight = window.innerHeight;
+                window.scrollBy({
+                    top: viewportHeight,
+                    behavior: 'smooth'
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,49 @@
+{% extends "lms/manage/base_manage.html" %}
+{% load static %}
+
+{% block title %}Your academies{% endblock %}
+
+{% block head_extra %}
+<style>:root { --manage-accent: #037ef3; }</style>
+{% endblock %}
+
+{% block content %}
+<div class="manage-hero" style="background: linear-gradient(135deg, #1b1b2f, #037ef3);">
+  <h1>Academy content portal</h1>
+  <p>Upload materials, session videos, and Drive links for your function.</p>
+  {% if user_expa_id %}
+  <p class="manage-meta">Logged in as EXPA ID <strong>{{ user_expa_id }}</strong>
+    {% if is_site_admin %} · site admin (all functions){% endif %}
+  </p>
+  {% endif %}
+</div>
+
+{% if academies %}
+<p class="link-muted mb-3">Pick your function to add or edit cards and recordings. These URLs are not on the public menu.</p>
+<div class="manage-grid">
+  {% for academy in academies %}
+  <a class="manage-card" href="{% url 'lms:manage_dashboard' academy.key %}">
+    <h2>{{ academy.title }}</h2>
+    <p class="sub">{{ academy.subtitle }}</p>
+    <p class="sub mt-2">/manage/{{ academy.key }}/</p>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="manage-section">
+  <p class="manage-empty mb-0">
+    No academy is linked to your account yet. Ask a site administrator to add your
+    <strong>EXPA person ID</strong> under
+    <em>Django admin → LMS → Academy content managers</em> for the function you lead
+    (oGV, iGV, oGT, iGT, B2C, B2B, TM, or F&amp;L).
+  </p>
+</div>
+{% endif %}
+
+{% if is_site_admin %}
+<p class="link-muted mt-4">
+  As staff you can open any function above, or assign managers in
+  <a href="/admin/lms/academycontentmanager/">Django admin</a>.
+</p>
+{% endif %}
+{% endblock %}

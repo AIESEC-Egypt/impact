@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | EXPA</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@300;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #007bff, #6f42c1);
+      background-size: 300% 300%;
+      animation: bgMove 6s ease infinite alternate;
+      font-family: 'Unbounded', sans-serif;
+    }
+
+       .logo {
+      width: 100px;
+      margin: 0 auto 20px auto;
+      display: block;
+    }
+
+    @keyframes bgMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .container {
+      text-align: center;
+      padding: 35px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      max-width: 450px;
+      width: 90%;
+    }
+
+    h1 {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+
+    button.login-btn {
+      padding: 15px 30px;
+      font-size: 1rem;
+      font-weight: 500;
+      border: none;
+      border-radius: 50px;
+      background-color: white;
+      color: #007bff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: "Unbounded";
+    }
+
+    button.login-btn:hover {
+      background-color: #007bff;
+      color: white;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      button.login-btn {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+      }
+      .footer {
+        font-size: 0.75rem;
+        padding: 0 10px;
+      }
+           .logo {
+        width: 80px;
+        margin-bottom: 15px;
+      }
+    }
+        .footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+        <img src="aspects/icon.png" alt="Logo" class="logo" />
+
+    <h1>Welcome to IMPACT</h1>
+    <button class="login-btn" onclick="loginWithExpa()">Login with EXPA</button>
+  </div>
+ <div class="footer">
+Made with ❤️, Powered by AIESEC in Egypt. © 2025 <br>
+Developed by <a href="https://www.linkedin.com/in/ibraheem-a-nassar/" target="_blank" style="color: white; font-weight: lighter;">Ibraheem Nassar</p>  </div>
+  <script>
+    let popup;
+
+    function loginWithExpa() {
+      const authUrl = "https://auth.aiesec.org/oauth/authorize?client_id=r3qZe9CsfLt7nb0QxzV4wRX4pbAXSpuYoKfixg3zJB8&redirect_uri=https://impact.aiesec.org.eg/&response_type=code";
+      popup = window.open(authUrl, "EXPA Login", "width=600,height=700");
+
+      if (!popup || popup.closed || typeof popup.closed === "undefined") {
+        alert("Popup blocked! Please allow popups.");
+        return;
+      }
+
+      const interval = setInterval(() => {
+        if (!popup || popup.closed) {
+          clearInterval(interval);
+          checkForAuthCode();
+        } else {
+          try {
+            const popupUrl = popup.location.href;
+            if (popupUrl.includes("?code=")) {
+              const urlParams = new URLSearchParams(new URL(popupUrl).search);
+              const authCode = urlParams.get("code");
+              if (authCode) {
+                popup.close();
+                clearInterval(interval);
+                exchangeCodeForToken(authCode);
+              }
+            }
+          } catch {}
+        }
+      }, 1000);
+    }
+
+    function checkForAuthCode() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const authCode = urlParams.get("code");
+      if (authCode) {
+        exchangeCodeForToken(authCode);
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+
+    async function exchangeCodeForToken(authCode) {
+  try {
+    const response = await fetch("https://auth.aiesec.org/oauth/token", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        client_id: "r3qZe9CsfLt7nb0QxzV4wRX4pbAXSpuYoKfixg3zJB8",
+        client_secret: "CwXyg4vpalrH6NZZGH_T9cO3eh2R39ugg8hDriF4tFw",
+        redirect_uri: "https://impact.aiesec.org.eg/",
+        grant_type: "authorization_code",
+        code: authCode
+      })
+    });
+
+    const data = await response.json();
+
+    if (data.access_token) {
+      sessionStorage.setItem("accessToken", data.access_token);
+      const token = data.access_token;
+
+      try {
+        const profileResponse = await fetch("https://gis-api.aiesec.org/v2/people/me?access_token=" + token);
+        const profileData = await profileResponse.json();
+
+        const positions = profileData.member_positions || [];
+
+        const isActive = positions.some(pos => pos.status === "active");
+
+        if (isActive) {
+          window.location.href = "/";
+        } else {
+          alert("❌ You are not an active member. Please contact your AIESEC team.");
+        }
+      } catch (err) {
+        console.error("Error checking position status:", err);
+        alert("Failed to verify member status.");
+      }
+    } else {
+      alert("Login failed.");
+    }
+  } catch (error) {
+    alert("Login error.");
+    console.error(error);
+  }
+}
+
+
+    window.onload = checkForAuthCode;
+  </script>
+</body>
+</html>

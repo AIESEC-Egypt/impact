@@ -1,0 +1,10 @@
+<span class="exam-pill">{{ academy.title }}</span>
+<h1 class="exam-title">{{ exam.title }}</h1>
+{% if exam.description %}<p class="exam-description">{{ exam.description }}</p>{% endif %}
+<p class="exam-meta">
+  Pass mark {{ exam.pass_mark }}%
+  {% if exam.time_limit_minutes %}&middot; Time limit {{ exam.time_limit_minutes }} minutes{% endif %}
+  {% if questions_shown and question_pool_size and questions_shown < question_pool_size %}
+  &middot; {{ questions_shown }} random question{{ questions_shown|pluralize }} from {{ question_pool_size }} in the bank
+  {% endif %}
+</p>

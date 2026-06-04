@@ -1,0 +1,17 @@
+{% load static %}
+{% if home_promos %}
+<link rel="stylesheet" href="{% static 'lms/home-promo.css' %}" />
+<section class="home-promo-section" aria-label="Announcements">
+  {% for promo in home_promos %}
+  <article class="home-promo-card">
+    <div class="home-promo-card__text">
+      <h2 class="home-promo-card__title">{{ promo.title }}</h2>
+      {% if promo.subtitle %}
+      <p class="home-promo-card__subtitle">{{ promo.subtitle }}</p>
+      {% endif %}
+    </div>
+    <a class="home-promo-card__btn" href="{{ promo.get_button_url }}">{{ promo.button_label }}</a>
+  </article>
+  {% endfor %}
+</section>
+{% endif %}

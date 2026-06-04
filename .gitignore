@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.Python
+
+# Virtual env
+venv/
+.venv/
+env/
+
+# Local logs (EXPA profile dumps may contain PII)
+logs/
+
+# Django
+db.sqlite3
+db.sqlite3-journal
+# Generated at build; keep only small LMS CSS overrides in git
+static/*
+!static/lms/
+!static/lms/**
+staticfiles/
+media/
+
+# Large binaries (not in git — built at deploy)
+*.pdf
+**/Academy/pdf/**/*.pdf
+
+# Legacy duplicates at repo root
+styles.css
+styles.min.css
+script.js
+
+# Secrets / environment
+.env
+*.env
+!.env.example
+expa-login-extract/expa-oauth-config.example.env
+
+# Local dev noise
+server.log
+*.log
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

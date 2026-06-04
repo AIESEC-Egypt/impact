@@ -1,0 +1,56 @@
+{% extends "lms/exam_layout.html" %}
+{% block title %}{{ exam.title }} | IMPACT{% endblock %}
+
+{% block exam_content %}
+<div class="exam-card card-impact p-4 p-md-5">
+  {% include "lms/_exam_header.html" %}
+
+  <form method="post" id="examForm" class="exam-form">
+    {% csrf_token %}
+    {% for question in questions %}
+    <div class="exam-question">
+      <p class="exam-question__text">
+        {{ forloop.counter }}. {{ question.text }}
+        <span class="exam-question__points">({{ question.points }} pt{{ question.points|pluralize }})</span>
+      </p>
+      {% for choice in question.choices.all %}
+      <div class="form-check">
+        <input class="form-check-input"
+               type="{% if question.question_type == 'multiple' %}checkbox{% else %}radio{% endif %}"
+               name="question_{{ question.id }}"
+               id="choice_{{ choice.id }}"
+               value="{{ choice.id }}">
+        <label class="form-check-label" for="choice_{{ choice.id }}">{{ choice.text }}</label>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+
+    <div class="exam-actions">
+      <button type="submit" class="exam-btn-primary{% if not dream_theme %} btn-impact{% endif %}">Submit answers</button>
+      <a href="{{ cancel_url }}" class="exam-btn-link">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block exam_scripts %}
+{% if exam.time_limit_minutes %}
+<script>
+  (function () {
+    var seconds = {{ exam.time_limit_minutes }} * 60;
+    var form = document.getElementById('examForm');
+    var timer = document.createElement('div');
+    timer.className = 'exam-timer';
+    document.body.appendChild(timer);
+    function tick() {
+      var m = Math.floor(seconds / 60), s = seconds % 60;
+      timer.textContent = 'Time left: ' + m + ':' + (s < 10 ? '0' : '') + s;
+      if (seconds <= 0) { form.submit(); return; }
+      seconds--; setTimeout(tick, 1000);
+    }
+    tick();
+  })();
+</script>
+{% endif %}
+{% endblock %}

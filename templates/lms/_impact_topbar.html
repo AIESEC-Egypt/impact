@@ -1,0 +1,21 @@
+{% load static %}
+<header class="impact-topbar">
+  <a class="brand" href="{{ topbar_home_url|default:'/' }}">
+    <img
+      class="impact-topbar__logo"
+      src="{% static 'aspects/impact.png' %}"
+      alt="IMPACT — AIESEC in Egypt"
+    />
+  </a>
+  <div class="userbox">
+    {% if user.is_authenticated %}
+      <span class="impact-topbar__name">{{ user.full_name|default:user.get_full_name|default:user.username }}</span>
+      {% if user.is_staff %}
+        <a href="{% url 'admin:index' %}">Admin</a>
+      {% endif %}
+      <a href="{% url 'accounts:logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">Login</a>
+    {% endif %}
+  </div>
+</header>

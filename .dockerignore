@@ -1,0 +1,63 @@
+# Git & local dev
+.git
+.gitignore
+**/.git
+venv
+.venv
+env
+__pycache__
+**/__pycache__
+*.py[cod]
+.pytest_cache
+.mypy_cache
+
+# Secrets & local DB
+.env
+.env.*
+!.env.example
+!.env.coolify.example
+db.sqlite3
+db.sqlite3-journal
+
+# Generated at build (sync_static_assets + collectstatic)
+static/
+staticfiles/
+media/
+logs/
+*.log
+server.log
+
+# Legacy / dev-only (not needed in container)
+index.html
+dreaming.html
+membership-ranking.html
+b2b-contracts.html
+icx-apds-submissions.html
+Academy/*.html
+expa-login-extract/
+membership-extract/
+tools/
+*.gs
+*.csv
+*.code-workspace
+APD_Apps_Script.gs
+B2B_Contract_Apps_Script.gs
+B2B_CONTRACTS_SETUP.md
+ranking-script.js
+b2b-contracts-submit.js
+icx-apds-submissions.js
+script.js
+styles.css
+styles.min.css
+img/
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+terminals/
+agent-transcripts/
+
+# Docs (optional in image — keep README for operators)
+DEPLOY.md
+COOLIFY.md

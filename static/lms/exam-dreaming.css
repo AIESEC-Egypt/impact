@@ -1,0 +1,110 @@
+/**
+ * Dreaming-themed quiz pages (burgundy / cream).
+ */
+.exam-page--dreaming {
+  background-image:
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(136, 45, 51, 0.06), transparent 65%),
+    linear-gradient(180deg, #e8e4d4 0%, #d4cfb5 45%, #cfc9b8 100%);
+  --exam-bg: #d4cfb5;
+  --exam-text: #5a1d22;
+  --exam-muted: rgba(90, 29, 34, 0.72);
+  --exam-primary: #882d33;
+  --exam-primary-hover: #6a2328;
+  --exam-primary-soft: rgba(136, 45, 51, 0.14);
+  --exam-pass: #0a6b0a;
+  --exam-pass-soft: rgba(10, 107, 10, 0.14);
+  --exam-pass-bg: rgba(10, 138, 10, 0.12);
+  --exam-fail: #8b1a28;
+  --exam-fail-soft: rgba(139, 26, 40, 0.14);
+  --exam-fail-bg: rgba(176, 0, 32, 0.1);
+  --exam-card-shadow: 0 12px 40px rgba(136, 45, 51, 0.12);
+  --exam-divider: rgba(136, 45, 51, 0.16);
+  --exam-body-font: "Roboto", sans-serif;
+}
+
+.exam-page--dreaming .exam-dreaming-wrap {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 36px 20px 48px;
+}
+
+.exam-page--dreaming .exam-card {
+  border: 1px solid rgba(136, 45, 51, 0.14);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.exam-page--dreaming .exam-pill {
+  background: rgba(136, 45, 51, 0.92);
+  color: #d4cfb5;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.exam-page--dreaming .exam-title {
+  font-family: "Unbounded", sans-serif;
+  color: #882d33;
+}
+
+.exam-page--dreaming .exam-description,
+.exam-page--dreaming .exam-meta,
+.exam-page--dreaming .exam-form .form-check-label {
+  font-family: var(--exam-body-font);
+}
+
+.exam-page--dreaming .exam-question__text {
+  font-family: "Unbounded", sans-serif;
+  font-size: 0.95rem;
+  color: #882d33;
+}
+
+.exam-page--dreaming .exam-btn-primary {
+  background: linear-gradient(135deg, #882d33, #a33d43);
+  box-shadow: 0 6px 20px rgba(136, 45, 51, 0.25);
+}
+
+.exam-page--dreaming .exam-btn-primary:hover {
+  background: linear-gradient(135deg, #6a2328, #882d33);
+}
+
+.exam-page--dreaming .exam-btn-link {
+  color: #882d33;
+  font-weight: 500;
+}
+
+.exam-page--dreaming .exam-btn-link:hover {
+  color: #5e1f24;
+}
+
+.exam-page--dreaming .exam-form .form-check-input:checked {
+  background-color: #882d33;
+  border-color: #882d33;
+}
+
+.exam-page--dreaming .exam-form .form-check-input:focus {
+  border-color: #882d33;
+  box-shadow: 0 0 0 0.2rem rgba(136, 45, 51, 0.28);
+}
+
+.exam-page--dreaming .exam-timer {
+  background: linear-gradient(135deg, #882d33, #6a2328);
+  border: 1px solid rgba(212, 207, 181, 0.35);
+}
+
+.exam-page--dreaming .exam-review-heading {
+  color: #882d33;
+  font-family: "Unbounded", sans-serif;
+}
+
+.exam-page--dreaming .exam-footer {
+  text-align: center;
+  padding: 28px 20px 36px;
+  color: rgba(90, 29, 34, 0.75);
+  font-size: 0.8rem;
+  font-family: var(--exam-body-font);
+}
+
+.exam-page--dreaming .alert {
+  background: rgba(255, 255, 255, 0.65);
+  border-color: rgba(136, 45, 51, 0.2);
+  color: #5a1d22;
+}

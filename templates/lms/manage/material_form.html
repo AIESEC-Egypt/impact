@@ -1,0 +1,67 @@
+{% extends "lms/manage/base_manage.html" %}
+
+{% block title %}{% if editing %}Edit{% else %}Add{% endif %} material{% endblock %}
+
+{% block content %}
+<div class="manage-hero" style="background: linear-gradient(135deg, #1b1b2f, var(--manage-accent)); padding: 20px 28px;">
+  <h1>{% if editing %}Edit material{% else %}New material{% endif %}</h1>
+  <p>{{ academy.title }}</p>
+</div>
+
+<div class="manage-section manage-form">
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="row g-3">
+      <div class="col-md-8">
+        <label class="form-label" for="{{ form.title.id_for_label }}">Title</label>
+        {{ form.title }}
+        {% if form.title.errors %}<div class="text-danger small">{{ form.title.errors }}</div>{% endif %}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.order.id_for_label }}">Sort order</label>
+        {{ form.order }}
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="{{ form.subtitle.id_for_label }}">Subtitle (on card)</label>
+        {{ form.subtitle }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.material_type.id_for_label }}">Type</label>
+        {{ form.material_type }}
+      </div>
+      <div class="col-md-8">
+        <label class="form-label" for="{{ form.url.id_for_label }}">Drive / resource URL</label>
+        {{ form.url }}
+        {% if form.url.errors %}<div class="text-danger small">{{ form.url.errors }}</div>{% endif %}
+        <div class="form-text">Google Slides, Drive file/folder, PDF host, or any link.</div>
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="{{ form.description.id_for_label }}">Description (optional)</label>
+        {{ form.description }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="{{ form.thumbnail.id_for_label }}">Card image</label>
+        {{ form.thumbnail }}
+        {% if editing and item.thumbnail %}
+        <div class="form-text">Current: <a href="{{ item.thumbnail.url }}" target="_blank" rel="noopener">view image</a></div>
+        {% endif %}
+      </div>
+      <div class="col-md-6 d-flex align-items-end">
+        <div class="form-check">
+          {{ form.is_published }}
+          <label class="form-check-label" for="{{ form.is_published.id_for_label }}">Published on live academy page</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-4 d-flex gap-2 flex-wrap">
+      <button type="submit" class="btn-manage">Save</button>
+      <a class="btn-manage-outline" href="{% url 'lms:manage_dashboard' academy.key %}">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

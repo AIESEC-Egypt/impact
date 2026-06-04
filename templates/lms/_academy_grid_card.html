@@ -1,0 +1,8 @@
+{# Index-style academy card for grid layout. Expects: card (academy, theme, card_class) #}
+<a
+  class="academy-card {{ card.card_class }} academy-grid-card"
+  href="{% url 'lms:academy_detail' card.academy.key %}"
+  style="color: white; text-decoration: none !important;"
+>
+  <h3 class="card-title"><span class="custom-font">{{ card.theme.label }}</span> ACADEMY</h3>
+</a>

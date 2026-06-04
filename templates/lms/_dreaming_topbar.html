@@ -1,0 +1,21 @@
+{% load static %}
+<header class="dreaming-topbar">
+  <a class="brand" href="{% url 'lms:dreaming' %}">
+    <img src="{% static 'image/Dream Team/eye.png' %}" alt="" width="36" height="36" />
+    <span class="brand__label">
+      IMPACT
+      <span class="brand__sublabel">Dreaming Process</span>
+    </span>
+  </a>
+  <div class="userbox">
+    {% if user.is_authenticated %}
+      <span class="dreaming-topbar__name">{{ user.full_name|default:user.get_full_name|default:user.username }}</span>
+      {% if user.is_staff %}
+      <a href="{% url 'admin:index' %}">Admin</a>
+      {% endif %}
+      <a href="{% url 'accounts:logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'accounts:login' %}">Login</a>
+    {% endif %}
+  </div>
+</header>

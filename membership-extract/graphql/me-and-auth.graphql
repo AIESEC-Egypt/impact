@@ -1,0 +1,49 @@
+# Logged-in member (requires JWT from EXPA OAuth / completeExpaOauth)
+query LoggedInMember {
+  me {
+    expaId
+    fullName
+    personId
+    officeName
+    roleCode
+    roleName
+    functionCode
+    functionName
+  }
+}
+
+mutation CompleteExpaOAuth($code: String!, $state: String) {
+  completeExpaOauth(code: $code, state: $state) {
+    token
+    username
+    expaId
+  }
+}
+
+mutation BeginExpaOAuth($nextUrl: String) {
+  beginExpaOauth(nextUrl: $nextUrl) {
+    authUrl
+    state
+  }
+}
+
+query MyAssignedQuizzes($status: String) {
+  myAssignedQuizzes(status: $status) {
+    id
+    status
+    assignedAt
+    quiz {
+      id
+      title
+    }
+  }
+}
+
+mutation RecalculateAssignments($allMembers: Boolean) {
+  recalculateAssignments(allMembers: $allMembers) {
+    ok
+    created
+    updated
+    expired
+  }
+}

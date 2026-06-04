@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Ranking - AIESEC in Egypt | IMPACT Hub</title>
+    <meta name="description" content="Track and celebrate the outstanding performance of AIESEC Egypt's individual members. See who leads in approvals and slot submissions across all products and Local Committees." />
+    <meta name="keywords" content="AIESEC Egypt, member ranking, performance tracking, approvals, slots, leaderboard, AIESEC members" />
+    <meta property="og:title" content="Membership Ranking – AIESEC in Egypt" />
+    <meta property="og:description" content="Track and celebrate the outstanding performance of AIESEC Egypt's individual members." />
+    <meta property="og:image" content="https://impact.aiesec.org.eg/aspects/icon.png" />
+    <meta property="og:url" content="https://impact.aiesec.org.eg/membership-ranking.html" />
+    <meta property="og:type" content="website" />
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Six+Caps&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amsterdam:wght@400&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="/static/styles.min.css" media="print" onload="this.media='all'">
+    <link rel="icon" href="/static/aspects/icon.png">
+    
+    <style>
+        .pre-loader {
+            position: fixed;
+            background-color: #ffffff;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pre-loader img {
+            width: 200px;
+        }
+
+        html.loading, body.loading {
+            overflow: hidden;
+        }
+
+        /* Ranking Page Specific Styles */
+        .ranking-hero {
+            background: linear-gradient(135deg, #037EF3, #8a2be2, #037EF3);
+            background-size: 300% 300%;
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: dynamicGradient 20s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .ranking-hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shimmerWave 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes shimmerWave {
+            0%, 100% {
+                transform: translateX(-100%) skewX(-15deg);
+            }
+            50% {
+                transform: translateX(100%) skewX(-15deg);
+            }
+        }
+
+        @keyframes dynamicGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 100% 50%;
+            }
+            50% {
+                background-position: 50% 100%;
+            }
+            75% {
+                background-position: 100% 0%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Container width matching website */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation bar alignment fix */
+        .navbar {
+            padding: 10px 16px;
+        }
+
+        .navbar-collapse {
+            justify-content: flex-end !important;
+            margin-left: auto;
+        }
+
+        .navbar-nav {
+            margin-left: auto;
+            margin-right: 0;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            list-style: none !important;
+            margin-bottom: 0 !important;
+            padding-left: 0 !important;
+        }
+
+        .navbar-nav .nav-item {
+            display: flex !important;
+            align-items: center !important;
+        }
+
+        .navbar-nav .nav-link,
+        .navbar-nav .dropdown-toggle {
+            display: flex !important;
+            align-items: center !important;
+            padding: 6px 4px !important;
+            font-size: 12px !important;
+            color: #333 !important;
+            text-decoration: none !important;
+            white-space: nowrap !important;
+        }
+
+
+        .navbar-nav .nav-item:last-child {
+            margin-right: 0;
+        }
+
+        /* Fix dropdown alignment and positioning */
+        .dropdown-menu {
+            position: absolute !important;
+            top: 100% !important;
+            left: auto !important;
+            right: 0 !important;
+            z-index: 1000 !important;
+            display: none !important;
+            min-width: 200px !important;
+            padding: 0.5rem 0 !important;
+            margin: 0 !important;
+            background-color: white !important;
+            border: 1px solid rgba(0,0,0,.15) !important;
+            border-radius: 0.375rem !important;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175) !important;
+        }
+
+        .dropdown-menu.show {
+            display: block !important;
+        }
+
+        .dropdown-item {
+            display: block !important;
+            width: 100% !important;
+            padding: 0.25rem 1rem !important;
+            clear: both !important;
+            font-weight: 400 !important;
+            color: #212529 !important;
+            text-align: inherit !important;
+            text-decoration: none !important;
+            white-space: nowrap !important;
+            background-color: transparent !important;
+            border: 0 !important;
+        }
+
+        .dropdown-item:hover,
+        .dropdown-item:focus {
+            color: #16181b !important;
+            background-color: #f8f9fa !important;
+        }
+
+        /* Ensure dropdown toggle positioning */
+        .dropdown {
+            position: relative !important;
+        }
+
+        .dropdown-toggle::after {
+            display: inline-block !important;
+            margin-left: 0.255em !important;
+            vertical-align: 0.255em !important;
+            content: "" !important;
+            border-top: 0.3em solid !important;
+            border-right: 0.3em solid transparent !important;
+            border-bottom: 0 !important;
+            border-left: 0.3em solid transparent !important;
+        }
+
+        .ranking-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/static/aspects/background.webp') center/cover;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        .ranking-title {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            z-index: 3;
+        }
+
+        .ranking-subtitle {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 200;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 3;
+        }
+
+        .ranking-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 3;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
+        }
+
+        .stat-number {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-top: 0;
+            font-weight: 200;
+            line-height: 1.2;
+        }
+
+        /* Product Filter Section */
+        .product-filter {
+            background: white;
+            padding: 40px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .product-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .product-btn {
+            padding: 15px 30px;
+            border: 2px solid #037EF3;
+            background: white;
+            color: #037EF3;
+            border-radius: 50px;
+            font-family: 'Unbounded', sans-serif;
+            position: relative;
+            overflow: hidden;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .product-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .product-btn:hover::before {
+            left: 100%;
+        }
+
+        .product-btn:hover,
+        .product-btn.active {
+            background: #037EF3;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(3, 126, 243, 0.3);
+        }
+
+        /* Submit ICX APD Button */
+        .submit-apd-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #037EF3, #8a2be2);
+            color: white;
+            border-radius: 50px;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(3, 126, 243, 0.3);
+        }
+
+        .submit-apd-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(3, 126, 243, 0.4);
+            color: white;
+        }
+
+        .submit-apd-btn i {
+            margin-right: 8px;
+        }
+
+        /* Controls Section */
+        .ranking-controls {
+            background: #f8f9fa;
+            padding: 40px 0;
+            border-bottom: 1px solid #e6e6e6;
+        }
+
+        .controls-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            color: #666;
+            z-index: 1;
+        }
+
+        .search-input {
+            padding: 15px 20px 15px 50px;
+            border: 2px solid #e6e6e6;
+            border-radius: 25px;
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #037EF3;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(3, 126, 243, 0.1);
+        }
+
+        .sort-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .sort-select {
+            padding: 15px 20px;
+            border: 2px solid #e6e6e6;
+            border-radius: 25px;
+            font-family: 'Unbounded', sans-serif;
+            background: white;
+            cursor: pointer;
+            flex: 1;
+            min-width: 150px;
+        }
+
+
+        /* Results Section */
+        .ranking-results {
+            padding: 60px 0;
+            background: white;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .results-header h2 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 2.5rem;
+            color: #404040;
+            margin-bottom: 10px;
+        }
+
+        .results-header p {
+            font-family: 'Roboto', sans-serif;
+            color: #555;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .last-updated {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            font-family: 'Roboto', sans-serif;
+            color: #555;
+            font-weight: 400;
+        }
+
+        .refresh-btn {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, #037EF3, #8a2be2);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: 'Unbounded', sans-serif;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .refresh-btn:hover::before {
+            left: 100%;
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(3, 126, 243, 0.3);
+        }
+
+        /* Table Styles */
+        .ranking-table-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow-x: auto;
+            overflow-y: visible;
+            margin-bottom: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .ranking-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .ranking-table thead {
+            background: linear-gradient(135deg, #037EF3, #8a2be2);
+            position: relative;
+        }
+
+        .ranking-table th {
+            background: transparent;
+            color: white;
+            padding: 15px 10px;
+            text-align: left;
+            font-family: 'Unbounded', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            border: none;
+            z-index: 3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Column width adjustments for better fit */
+        .ranking-table th:nth-child(1) { width: 8%; } /* Rank */
+        .ranking-table th:nth-child(2) { width: 28%; } /* Member Name */
+        .ranking-table th:nth-child(3) { width: 30%; } /* Local Committee */
+        .ranking-table th:nth-child(4) { width: 12%; } /* Product */
+        .ranking-table th:nth-child(5) { width: 11%; } /* Approvals */
+        .ranking-table th:nth-child(6) { width: 11%; } /* Slots */
+
+        /* Add sort arrows to all sortable columns */
+        .ranking-table th.sortable {
+            padding-right: 25px !important;
+        }
+
+        .ranking-table th.sortable::after {
+            content: '⇅';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.5;
+            font-size: 14px;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .ranking-table th.sortable:hover::after {
+            opacity: 1;
+        }
+
+        /* Active sort indicator */
+        .ranking-table th.sortable.sort-asc::after {
+            content: '↑';
+            opacity: 1;
+            font-size: 16px;
+        }
+
+        .ranking-table th.sortable.sort-desc::after {
+            content: '↓';
+            opacity: 1;
+            font-size: 16px;
+        }
+
+        /* First column - align to left edge */
+        .ranking-table th:first-child {
+            padding-left: 10px;
+        }
+
+        .ranking-table th:first-child.sortable {
+            padding-right: 35px !important;
+        }
+
+        /* Approvals column - align to right edge */
+        .ranking-table th:nth-child(5) {
+            padding-left: 8px;
+            padding-right: 8px;
+            text-align: right;
+        }
+
+        .ranking-table th:nth-child(5).sortable {
+            padding-right: 25px !important;
+        }
+
+        /* Slots column - align to right edge when visible */
+        .ranking-table th:nth-child(6) {
+            padding-left: 8px;
+            padding-right: 8px;
+            text-align: right;
+        }
+
+        .ranking-table th:nth-child(6).sortable {
+            padding-right: 25px !important;
+        }
+
+        /* Class for last visible column - applied dynamically by JavaScript */
+        .ranking-table th.last-visible-column {
+            text-align: right !important;
+        }
+
+        .ranking-table th.last-visible-column.sortable {
+            padding-right: 25px !important;
+        }
+
+        .ranking-table td.last-visible-column {
+            padding-right: 12px !important;
+            padding-left: 8px !important;
+            text-align: right !important;
+        }
+
+        /* Force hide slots column by default - JavaScript will show it for ICX products */
+        .ranking-table th:nth-child(6),
+        .ranking-table td:nth-child(6) {
+            display: none !important;
+        }
+
+        /* Show slots column only when explicitly shown by JavaScript */
+        .ranking-table th:nth-child(6).show-slots,
+        .ranking-table td:nth-child(6).show-slots {
+            display: table-cell !important;
+        }
+
+        /* B2B specific styling - hide approvals column, show slots */
+        .ranking-table.b2b-mode th:nth-child(5),
+        .ranking-table.b2b-mode td:nth-child(5) {
+            display: none !important;
+        }
+
+        .ranking-table.b2b-mode th:nth-child(6),
+        .ranking-table.b2b-mode td:nth-child(6) {
+            display: table-cell !important;
+        }
+
+        .ranking-table.b2b-mode th:nth-child(6),
+        .ranking-table.b2b-mode td:nth-child(6) {
+            padding-right: 12px !important;
+            padding-left: 8px !important;
+            text-align: right !important;
+        }
+
+
+        .ranking-table thead::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+            z-index: 1;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .ranking-table th:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .ranking-table th:hover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 2;
+        }
+
+        .ranking-table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid #f0f0f0;
+            font-family: 'Roboto', sans-serif;
+            word-wrap: break-word;
+            word-break: break-word;
+            white-space: normal;
+            line-height: 1.4;
+        }
+
+        /* First column data - align to left edge */
+        .ranking-table td:first-child {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        /* Approvals column data - align to right edge */
+        .ranking-table td:nth-child(5) {
+            padding-right: 12px;
+            padding-left: 8px;
+            text-align: right;
+        }
+
+        /* Slots column data - align to right edge when visible */
+        .ranking-table td:nth-child(6) {
+            padding-right: 12px;
+            padding-left: 8px;
+            text-align: right;
+        }
+
+        .ranking-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .rank-cell {
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-align: center;
+            width: 60px;
+            min-width: 60px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .rank-1 { 
+            color: #FFD700;
+        }
+        .rank-2 { 
+            color: #C0C0C0;
+        }
+        .rank-3 { 
+            color: #CD7F32;
+        }
+
+        /* Style for top 3 ranked rows - colored backgrounds */
+        .ranking-table tbody tr:has(.rank-1) {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border-left: 4px solid #FFD700;
+        }
+
+        .ranking-table tbody tr:has(.rank-2) {
+            background: linear-gradient(90deg, rgba(192, 192, 192, 0.15) 0%, rgba(192, 192, 192, 0.05) 100%);
+            border-left: 4px solid #C0C0C0;
+        }
+
+        .ranking-table tbody tr:has(.rank-3) {
+            background: linear-gradient(90deg, rgba(205, 127, 50, 0.15) 0%, rgba(205, 127, 50, 0.05) 100%);
+            border-left: 4px solid #CD7F32;
+        }
+
+        /* Keep colored backgrounds on hover for top 3 */
+        .ranking-table tbody tr:has(.rank-1):hover {
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 215, 0, 0.1) 100%);
+        }
+
+        .ranking-table tbody tr:has(.rank-2):hover {
+            background: linear-gradient(90deg, rgba(192, 192, 192, 0.25) 0%, rgba(192, 192, 192, 0.1) 100%);
+        }
+
+        .ranking-table tbody tr:has(.rank-3):hover {
+            background: linear-gradient(90deg, rgba(205, 127, 50, 0.25) 0%, rgba(205, 127, 50, 0.1) 100%);
+        }
+
+        .member-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .lc-name {
+            color: #555;
+            font-weight: 400;
+        }
+
+        .product-name {
+            font-weight: 600;
+            color: #037EF3;
+        }
+
+        .metric-value {
+            font-weight: 700;
+            color: #333;
+            text-align: right;
+            padding-right: 12px;
+            padding-left: 8px;
+        }
+
+
+
+        /* Top Performers */
+        .top-performers {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 80px 0;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .top-performers::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/static/aspects/background.webp') center/cover;
+            opacity: 0.02;
+            z-index: -1;
+        }
+
+        .top-performers h3 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #404040;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+        }
+
+        .top-performers h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #F85A40, #037EF3);
+            border-radius: 2px;
+        }
+
+        .top-performers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .performer-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            position: relative;
+            transition: all 0.3s ease;
+            border: 1px solid #e6e6e6;
+            z-index: 2;
+        }
+
+        .performer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #F85A40, #037EF3, #8a2be2);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .performer-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .performer-card.gold {
+            border-top: 5px solid #FFD700;
+        }
+
+        .performer-card.silver {
+            border-top: 5px solid #C0C0C0;
+        }
+
+        .performer-card.bronze {
+            border-top: 5px solid #CD7F32;
+        }
+
+        .performer-rank {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .performer-info h4 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .performer-info p {
+            font-family: 'Roboto', sans-serif;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .performer-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .performer-stats .stat {
+            font-family: 'Roboto', sans-serif;
+            color: #037EF3;
+            font-weight: 600;
+        }
+
+        .performer-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .performer-card.gold .performer-badge {
+            background: #FFD700;
+        }
+
+        .performer-card.silver .performer-badge {
+            background: #C0C0C0;
+        }
+
+        .performer-card.bronze .performer-badge {
+            background: #CD7F32;
+        }
+
+        /* Analytics Section */
+        .ranking-analytics {
+            background: white;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .ranking-analytics::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('/static/aspects/background.webp') center/cover;
+            opacity: 0.02;
+            z-index: -1;
+        }
+
+        .analytics-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .analytics-header h2 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 2.5rem;
+            color: #404040;
+            margin-bottom: 10px;
+            font-weight: 300;
+            position: relative;
+        }
+
+        .analytics-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #F85A40, #037EF3);
+            border-radius: 2px;
+        }
+
+        .analytics-header p {
+            font-family: 'Unbounded', sans-serif;
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 200;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .analytics-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-header h3 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: 1.3rem;
+            color: #333;
+        }
+
+        .card-header i {
+            color: #037EF3;
+            font-size: 1.5rem;
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .ranking-title {
+                font-size: 2.5rem;
+                font-weight: 300;
+            }
+
+            .ranking-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .ranking-stats {
+                gap: 30px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .controls-container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 20px;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .sort-controls {
+                width: 100%;
+            }
+
+            .sort-select {
+                width: 100%;
+                min-width: unset;
+            }
+
+            .product-buttons {
+                gap: 10px;
+            }
+
+            .product-btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            /* Mobile navigation alignment */
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .navbar-collapse {
+                justify-content: center !important;
+                margin-left: 0;
+            }
+
+            .navbar-nav {
+                margin-left: 0;
+                text-align: center;
+            }
+
+            .top-performers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ranking-table-container {
+                overflow-x: hidden;
+            }
+
+            .ranking-table {
+                min-width: unset;
+                table-layout: fixed;
+                font-size: 0.8rem;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .ranking-table th {
+                font-size: 0.65rem;
+                padding: 10px 4px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .ranking-table td {
+                font-size: 0.75rem;
+                padding: 10px 4px;
+                white-space: normal;
+                word-wrap: break-word;
+            }
+
+            /* Adjust column widths for mobile */
+            .ranking-table th:nth-child(1),
+            .ranking-table td:nth-child(1) { width: 8% !important; } /* Rank */
+            .ranking-table th:nth-child(2),
+            .ranking-table td:nth-child(2) { width: 24% !important; } /* Member Name */
+            .ranking-table th:nth-child(3),
+            .ranking-table td:nth-child(3) { width: 26% !important; } /* Local Committee */
+            .ranking-table th:nth-child(4),
+            .ranking-table td:nth-child(4) { width: 14% !important; } /* Product */
+            .ranking-table th:nth-child(5),
+            .ranking-table td:nth-child(5) { width: 14% !important; } /* Approvals */
+            .ranking-table th:nth-child(6),
+            .ranking-table td:nth-child(6) { width: 14% !important; } /* Slots */
+
+            .rank-cell {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification-success {
+            background: #28a745;
+        }
+
+        .notification-error {
+            background: #dc3545;
+        }
+
+        .notification-info {
+            background: #17a2b8;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #037EF3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="pre-loader">
+        <img style="width:200px" src="/static/aspects/circle.gif" alt="">
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <a href="/" class="logo">
+            <img class="navbar-brand" src="/static/aspects/impact.png" alt="AIESEC">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav nav-links">
+                {% include "lms/_site_nav_home.html" %}
+                <li class="nav-item"><a class="nav-link" href="/history/">History</a></li>
+                
+                <!-- Functional Academies Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Academies</a>
+                    <ul class="dropdown-menu" style="width: 100%;">
+                        <li><a class="dropdown-item" href="/academy/ogv/">oGV Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/igv/">iGV Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/ogt/">oGT Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/igt/">iGT Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/b2c/">B2C Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/b2b/">B2B Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/tm/">TM Academy</a></li>
+                        <li><a class="dropdown-item" href="/academy/fl/">F&L Academy</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Contracts</a>
+                    <ul class="dropdown-menu" style="width: 250px; white-space: normal;">
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://docs.google.com/forms/d/1n54SOC6Tz-rGqfeytC8x5-GgN59JHQiDegTf-gRak_8/" target="_blank">iGV Contracts System</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://docs.google.com/forms/d/e/1FAIpQLScLOJfJ3YN6oTwKHs030-jB2RkIerVdileWt3XZcAh0swNgrQ/viewform?usp=sf_link" target="_blank">iGTa/e Contracts System</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://forms.gle/SjbiVE4NwLxZ3KML8" target="_blank">oGX Contracts System</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="/b2b-contracts/">B2B Contracts System</a></li>
+                    </ul>
+                </li> 
+                
+                <!-- Conference Outputs Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Conferences</a>
+                    <ul class="dropdown-menu" style="width: 100%;">
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/16YWyC5145B376VjVhrO3_nF6aS9Od_8k?usp=drive_link" target="_blank">Fusion</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/1MYHeFNWYYIFhgRrhzQl2sVwJQK_4MZMM?usp=drive_link" target="_blank">Activate</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/1RN-P9HI6QlKPtp80xm6GH78D5NiVZ0ez?usp=drive_link" target="_blank">Mahd</a></li>
+                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;" onmouseover="this.style.background='#037ef3'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/1zFYJ-dJVQXwRFozoqWgNrU7E7Sq8A-91?usp=drive_link" target="_blank">Momentum</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item"><a class="nav-link active" href="/icx-apds-submissions/">ICX APDs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="ranking-hero">
+        <div class="container">
+            <h1 class="ranking-title"><b>Member Performance Ranking</b></h1>
+            <p class="ranking-subtitle">Track and celebrate the outstanding performance of AIESEC Egypt's individual members</p>
+            
+            <div class="ranking-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalMembers">0</span>
+                    <div class="stat-label">Active Members</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalApprovals">0</span>
+                    <div class="stat-label">Total Approvals</div>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="totalSlots">0</span>
+                    <div class="stat-label">Slots Opened</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Filter -->
+    <section class="product-filter">
+        <div class="container">
+            <div class="product-buttons">
+                <button class="product-btn active" data-product="OGV">OGV</button>
+                <button class="product-btn" data-product="IGV">IGV</button>
+                <button class="product-btn" data-product="OGT">OGT</button>
+                <button class="product-btn" data-product="IGT">IGT</button>
+                <button class="product-btn" data-product="B2B">B2B</button>
+                <button class="product-btn" data-product="all">All Products</button>
+            </div>
+            <!-- Submit ICX APD Button - only visible for IGV and IGT -->
+            <div class="submit-apd-container" id="submitAPDContainer" style="display: none; margin-top: 30px; text-align: center;">
+                <a href="/icx-apds-submissions/" class="submit-apd-btn">
+                    <i class="fas fa-plus-circle"></i> Submit ICX APD
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Controls -->
+    <section class="ranking-controls">
+        <div class="container">
+            <div class="controls-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search members...">
+                </div>
+                
+                <div class="sort-controls">
+                    <select class="sort-select" id="monthFilter">
+                        <option value="default">Current Month</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                    </select>
+                    
+                    <select class="sort-select" id="sortSelect">
+                        <option value="approvals">Approvals (High to Low)</option>
+                        <option value="approvals-asc">Approvals (Low to High)</option>
+                        <option value="memberName">Name (A-Z)</option>
+                        <option value="memberName-desc">Name (Z-A)</option>
+                        <option value="lc">Local Committee</option>
+                        <option value="product">Product</option>
+                    </select>
+                    
+                    <select class="sort-select" id="lcFilter">
+                        <option value="all">All Local Committees</option>
+                        <!-- LC options will be populated dynamically -->
+                    </select>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section class="ranking-results">
+        <div class="container">
+            <div class="results-header">
+                <h2 class="results-title">Member Rankings</h2>
+                <p class="results-subtitle">Individual performance metrics updated in real-time</p>
+                <div class="last-updated">
+                    <i class="fas fa-clock"></i>
+                    <span>Last updated: <span id="lastUpdated">Just now</span></span>
+                    <button class="refresh-btn" onclick="refreshData()">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Table View -->
+            <div class="ranking-table-container">
+                <table class="ranking-table">
+                    <thead>
+                        <tr>
+                            <th class="sortable" data-sort="rank">Rank</th>
+                            <th class="sortable" data-sort="memberName">Member Name</th>
+                            <th class="sortable" data-sort="lc">Local Committee</th>
+                            <th class="sortable" data-sort="product">Product</th>
+                            <th class="sortable" data-sort="approvals">Approvals</th>
+                            <th class="sortable" data-sort="slotsOpened" id="slotsHeader">Slots Opened</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankingTableBody">
+                        <!-- Dynamic content will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            
+            <!-- Top Performers -->
+            <div class="top-performers">
+                <h3>🏆 Top Performers</h3>
+                <div class="top-performers-grid">
+                    <div class="performer-card gold">
+                        <div class="performer-rank">1st</div>
+                        <div class="performer-info">
+                            <h4 id="topPerformer1">Loading...</h4>
+                            <p>Leading in overall performance</p>
+                            <div class="performer-stats">
+                                <span class="stat" id="topPerformer1Approvals">0 Approvals</span>
+                                <span class="stat" id="topPerformer1Slots">0 Slots</span>
+                            </div>
+                        </div>
+                        <div class="performer-badge">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="performer-card silver">
+                        <div class="performer-rank">2nd</div>
+                        <div class="performer-info">
+                            <h4 id="topPerformer2">Loading...</h4>
+                            <p>Second best performance</p>
+                            <div class="performer-stats">
+                                <span class="stat" id="topPerformer2Approvals">0 Approvals</span>
+                                <span class="stat" id="topPerformer2Slots">0 Slots</span>
+                            </div>
+                        </div>
+                        <div class="performer-badge">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="performer-card bronze">
+                        <div class="performer-rank">3rd</div>
+                        <div class="performer-info">
+                            <h4 id="topPerformer3">Loading...</h4>
+                            <p>Strong growth trajectory</p>
+                            <div class="performer-stats">
+                                <span class="stat" id="topPerformer3Approvals">0 Approvals</span>
+                                <span class="stat" id="topPerformer3Slots">0 Slots</span>
+                            </div>
+                        </div>
+                        <div class="performer-badge">
+                            <i class="fas fa-award"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section class="ranking-analytics">
+        <div class="container">
+            <div class="analytics-header">
+                <h2>Performance Analytics</h2>
+                <p>Insights and trends across AIESEC Egypt</p>
+            </div>
+            
+            <div class="analytics-grid">
+                <div class="analytics-card">
+                    <div class="card-header">
+                        <h3>Approval Trends</h3>
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="approvalChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="analytics-card">
+                    <div class="card-header">
+                        <h3>Product Distribution</h3>
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="functionChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="image-footer">
+        <div class="scrolling-container">
+            <div class="scrolling-content">
+                <img loading="lazy" src="/static/image/IMG-20250213-WA0004.webp" alt="Image 1">
+                <img loading="lazy" src="/static/image/IMG-20250213-WA0005.webp" alt="Image 2">
+                <img loading="lazy" src="/static/image/IMG-20250213-WA0006.webp" alt="Image 3">
+                <img loading="lazy" src="/static/image/IMG-20250213-WA0007.webp" alt="Image 4">
+                <img loading="lazy" src="/static/image/IMG-20250213-WA0008.webp" alt="Image 5">
+                <img loading="lazy" src="/static/image/IMG-20250213-WA0010.webp" alt="Image 6">
+                <img loading="lazy" src="/static/image/IMG-20250213-WA0009.webp" alt="Image 2">
+                <img loading="lazy" src="/static/image/IMG-20250213-WA0011.webp" alt="Image 3">
+                <img loading="lazy" src="/static/image/IMG-20250213-WA0012.webp" alt="Image 4">
+            </div>
+        </div>
+        <p class="footer-text">
+            Made with ❤️, Powered by AIESEC in Egypt. © 2025 <br>
+            Developed by <a href="https://www.linkedin.com/in/mohamed-wael-407945228/" target="_blank" style="color: white; font-weight: lighter;">Mohamed Wael</a>
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/script.js"></script>
+    <script src="/static/ranking-script.js"></script>
+    
+    <script>
+        // Pre-loader functionality
+        window.addEventListener("load", function () {
+            const loader = document.querySelector(".pre-loader");
+            loader.style.transition = "opacity 0.5s ease";
+            loader.style.opacity = "0";
+            setTimeout(() => loader.remove(), 500);
+        });
+
+        document.documentElement.classList.add("loading");
+        window.addEventListener("load", function () {
+            document.documentElement.classList.remove("loading");
+        });
+    </script>
+</body>
+</html>

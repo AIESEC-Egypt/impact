@@ -1,0 +1,217 @@
+.manage-topbar {
+  background: linear-gradient(135deg, #1b1b2f, #35266a);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.manage-topbar a.brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.manage-topbar__logo {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+.manage-topbar .nav-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+}
+.manage-topbar__name {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.85rem;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.manage-topbar .nav-links a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 300;
+}
+.manage-topbar .nav-links a:hover {
+  text-decoration: underline;
+}
+.manage-wrap {
+  max-width: 1100px;
+  margin: 28px auto 48px;
+  padding: 0 18px;
+}
+.manage-hero {
+  border-radius: 16px;
+  padding: 28px 32px;
+  color: #fff;
+  margin-bottom: 28px;
+  box-shadow: 0 12px 32px rgba(27, 27, 47, 0.12);
+}
+.manage-hero h1 {
+  font-size: 1.6rem;
+  margin: 0 0 6px;
+  font-weight: 700;
+}
+.manage-hero p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.88rem;
+  font-weight: 300;
+}
+.manage-meta {
+  font-size: 0.78rem;
+  opacity: 0.85;
+  margin-top: 12px;
+}
+.manage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+}
+.manage-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: 0 6px 20px rgba(3, 126, 243, 0.07);
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  border: 2px solid transparent;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.manage-card:hover {
+  border-color: var(--manage-accent, #037ef3);
+  transform: translateY(-2px);
+  color: inherit;
+}
+.manage-card h2 {
+  font-size: 1.1rem;
+  margin: 0 0 6px;
+}
+.manage-card .sub {
+  font-size: 0.8rem;
+  color: #6c6c80;
+  margin: 0;
+}
+.manage-section {
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 24px;
+  margin-bottom: 22px;
+  box-shadow: 0 6px 20px rgba(3, 126, 243, 0.06);
+}
+.manage-section h2 {
+  font-size: 1.05rem;
+  margin: 0 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.manage-table {
+  width: 100%;
+  font-size: 0.85rem;
+}
+.manage-table th {
+  font-weight: 500;
+  color: #6c6c80;
+  border-bottom: 1px solid #e8ecf4;
+  padding: 8px 10px;
+}
+.manage-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #f0f2f8;
+  vertical-align: middle;
+}
+.manage-table tr:last-child td {
+  border-bottom: none;
+}
+.badge-live {
+  background: rgba(7, 109, 62, 0.12);
+  color: #076d3e;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+}
+.badge-draft {
+  background: rgba(27, 27, 47, 0.08);
+  color: #6c6c80;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+}
+.btn-manage {
+  background: var(--manage-accent, #037ef3);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 8px 18px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-manage:hover {
+  filter: brightness(0.92);
+  color: #fff;
+}
+.btn-manage-outline {
+  background: transparent;
+  color: var(--manage-accent, #037ef3);
+  border: 1px solid var(--manage-accent, #037ef3);
+  border-radius: 50px;
+  padding: 7px 16px;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+.btn-manage-outline:hover {
+  background: rgba(3, 126, 243, 0.08);
+  color: var(--manage-accent, #037ef3);
+}
+.btn-manage-danger {
+  background: transparent;
+  color: #b00020;
+  border: 1px solid #e8c4c8;
+  border-radius: 50px;
+  padding: 6px 14px;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+.btn-manage-danger:hover {
+  background: #fff5f6;
+}
+.manage-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.manage-form .form-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #1b1b2f;
+}
+.manage-form .form-text {
+  font-size: 0.75rem;
+}
+.manage-empty {
+  color: #6c6c80;
+  font-size: 0.88rem;
+  padding: 12px 0;
+}
+.link-muted {
+  color: #6c6c80;
+  font-size: 0.82rem;
+}
+.url-preview {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.78rem;
+  color: #037ef3;
+}

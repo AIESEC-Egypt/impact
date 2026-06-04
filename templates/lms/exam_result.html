@@ -1,0 +1,45 @@
+{% extends "lms/exam_layout.html" %}
+{% block title %}Result: {{ exam.title }} | IMPACT{% endblock %}
+
+{% block exam_content %}
+<div class="exam-card card-impact exam-result-card p-4 p-md-5 mb-4">
+  <span class="exam-pill">{{ academy.title }}</span>
+  <h1 class="exam-title">{{ exam.title }}</h1>
+  <div class="exam-score {% if attempt.passed %}exam-score--pass{% else %}exam-score--fail{% endif %}">
+    {{ attempt.percentage|floatformat:0 }}%
+  </div>
+  <p class="exam-status {% if attempt.passed %}exam-status--pass{% else %}exam-status--fail{% endif %}">
+    {% if attempt.passed %}
+      Passed
+    {% else %}
+      Not passed &mdash; pass mark is {{ exam.pass_mark }}%
+    {% endif %}
+  </p>
+  <p class="exam-meta">Score: {{ attempt.score|floatformat:0 }} / {{ attempt.max_score|floatformat:0 }} points</p>
+  <div class="exam-actions exam-actions--centered">
+    <a href="{{ cancel_url }}" class="exam-btn-primary{% if not dream_theme %} btn-impact{% endif %}">Back to {{ back_label }}</a>
+    <a href="{% url 'lms:exam_take' academy.key exam.id %}" class="exam-btn-link">Try again</a>
+  </div>
+</div>
+
+<h2 class="exam-review-heading">Review</h2>
+{% for item in review %}
+<div class="exam-card card-impact exam-review-card p-4 mb-3">
+  <p class="exam-question__text">
+    {{ forloop.counter }}. {{ item.question.text }}
+    {% if item.is_correct %}
+      <span class="exam-pill exam-pill--pass">Correct</span>
+    {% else %}
+      <span class="exam-pill exam-pill--fail">Incorrect</span>
+    {% endif %}
+  </p>
+  {% for choice in item.choices %}
+  <div class="exam-choice{% if choice.id in item.correct %} exam-choice--correct{% elif choice.id in item.selected %} exam-choice--wrong{% endif %}">
+    {% if choice.id in item.selected %}&#10003;{% else %}&nbsp;&nbsp;{% endif %}
+    {{ choice.text }}
+    {% if choice.id in item.correct %}<span class="exam-choice__hint"> (correct answer)</span>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}

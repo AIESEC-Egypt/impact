@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Member session example</title>
+</head>
+<body>
+  <h1>Logged-in member</h1>
+  <pre id="out">Not loaded</pre>
+  <button type="button" id="btn-refresh">Refresh me</button>
+  <button type="button" id="btn-logout">Logout local</button>
+
+  <script>
+    window.MEMBER_GRAPHQL_ENDPOINT = "http://127.0.0.1:8000/graphql";
+  </script>
+  <script src="frontend/member-session.js"></script>
+  <script src="frontend/member-profile-gis.js"></script>
+  <script src="frontend/member-graphql-client.js"></script>
+  <script src="frontend/member-login-flow.js"></script>
+  <script>
+    var out = document.getElementById("out");
+
+    function render() {
+      var lines = [];
+      lines.push("isLoggedIn: " + MemberSession.isLoggedIn());
+      lines.push("edm JWT: " + (MemberSession.getAppJwt() ? "(set)" : "(empty)"));
+      lines.push("EXPA token: " + (MemberSession.getExpaAccessToken() ? "(set)" : "(empty)"));
+      lines.push("cached profile: " + JSON.stringify(MemberSession.getMemberProfile(), null, 2));
+      out.textContent = lines.join("\n");
+    }
+
+    document.getElementById("btn-refresh").onclick = async function () {
+      try {
+        var me = await MemberGraphQL.fetchMe();
+        out.textContent = JSON.stringify(me, null, 2);
+      } catch (e) {
+        out.textContent = "Error: " + e.message;
+      }
+    };
+
+    document.getElementById("btn-logout").onclick = function () {
+      MemberSession.logoutLocal();
+      render();
+    };
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+{% extends "lms/manage/base_manage.html" %}
+
+{% block title %}{{ academy.title }}{% endblock %}
+
+{% block content %}
+<div class="manage-hero" style="background: linear-gradient(135deg, #1b1b2f, var(--manage-accent));">
+  <h1>{{ academy_theme.label }} · {{ academy.title }}</h1>
+  <p>{{ academy.subtitle }}</p>
+  <p class="manage-meta">
+    {{ materials.count }} material{{ materials.count|pluralize }},
+    {{ sessions.count }} session{{ sessions.count|pluralize }}
+    · {{ published_materials }} / {{ published_sessions }} published on the live page
+  </p>
+</div>
+
+<section class="manage-section">
+  <h2>
+    Materials &amp; Drive links
+    <a class="btn-manage" href="{% url 'lms:manage_material_create' academy.key %}">+ Add material</a>
+  </h2>
+  {% if materials %}
+  <div class="table-responsive">
+    <table class="manage-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Type</th>
+          <th>Link</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in materials %}
+        <tr>
+          <td>{{ m.order }}</td>
+          <td>
+            <strong>{{ m.title }}</strong>
+            {% if m.subtitle %}<br><span class="link-muted">{{ m.subtitle }}</span>{% endif %}
+          </td>
+          <td>{{ m.get_material_type_display }}</td>
+          <td><a href="{{ m.url }}" target="_blank" rel="noopener" class="url-preview">{{ m.url }}</a></td>
+          <td>
+            {% if m.is_published %}<span class="badge-live">Live</span>{% else %}<span class="badge-draft">Draft</span>{% endif %}
+          </td>
+          <td>
+            <div class="manage-actions">
+              <a class="btn-manage-outline" href="{% url 'lms:manage_material_edit' academy.key m.pk %}">Edit</a>
+              <form method="post" action="{% url 'lms:manage_material_delete' academy.key m.pk %}" class="d-inline" onsubmit="return confirm('Delete this material?');">
+                {% csrf_token %}
+                <button type="submit" class="btn-manage-danger">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="manage-empty">No materials yet. Add Google Slides, Drive folders, PDFs, or other links members see as cards.</p>
+  {% endif %}
+</section>
+
+<section class="manage-section">
+  <h2>
+    Recorded sessions
+    <a class="btn-manage" href="{% url 'lms:manage_session_create' academy.key %}">+ Add session</a>
+  </h2>
+  {% if sessions %}
+  <div class="table-responsive">
+    <table class="manage-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Title</th>
+          <th>Video link</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in sessions %}
+        <tr>
+          <td>{{ s.order }}</td>
+          <td><strong>{{ s.title }}</strong></td>
+          <td><a href="{{ s.video_url }}" target="_blank" rel="noopener" class="url-preview">{{ s.video_url }}</a></td>
+          <td>
+            {% if s.is_published %}<span class="badge-live">Live</span>{% else %}<span class="badge-draft">Draft</span>{% endif %}
+          </td>
+          <td>
+            <div class="manage-actions">
+              <a class="btn-manage-outline" href="{% url 'lms:manage_session_edit' academy.key s.pk %}">Edit</a>
+              <form method="post" action="{% url 'lms:manage_session_delete' academy.key s.pk %}" class="d-inline" onsubmit="return confirm('Delete this session?');">
+                {% csrf_token %}
+                <button type="submit" class="btn-manage-danger">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="manage-empty">No sessions yet. Paste a YouTube or Drive video URL for each recording.</p>
+  {% endif %}
+</section>
+
+<p class="link-muted">
+  <a href="{% url 'lms:manage_hub' %}">← All academies</a>
+  · Order controls sort order on the public page (lower numbers first).
+</p>
+{% endblock %}
