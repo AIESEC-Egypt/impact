@@ -67,7 +67,8 @@ def _material_sections(materials):
 
 
 def academy_context(academy):
-    materials = academy.materials.filter(is_published=True)
+    # Only materials created via /manage/ (legacy HTML import sets card_image).
+    materials = academy.materials.filter(is_published=True, card_image="")
     return {
         "academy": academy,
         "materials": materials,

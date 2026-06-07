@@ -17,9 +17,7 @@ fi
 
 echo "==> seed LMS"
 python manage.py seed_lms
-python manage.py clear_material_pdfs
-python manage.py seed_academy_legacy_materials --replace
-python manage.py clear_material_pdfs
+python manage.py clear_legacy_academy_materials
 python manage.py seed_home_howya_promo
 python manage.py seed_dreaming_history_quiz --replace
 

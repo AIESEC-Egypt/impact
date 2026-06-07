@@ -961,38 +961,6 @@
             font-family: 'Unbounded', sans-serif;
         }
 
-        .session-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .session {
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-radius: 16px;
-            overflow: hidden;
-            background-color: rgba(136, 45, 51, 0.86);
-            border: 2px solid rgba(136, 45, 51, 0.96);
-            width: clamp(360px, 80vw, 900px);
-            max-width: 100%;
-        }
-
-        .session:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(136, 45, 51, 0.3);
-            border-color: rgba(136, 45, 51, 0.6);
-        }
-
-        .session img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
         .footer-text {
             background: rgba(136, 45, 51, 0.86);
             color: #d4cfb5;
@@ -1200,18 +1168,6 @@
                     <span class="dreaming-countdown__value" data-countdown-segment="seconds">00</span>
                     <span class="dreaming-countdown__label">Seconds</span>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PDF Resources Section -->
-    <section class="pdf-section">
-        <h2 class="section-title">Dreaming Resources</h2>
-        <div class="session-container">
-            <!-- Add your PDF sessions here -->
-            <!-- Example structure - replace with actual PDF files -->
-            <div class="session">
-                <img src="{% static 'Academy/pdf/Dreaming Process I.png' %}" alt="Dreaming Guide">
             </div>
         </div>
     </section>

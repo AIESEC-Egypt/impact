@@ -1,4 +1,4 @@
-"""Seed the academies (and the dreaming process) plus a little sample content.
+"""Seed academies and the dreaming process (no legacy material cards).
 
 Idempotent: safe to run multiple times. Run with:
     python manage.py seed_lms
@@ -6,7 +6,7 @@ Idempotent: safe to run multiple times. Run with:
 
 from django.core.management.base import BaseCommand
 
-from lms.models import Academy, Choice, Exam, Material, Question, Session
+from lms.models import Academy
 
 ACADEMIES = [
     ("ogv", "oGV Academy", "Outgoing Global Volunteer", 1),
@@ -21,7 +21,7 @@ ACADEMIES = [
 
 
 class Command(BaseCommand):
-    help = "Seed academies, the dreaming process, and sample learning content."
+    help = "Seed academies and the dreaming process."
 
     def handle(self, *args, **options):
         for key, title, subtitle, order in ACADEMIES:
@@ -51,77 +51,8 @@ class Command(BaseCommand):
         )
         self.stdout.write("Created/updated Dreaming Process")
 
-        self._seed_sample_content()
         self._seed_dreaming_quiz(dreaming)
         self.stdout.write(self.style.SUCCESS("Seeding complete."))
-
-    def _seed_sample_content(self):
-        igv = Academy.objects.get(key="igv")
-
-        Material.objects.get_or_create(
-            academy=igv,
-            title="iGV Starter Pack",
-            defaults={
-                "material_type": "ppt",
-                "url": "https://docs.google.com/presentation/d/EXAMPLE/edit",
-                "description": "Everything a new iGV member needs to get started.",
-                "order": 1,
-            },
-        )
-        Session.objects.get_or_create(
-            academy=igv,
-            title="iGV 101 Recording",
-            defaults={
-                "video_url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-                "description": "Recorded onboarding session for iGV.",
-                "order": 1,
-            },
-        )
-
-        exam, created = Exam.objects.get_or_create(
-            academy=igv,
-            title="iGV Knowledge Check",
-            defaults={
-                "description": "A short quiz on iGV fundamentals.",
-                "kind": Exam.KIND_EXAM,
-                "pass_mark": 60,
-                "max_attempts": 0,
-                "is_published": True,
-            },
-        )
-        if created or not exam.questions.exists():
-            q1 = Question.objects.create(
-                exam=exam,
-                text="What does iGV stand for?",
-                question_type=Question.SINGLE,
-                points=1,
-                order=1,
-            )
-            Choice.objects.create(question=q1, text="Incoming Global Volunteer", is_correct=True, order=1)
-            Choice.objects.create(question=q1, text="International Group Visit", is_correct=False, order=2)
-            Choice.objects.create(question=q1, text="Internal Growth Vision", is_correct=False, order=3)
-
-            q2 = Question.objects.create(
-                exam=exam,
-                text="iGV opportunities are always 6 weeks long.",
-                question_type=Question.TRUE_FALSE,
-                points=1,
-                order=2,
-            )
-            Choice.objects.create(question=q2, text="True", is_correct=False, order=1)
-            Choice.objects.create(question=q2, text="False", is_correct=True, order=2)
-
-            q3 = Question.objects.create(
-                exam=exam,
-                text="Which of these are stages of the customer journey? (select all)",
-                question_type=Question.MULTIPLE,
-                points=2,
-                order=3,
-            )
-            Choice.objects.create(question=q3, text="Attraction", is_correct=True, order=1)
-            Choice.objects.create(question=q3, text="Consideration", is_correct=True, order=2)
-            Choice.objects.create(question=q3, text="Hibernation", is_correct=False, order=3)
-        self.stdout.write("Seeded sample material/session/exam on iGV.")
 
     def _seed_dreaming_quiz(self, dreaming):
         from django.core.management import call_command
