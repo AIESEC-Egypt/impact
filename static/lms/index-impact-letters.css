@@ -1,0 +1,4 @@
+/* IMPACT hero letters — background image (tracked for deploy; also in static/styles.css locally) */
+.letter {
+  background-image: url('../aspects/IMG_2275%20(1).JPG');
+}

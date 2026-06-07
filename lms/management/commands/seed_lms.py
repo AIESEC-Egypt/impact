@@ -58,4 +58,4 @@ class Command(BaseCommand):
         from django.core.management import call_command
 
         call_command("seed_dreaming_history_quiz")
-        self.stdout.write("Seeded dreaming history quiz (60 questions, 15 per attempt).")
+        self.stdout.write("Seeded dreaming history quiz (30 questions, 15 per attempt).")

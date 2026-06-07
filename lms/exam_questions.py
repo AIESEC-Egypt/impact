@@ -24,7 +24,7 @@ def select_questions_for_attempt(exam):
     limit = exam.questions_per_attempt or 0
     if limit > 0 and limit < len(pool):
         pool = rng.sample(pool, limit)
-    elif exam.shuffle_questions:
+    if exam.shuffle_questions:
         rng.shuffle(pool)
     return pool
 

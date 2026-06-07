@@ -1,4 +1,4 @@
-"""Load the 60-question AIESEC in Egypt history quiz on the Dreaming academy."""
+"""Load the 30-question AIESEC in Egypt history quiz on the Dreaming academy."""
 
 from django.core.management.base import BaseCommand
 from django.db import transaction
@@ -11,18 +11,18 @@ LEGACY_TITLES = ("El Haweya Knowledge Quiz",)
 
 DESCRIPTION = (
     FORM_DESCRIPTION
-    + "\n\nEach attempt shows 15 randomly selected questions from the full bank of 60."
+    + "\n\nEach attempt shows 15 randomly selected questions from the full bank of 30."
 )
 
 
 class Command(BaseCommand):
-    help = "Seed or refresh the Dreaming history quiz (60 questions, 15 per attempt)."
+    help = "Seed or refresh the Dreaming history quiz (30 questions, 15 per attempt)."
 
     def add_arguments(self, parser):
         parser.add_argument(
             "--replace",
             action="store_true",
-            help="Delete existing questions on this exam and reload all 60.",
+            help="Delete existing questions on this exam and reload all 30.",
         )
 
     @transaction.atomic
@@ -45,7 +45,7 @@ class Command(BaseCommand):
         exam.kind = Exam.KIND_QUIZ
         exam.pass_mark = 60
         exam.questions_per_attempt = 15
-        exam.shuffle_questions = False
+        exam.shuffle_questions = True
         exam.is_published = True
         exam.save()
 
