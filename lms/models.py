@@ -202,8 +202,14 @@ class Material(models.Model):
         return f"{self.academy.key}: {self.title}"
 
     def link_url(self):
-        """External URL when the card is clickable (Drive, etc.)."""
-        return (self.url or "").strip()
+        """External URL when the card is clickable (Drive, etc.). Never PDFs."""
+        u = (self.url or "").strip()
+        if not u:
+            return ""
+        lower = u.lower()
+        if lower.endswith(".pdf") or "/academy/pdf/" in lower or "/static/academy/pdf/" in lower:
+            return ""
+        return u
 
     @property
     def embed_url(self):

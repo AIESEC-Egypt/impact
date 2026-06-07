@@ -78,6 +78,14 @@ class Command(BaseCommand):
                 self.stdout.write(f"Copied file {src_rel} → static/{dest_rel}")
             copied += 1
 
+        removed_pdfs = 0
+        for pdf in static.rglob("*.pdf"):
+            if pdf.is_file():
+                pdf.unlink()
+                removed_pdfs += 1
+        if removed_pdfs:
+            self.stdout.write(f"Removed {removed_pdfs} PDF file(s) from static/")
+
         self.stdout.write(
             self.style.SUCCESS(f"Done. {copied} paths synced, {skipped} missing.")
         )

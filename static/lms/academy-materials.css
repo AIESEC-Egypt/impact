@@ -1,0 +1,177 @@
+/* Materials section — legacy Academy session-section / session-title / session cards */
+
+.academy-learning {
+  width: 100%;
+  background: #fff;
+  padding: 48px 0 32px;
+  font-family: 'Unbounded', sans-serif;
+}
+
+.academy-learning .session-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.academy-materials__section.session-title {
+  margin-top: 8px;
+  margin-bottom: 12px;
+  min-height: auto;
+  height: auto;
+  padding: 16px 20px;
+  font-size: clamp(1.1rem, 3vw, 1.75rem);
+  border-width: 6px;
+}
+
+.academy-materials__title.session-title {
+  text-align: center;
+  align-content: center;
+  width: min(1253px, calc(100% - 40px));
+  min-height: 90px;
+  height: auto;
+  padding: 24px 20px;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-family: 'Unbounded', sans-serif;
+  color: var(--academy-accent, #f85a40);
+  margin: 20px auto;
+  border: 10px solid var(--academy-accent, #f85a40);
+  border-radius: 20px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.materials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(280px, 492px));
+  justify-content: center;
+  align-items: start;
+  gap: 10px;
+  width: min(1014px, 100%);
+  max-width: 100%;
+  margin: 0 auto 80px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.material-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 492px;
+  justify-self: center;
+}
+
+.material-item .session.material-link,
+.material-item .session.material-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 492 / 210;
+  max-height: none;
+  height: auto;
+  border-radius: 15px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.material-item .session.material-link {
+  cursor: pointer;
+}
+
+.material-item .session.material-card {
+  cursor: default;
+}
+
+.material-item .session.material-link img,
+.material-item .session.material-card img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.material-item .session.material-link:hover img {
+  filter: grayscale(0%);
+  transform: scale(1.03);
+}
+
+.material-item .session.material-link:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.material-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 210px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--academy-accent, #f85a40), #2d2e2e);
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  padding: 16px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.material-caption {
+  margin: 12px 0 0;
+  font-family: 'Roboto Flex', 'Unbounded', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #2d2e2e;
+  text-align: center;
+  max-width: 100%;
+  line-height: 1.35;
+}
+
+.materials-grid .material-item:last-child:nth-child(odd):not(:only-child) {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+
+@media screen and (max-width: 1040px) {
+  .materials-grid {
+    grid-template-columns: minmax(0, 492px);
+  }
+}
+
+@media screen and (max-width: 726px) {
+  .material-item .session.material-link,
+  .material-item .session.material-card {
+    aspect-ratio: 16 / 9;
+  }
+
+  .academy-materials__title.session-title {
+    width: min(913px, calc(100% - 24px));
+    margin: 16px auto;
+    padding: 18px 14px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .materials-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 48px;
+    padding: 0 16px;
+  }
+
+  .material-item {
+    max-width: 360px;
+  }
+
+  .materials-grid .material-item:last-child:nth-child(odd):not(:only-child) {
+    grid-column: auto;
+  }
+}

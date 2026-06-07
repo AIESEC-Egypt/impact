@@ -1,0 +1,134 @@
+/* Functional academy heroes — colors from legacy Academy/*.html + homepage cards */
+
+@font-face {
+  font-family: 'Amsterdam';
+  src: url('../fonts/am.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@keyframes academyGradientMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.academy-hero.home-section {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 52px);
+  min-height: 420px;
+  max-height: 900px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: hidden;
+  color: #fff;
+  padding: 20px;
+  margin: 0;
+  background-size: 200% 200%;
+}
+
+.academy-hero.home-section .content-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  width: 100%;
+  min-height: 280px;
+}
+
+.academy-hero .background-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(5rem, 18vw, 13.375rem);
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+  font-family: 'Unbounded', sans-serif;
+  pointer-events: none;
+  margin: 0;
+  z-index: 0;
+}
+
+.academy-hero .foreground-text {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: 'Amsterdam', cursive, sans-serif;
+  font-size: clamp(6rem, 22vw, 15.75rem);
+  font-style: normal;
+  font-weight: 100;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-transform: none;
+}
+
+.academy-hero__meta {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
+  font-weight: 300;
+  opacity: 0.92;
+  padding: 0 24px;
+}
+
+.academy-hero__meta p {
+  margin: 4px 0;
+}
+
+.academy-hero--ogv,
+.academy-hero--igv {
+  background: linear-gradient(90deg, #f85a40, #903426);
+  animation: academyGradientMove 2s infinite alternate;
+}
+
+.academy-hero--ogt,
+.academy-hero--igt {
+  background: linear-gradient(90deg, #0cb9c1, #f48924);
+  animation: academyGradientMove 2s infinite alternate;
+}
+
+.academy-hero--b2c {
+  background: linear-gradient(135deg, #037ef3, #1366b4);
+  animation: academyGradientMove 2s infinite alternate;
+}
+
+.academy-hero--b2b {
+  background: linear-gradient(135deg, #0e33af, #2651dc);
+  animation: academyGradientMove 2s infinite alternate;
+}
+
+.academy-hero--tm {
+  background: linear-gradient(135deg, #35266a, #a785f0);
+  animation: academyGradientMove 2s infinite alternate;
+}
+
+.academy-hero--fl {
+  background: linear-gradient(135deg, #076d3e, #0da15d, #46d286);
+  animation: academyGradientMove 2s infinite alternate;
+}
+
+.academy-hero--default {
+  background: linear-gradient(135deg, #037ef3, #6f42c1);
+}
+
+@media (max-width: 768px) {
+  .academy-hero.home-section {
+    height: auto;
+    min-height: 72vh;
+    padding: 48px 16px 80px;
+  }
+}
