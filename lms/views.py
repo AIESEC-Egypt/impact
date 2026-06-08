@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.db.utils import DatabaseError
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -20,11 +21,11 @@ def home(request):
     code = request.GET.get("code")
     if code and not request.user.is_authenticated:
         return handle_oauth_callback(request, code)
-    return render(
-        request,
-        "index.html",
-        {"home_promos": HomePromo.objects.filter(is_published=True)},
-    )
+    try:
+        home_promos = list(HomePromo.objects.filter(is_published=True))
+    except DatabaseError:
+        home_promos = []
+    return render(request, "index.html", {"home_promos": home_promos})
 
 
 def _published_academies():

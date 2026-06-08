@@ -7,6 +7,10 @@ set -e
 
 case "${1:-web}" in
   web)
+    if [ "${SKIP_MIGRATE:-0}" != "1" ]; then
+      echo "==> migrate (startup)"
+      python manage.py migrate --noinput
+    fi
     exec gunicorn impact.wsgi:application \
       --bind "0.0.0.0:${PORT:-8000}" \
       --workers "${WEB_CONCURRENCY:-2}" \

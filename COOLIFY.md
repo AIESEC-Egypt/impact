@@ -14,12 +14,15 @@ Set `DJANGO_DEBUG=False` so users see friendly errors only (no technical dumps).
 ## First deploy
 
 1. Deploy the container (Coolify builds the Dockerfile).
+   Migrations run automatically on each container start.
 2. Open **Terminal** and run:
 
 ```bash
 /app/scripts/docker-entrypoint.sh release
 /app/scripts/docker-entrypoint.sh manage createsuperuser
 ```
+
+`release` seeds academies, quizzes, and promos (skip later with `SKIP_SEED=1`).
 
 3. Configure EXPA in `/admin/`, then:
 
