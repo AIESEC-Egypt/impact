@@ -13,6 +13,9 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # --- Static bundle (rebuilds when assets or templates change) ---------------
 FROM deps AS static
 
+# deps installs to /install; put packages on the default Python path
+COPY --from=deps /install /usr/local
+
 WORKDIR /app
 
 ENV DJANGO_SECRET_KEY=build-only \
