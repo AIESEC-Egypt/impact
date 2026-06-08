@@ -1,5 +1,11 @@
 from django.conf import settings
+from django.http import HttpResponse
 from django.shortcuts import render
+
+
+def health(request):
+    """Plain 200 for Docker/Coolify probes (no HTTPS redirect)."""
+    return HttpResponse("ok", content_type="text/plain")
 
 
 def page_not_found(request, exception):

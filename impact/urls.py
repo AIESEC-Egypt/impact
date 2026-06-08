@@ -4,9 +4,11 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
 
+from impact import views as impact_views
 from lms import views as lms_views
 
 urlpatterns = [
+    path("health/", impact_views.health, name="health"),
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
 
