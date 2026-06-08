@@ -32,7 +32,6 @@ COPY image/ image/
 COPY Academy/ Academy/
 COPY ["Middle Video/", "Middle Video/"]
 COPY ["styles server.css", "styles server.css"]
-COPY script.js script.js
 
 # Django app (needed for collectstatic + template refs)
 COPY manage.py .

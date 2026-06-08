@@ -52,14 +52,13 @@ class Command(BaseCommand):
             self.stdout.write("Synced static/styles.css → static/styles.min.css")
             copied += 1
 
-        for js_name in ("script.js",):
-            js_src = base / js_name
+        js_dest = static / "script.js"
+        for js_src in (base / "script.js", base / "static" / "script.js"):
             if js_src.is_file():
-                shutil.copy2(js_src, static / "script.js")
-                self.stdout.write(f"Copied {js_name} → static/script.js")
+                shutil.copy2(js_src, js_dest)
+                self.stdout.write(f"Copied {js_src.relative_to(base)} → static/script.js")
                 copied += 1
-            elif (static / "script.js").is_file():
-                self.stdout.write("Using existing static/script.js")
+                break
 
         video_src = _video_src(base)
         if video_src:

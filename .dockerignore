@@ -25,7 +25,10 @@ db.sqlite3
 db.sqlite3-journal
 
 # Generated at build (sync_static_assets + collectstatic)
-static/
+static/*
+!static/lms/
+!static/lms/**
+!static/script.js
 staticfiles/
 media/
 logs/
