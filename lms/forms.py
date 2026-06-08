@@ -48,7 +48,7 @@ class HomePromoAdminForm(forms.ModelForm):
         if destination == HomePromo.DEST_DREAMING_EXAM and not exam:
             self.add_error(
                 "exam",
-                "Select the Dreaming knowledge quiz (e.g. Howya / History certificate test).",
+                "Select the Dreaming knowledge quiz (e.g. Haweya / History certificate test).",
             )
         if destination == HomePromo.DEST_CUSTOM_URL and not custom_url:
             self.add_error("custom_url", "Enter the full URL for the button.")

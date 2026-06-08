@@ -11,8 +11,13 @@ urlpatterns = [
         name="export_exam_respondents",
     ),
     path(
+        "api/exports/haweya-respondents/",
+        export_views.export_haweya_respondents,
+        name="export_haweya_respondents",
+    ),
+    path(
         "api/exports/howya-respondents/",
-        export_views.export_howya_respondents,
+        export_views.export_haweya_respondents,
         name="export_howya_respondents",
     ),
     path("dreaming/", views.dreaming, name="dreaming"),

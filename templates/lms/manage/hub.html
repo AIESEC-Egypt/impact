@@ -40,11 +40,11 @@
 {% endif %}
 
 {% if is_site_admin %}
-{% if howya_exam %}
+{% if haweya_exam %}
 <div class="manage-section mt-4">
-  <h2 class="h5 mb-2">Dreaming — Howya certificate quiz</h2>
+  <h2 class="h5 mb-2">Dreaming — Haweya certificate quiz</h2>
   <p class="link-muted mb-3">Site admins can view respondents and edit the El Haweya knowledge test.</p>
-  <a class="btn-manage" href="{% url 'lms:manage_exam_questions' 'dreaming' howya_exam.pk %}">Open Howya quiz</a>
+  <a class="btn-manage" href="{% url 'lms:manage_exam_questions' 'dreaming' haweya_exam.pk %}">Open Haweya quiz</a>
 </div>
 {% endif %}
 <p class="link-muted mt-4">

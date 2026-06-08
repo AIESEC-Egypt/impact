@@ -24,7 +24,7 @@ raise SystemExit(0 if Academy.objects.exists() else 1)
   echo "==> empty database — seeding"
   python manage.py seed_lms
   python manage.py merge_duplicate_academies
-  python manage.py seed_home_howya_promo
+  python manage.py seed_home_haweya_promo
 }
 
 case "${1:-web}" in

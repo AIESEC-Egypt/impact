@@ -26,7 +26,7 @@ echo "==> seed LMS"
 python manage.py seed_lms
 python manage.py merge_duplicate_academies
 python manage.py clear_legacy_academy_materials
-python manage.py seed_home_howya_promo
+python manage.py seed_home_haweya_promo
 python manage.py seed_dreaming_history_quiz --replace
 
 echo "==> done — run: docker-entrypoint.sh manage createsuperuser"

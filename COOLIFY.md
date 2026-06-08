@@ -41,15 +41,15 @@ Migrations only (no re-seed):
 
 Skip seeds on `release`: `SKIP_SEED=1 /app/scripts/docker-entrypoint.sh release`
 
-## Howya quiz export (Google Sheets)
+## Haweya quiz export (Google Sheets)
 
 1. Set `QUIZ_EXPORT_API_TOKEN` in Coolify (long random string).
-2. In Google Sheets → Extensions → Apps Script → paste `Dreaming_Howya_Export_Apps_Script.gs`.
-3. Set `API_TOKEN` in the script to the same value; run **IMPACT → Sync Howya respondents**.
+2. In Google Sheets → Extensions → Apps Script → paste `Dreaming_Haweya_Export_Apps_Script.gs`.
+3. Set `API_TOKEN` in the script to the same value; run **IMPACT → Sync Haweya respondents**.
 
 API endpoints (Bearer token or `?token=`):
 
-- `GET /api/exports/howya-respondents/` — Dreaming Howya certificate quiz
+- `GET /api/exports/haweya-respondents/` — Dreaming Haweya certificate quiz
 - `GET /api/exports/exam-respondents/?exam_id=<id>` — any exam
 
 View respondents in `/admin/` (Exam → Respondents) or `/manage/` (quiz questions page).

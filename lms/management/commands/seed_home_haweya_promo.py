@@ -1,10 +1,11 @@
-"""Create a default home promo for the Dreaming Howya / history certificate quiz."""
+"""Create a default home promo for the Dreaming Haweya / history certificate quiz."""
 
 from django.core.management.base import BaseCommand
 
 from lms.models import Academy, Exam, HomePromo
 
-DEFAULT_TITLE = "Obtain your Howya certificate now"
+DEFAULT_TITLE = "Obtain your Haweya certificate now"
+LEGACY_TITLE = "Obtain your Howya certificate now"
 DEFAULT_SUBTITLE = (
     "Pass the El Haweya knowledge test on the Dreaming process to earn your certificate."
 )
@@ -12,7 +13,7 @@ DEFAULT_BUTTON = "Take the certificate test"
 
 
 class Command(BaseCommand):
-    help = "Seed the default Howya certificate promo on the home page (idempotent)."
+    help = "Seed the default Haweya certificate promo on the home page (idempotent)."
 
     def handle(self, *args, **options):
         dreaming = Academy.objects.filter(key="dreaming").first()
@@ -30,17 +31,26 @@ class Command(BaseCommand):
             .first()
         )
 
-        promo, created = HomePromo.objects.get_or_create(
-            title=DEFAULT_TITLE,
-            defaults={
-                "subtitle": DEFAULT_SUBTITLE,
-                "button_label": DEFAULT_BUTTON,
-                "destination": HomePromo.DEST_DREAMING_EXAM,
-                "exam": exam,
-                "order": 0,
-                "is_published": True,
-            },
-        )
+        promo = HomePromo.objects.filter(title__in=[DEFAULT_TITLE, LEGACY_TITLE]).first()
+        if promo and promo.title == LEGACY_TITLE:
+            promo.title = DEFAULT_TITLE
+            promo.save(update_fields=["title"])
+
+        if not promo:
+            promo, created = HomePromo.objects.get_or_create(
+                title=DEFAULT_TITLE,
+                defaults={
+                    "subtitle": DEFAULT_SUBTITLE,
+                    "button_label": DEFAULT_BUTTON,
+                    "destination": HomePromo.DEST_DREAMING_EXAM,
+                    "exam": exam,
+                    "order": 0,
+                    "is_published": True,
+                },
+            )
+        else:
+            created = False
+
         if not created and exam and not promo.exam_id:
             promo.exam = exam
             promo.destination = HomePromo.DEST_DREAMING_EXAM

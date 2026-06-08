@@ -18,7 +18,7 @@ python manage.py sync_static_assets
 python manage.py collectstatic --noinput
 python manage.py seed_lms
 python manage.py clear_legacy_academy_materials
-python manage.py seed_home_howya_promo
+python manage.py seed_home_haweya_promo
 python manage.py createsuperuser
 ```
 

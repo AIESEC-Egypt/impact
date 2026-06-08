@@ -112,7 +112,7 @@ class HomePromoAdmin(admin.ModelAdmin):
                 ),
                 "description": (
                     "These banners appear on the IMPACT home page. "
-                    "Use them to promote the Howya certificate test or other Dreaming quizzes."
+                    "Use them to promote the Haweya certificate test or other Dreaming quizzes."
                 ),
             },
         ),
@@ -121,7 +121,7 @@ class HomePromoAdmin(admin.ModelAdmin):
             {
                 "fields": ("destination", "exam", "custom_url"),
                 "description": (
-                    'For the Howya certificate, choose "Dreaming knowledge quiz" '
+                    'For the Haweya certificate, choose "Dreaming knowledge quiz" '
                     "and select the quiz from the Dreaming page."
                 ),
             },

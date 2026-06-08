@@ -6,8 +6,8 @@ from accounts.models import MemberRoster
 
 from .models import Attempt, Exam
 
-HOWYA_EXAM_TITLE = "AIESEC in Egypt History & Identity Assessment"
-HOWYA_LEGACY_TITLES = ("El Haweya Knowledge Quiz",)
+HAWEYA_EXAM_TITLE = "AIESEC in Egypt History & Identity Assessment"
+HAWEYA_LEGACY_TITLES = ("El Haweya Knowledge Quiz",)
 
 
 def _member_key(attempt):
@@ -100,9 +100,9 @@ def respondents_for_exam(exam):
     return rows
 
 
-def resolve_howya_exam():
-    """Dreaming academy Howya / El Haweya history certificate quiz."""
-    titles = (HOWYA_EXAM_TITLE,) + HOWYA_LEGACY_TITLES
+def resolve_haweya_exam():
+    """Dreaming academy Haweya / El Haweya history certificate quiz."""
+    titles = (HAWEYA_EXAM_TITLE,) + HAWEYA_LEGACY_TITLES
     return (
         Exam.objects.filter(academy__key="dreaming", title__in=titles)
         .select_related("academy")

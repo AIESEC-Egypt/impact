@@ -4,10 +4,10 @@ from django.urls import reverse
 from django.utils import timezone
 
 from lms.exam_respondents import (
-    HOWYA_EXAM_TITLE,
+    HAWEYA_EXAM_TITLE,
     exam_respondents_payload,
     respondents_for_exam,
-    resolve_howya_exam,
+    resolve_haweya_exam,
 )
 from lms.models import Academy, AcademyContentManager, Attempt, Exam, Question
 
@@ -23,7 +23,7 @@ class RespondentsHelperTests(TestCase):
         )
         self.exam = Exam.objects.create(
             academy=self.academy,
-            title=HOWYA_EXAM_TITLE,
+            title=HAWEYA_EXAM_TITLE,
             kind=Exam.KIND_QUIZ,
             is_published=True,
         )
@@ -72,8 +72,8 @@ class RespondentsHelperTests(TestCase):
         self.assertEqual(by_expa["1001"]["attempt_count"], 2)
         self.assertEqual(by_expa["1002"]["percentage"], 55)
 
-    def test_resolve_howya_exam(self):
-        self.assertEqual(resolve_howya_exam().pk, self.exam.pk)
+    def test_resolve_haweya_exam(self):
+        self.assertEqual(resolve_haweya_exam().pk, self.exam.pk)
 
     def test_payload_shape(self):
         self._submit(self.user_a, 90, True)
@@ -89,7 +89,7 @@ class ExportApiTests(TestCase):
         self.academy = Academy.objects.create(key="dreaming", title="Dreaming", kind=Academy.KIND_DREAMING)
         self.exam = Exam.objects.create(
             academy=self.academy,
-            title=HOWYA_EXAM_TITLE,
+            title=HAWEYA_EXAM_TITLE,
             kind=Exam.KIND_QUIZ,
         )
         self.user = User.objects.create_user(username="u1", expa_id="42", full_name="Test User")
@@ -102,12 +102,12 @@ class ExportApiTests(TestCase):
             submitted_at=timezone.now(),
         )
 
-    def test_howya_export_requires_token(self):
-        url = reverse("lms:export_howya_respondents")
+    def test_haweya_export_requires_token(self):
+        url = reverse("lms:export_haweya_respondents")
         self.assertEqual(self.client.get(url).status_code, 401)
 
-    def test_howya_export_with_bearer_token(self):
-        url = reverse("lms:export_howya_respondents")
+    def test_haweya_export_with_bearer_token(self):
+        url = reverse("lms:export_haweya_respondents")
         response = self.client.get(url, HTTP_AUTHORIZATION="Bearer test-export-secret")
         self.assertEqual(response.status_code, 200)
         data = response.json()
@@ -160,14 +160,14 @@ class ManageRespondentsUiTests(TestCase):
         self.assertContains(response, "Members who answered")
         self.assertContains(response, "Respondent One")
 
-    def test_site_admin_can_open_dreaming_howya_quiz(self):
+    def test_site_admin_can_open_dreaming_haweya_quiz(self):
         dreaming = Academy.objects.create(key="dreaming", title="Dreaming", kind=Academy.KIND_DREAMING)
-        howya = Exam.objects.create(
+        haweya = Exam.objects.create(
             academy=dreaming,
-            title=HOWYA_EXAM_TITLE,
+            title=HAWEYA_EXAM_TITLE,
             kind=Exam.KIND_QUIZ,
         )
         admin = User.objects.create_user(username="admin", is_staff=True, is_superuser=True)
         self.client.force_login(admin)
-        url = reverse("lms:manage_exam_questions", args=["dreaming", howya.pk])
+        url = reverse("lms:manage_exam_questions", args=["dreaming", haweya.pk])
         self.assertEqual(self.client.get(url).status_code, 200)

@@ -121,7 +121,7 @@ class HomePromo(models.Model):
 
     title = models.CharField(
         max_length=200,
-        help_text='Headline shown on the home page, e.g. "Obtain your Howya certificate now".',
+        help_text='Headline shown on the home page, e.g. "Obtain your Haweya certificate now".',
     )
     subtitle = models.CharField(max_length=300, blank=True)
     button_label = models.CharField(max_length=80, default="Start now")

@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 from django.views.decorators.http import require_GET
 
-from .exam_respondents import exam_respondents_payload, resolve_howya_exam
+from .exam_respondents import exam_respondents_payload, resolve_haweya_exam
 from .models import Exam
 
 
@@ -50,12 +50,12 @@ def export_exam_respondents(request):
 
 
 @require_GET
-def export_howya_respondents(request):
+def export_haweya_respondents(request):
     if not _authorized(request):
         return JsonResponse({"error": "Unauthorized"}, status=401)
 
-    exam = resolve_howya_exam()
+    exam = resolve_haweya_exam()
     if not exam:
-        return JsonResponse({"error": "Howya quiz not found"}, status=404)
+        return JsonResponse({"error": "Haweya quiz not found"}, status=404)
 
     return _json_export(exam_respondents_payload(exam))
