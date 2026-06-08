@@ -1,6 +1,6 @@
-{% load static %}
+{% load static lms_extras %}
 <header class="impact-topbar">
-  <a class="brand" href="{{ topbar_home_url|default:'/' }}">
+  <a class="brand" href="{% url 'home' %}">
     <img
       class="impact-topbar__logo"
       src="{% static 'aspects/impact.png' %}"
@@ -9,11 +9,15 @@
   </a>
   <div class="userbox">
     {% if user.is_authenticated %}
-      <span class="impact-topbar__name">{{ user.full_name|default:user.get_full_name|default:user.username }}</span>
+      {% with account_name=user|navbar_account_name %}
+      {% if account_name %}
+      <span class="impact-topbar__name">{{ account_name }}</span>
+      {% endif %}
       {% if user.is_staff %}
         <a href="{% url 'admin:index' %}">Admin</a>
       {% endif %}
       <a href="{% url 'accounts:logout' %}">Logout</a>
+      {% endwith %}
     {% else %}
       <a href="{% url 'accounts:login' %}">Login</a>
     {% endif %}

@@ -84,3 +84,33 @@
     justify-content: center;
   }
 }
+
+/* Dreaming link highlight */
+.navbar-nav .dreaming-highlight {
+  background: linear-gradient(135deg, #882d33, #a33d43);
+  color: white !important;
+  padding: 8px 18px;
+  border-radius: 8px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-nav .dreaming-highlight:hover {
+  background: linear-gradient(135deg, #a33d43, #c24d53);
+  transform: translateY(-2px);
+}
+
+.navbar-nav .dreaming-highlight::after {
+  display: none;
+}
+
+.site-nav-dropdown-item {
+  padding: 14px 20px;
+  font-size: 14px;
+  transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.site-nav-dropdown-item:hover,
+.site-nav-dropdown-item:focus {
+  background: #037ef3;
+  color: white;
+}

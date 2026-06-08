@@ -1,0 +1,44 @@
+{{ formset.management_form }}
+{% if form.non_field_errors %}
+  <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+{% endif %}
+
+<div class="row g-3 mb-4">
+  <div class="col-md-8">
+    <label class="form-label" for="{{ form.text.id_for_label }}">Question</label>
+    {{ form.text }}
+  </div>
+  <div class="col-md-2">
+    <label class="form-label" for="{{ form.question_type.id_for_label }}">Type</label>
+    {{ form.question_type }}
+  </div>
+  <div class="col-md-1">
+    <label class="form-label" for="{{ form.points.id_for_label }}">Points</label>
+    {{ form.points }}
+  </div>
+  <div class="col-md-1">
+    <label class="form-label" for="{{ form.order.id_for_label }}">Order</label>
+    {{ form.order }}
+  </div>
+</div>
+
+<h3 class="h6 mb-2">Answer options</h3>
+<p class="form-text mb-3">Mark the correct answer(s). Single-choice = one correct; multiple-choice = one or more.</p>
+
+{% for f in formset %}
+<div class="row g-2 align-items-center mb-2 choice-row">
+  <div class="col-md-7">{{ f.text }}</div>
+  <div class="col-md-2">
+    <div class="form-check">
+      {{ f.is_correct }}
+      <label class="form-check-label" for="{{ f.is_correct.id_for_label }}">Correct</label>
+    </div>
+  </div>
+  <div class="col-md-2">{{ f.order }}</div>
+  <div class="col-md-1">
+    {% if f.DELETE %}{{ f.DELETE }}{% endif %}
+    {% for hidden in f.hidden_fields %}{{ hidden }}{% endfor %}
+  </div>
+  {% if f.errors %}<div class="col-12 text-danger small">{{ f.errors }}</div>{% endif %}
+</div>
+{% endfor %}

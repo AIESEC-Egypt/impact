@@ -37,6 +37,21 @@ class Command(BaseCommand):
         copied = 0
         skipped = 0
 
+        for styles_name in ("styles.min.css",):
+            styles_src = base / styles_name
+            if styles_src.is_file():
+                shutil.copy2(styles_src, static / "styles.min.css")
+                self.stdout.write(f"Copied {styles_name} → static/styles.min.css")
+                copied += 1
+
+        for styles_name in ("styles server.css", "styles.css"):
+            styles_src = base / styles_name
+            if styles_src.is_file():
+                shutil.copy2(styles_src, static / "styles.css")
+                self.stdout.write(f"Copied {styles_name} → static/styles.css")
+                copied += 1
+                break
+
         video_src = _video_src(base)
         if video_src:
             dest = static / "Middel Video"

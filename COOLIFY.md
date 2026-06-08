@@ -8,7 +8,8 @@
 | Port | `8000` |
 | Start command | *(leave empty — image uses `CMD web`)* |
 
-Paste env vars from `.env.coolify.example` (set real `DJANGO_SECRET_KEY` and `EXPA_*`).
+Paste env vars from `.env.coolify.example` (set real `DJANGO_SECRET_KEY`, `POSTGRES_*`, and `EXPA_*`).
+Set `DJANGO_DEBUG=False` so users see friendly errors only (no technical dumps).
 
 ## First deploy
 
@@ -28,11 +29,11 @@ Paste env vars from `.env.coolify.example` (set real `DJANGO_SECRET_KEY` and `EX
 
 ## Later deploys
 
+Static files are baked into the Docker image — redeploying the container is enough.
 Migrations only (no re-seed):
 
 ```bash
 /app/scripts/docker-entrypoint.sh manage migrate --noinput
-/app/scripts/docker-entrypoint.sh manage collectstatic --noinput
 ```
 
 Skip seeds on `release`: `SKIP_SEED=1 /app/scripts/docker-entrypoint.sh release`

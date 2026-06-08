@@ -207,6 +207,111 @@
   color: #6c6c80;
   font-size: 0.82rem;
 }
+.manage-steps {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+  font-size: 0.82rem;
+}
+.manage-steps li {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(27, 27, 47, 0.06);
+  color: #6c6c80;
+}
+.manage-steps li.active {
+  background: var(--manage-accent, #037ef3);
+  color: #fff;
+  font-weight: 500;
+}
+.manage-steps a {
+  color: inherit;
+  text-decoration: none;
+}
+.manage-steps a:hover {
+  text-decoration: underline;
+}
+.manage-add-question {
+  border: 2px solid rgba(3, 126, 243, 0.15);
+}
+.manage-add-question h2 {
+  color: var(--manage-accent, #037ef3);
+}
+.manage-steps__locked {
+  cursor: default;
+}
+.manage-steps__hint {
+  font-size: 0.72rem;
+  opacity: 0.85;
+}
+.manage-form-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.manage-form-actions--inline {
+  padding-top: 4px;
+  border-top: 1px solid #eef1f7;
+}
+.btn-manage-lg {
+  padding: 11px 22px;
+  font-size: 0.9rem;
+}
+.manage-details {
+  border: 1px solid #e8ecf4;
+  border-radius: 12px;
+  padding: 12px 16px;
+  background: #fafbfd;
+}
+.manage-details summary {
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #6c6c80;
+  list-style: none;
+}
+.manage-details summary::-webkit-details-marker {
+  display: none;
+}
+.manage-details summary::before {
+  content: "▸ ";
+}
+.manage-details[open] summary::before {
+  content: "▾ ";
+}
+.manage-form-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  margin: 0 -18px -28px;
+  padding: 12px 18px 16px;
+  background: linear-gradient(to top, #f0f2f8 70%, rgba(240, 242, 248, 0));
+  pointer-events: none;
+}
+.manage-form-bar__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: #fff;
+  border-radius: 14px;
+  padding: 12px 18px;
+  box-shadow: 0 -4px 24px rgba(27, 27, 47, 0.1);
+  pointer-events: auto;
+}
+.manage-form-bar__label {
+  font-size: 0.8rem;
+  color: #6c6c80;
+}
+body:has(.manage-form-bar) .manage-wrap {
+  padding-bottom: 88px;
+}
 .url-preview {
   max-width: 220px;
   overflow: hidden;

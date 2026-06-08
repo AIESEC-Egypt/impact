@@ -15,8 +15,9 @@ ACADEMIES = [
     ("igt", "iGT Academy", "Incoming Global Talent / Teacher", 4),
     ("b2c", "B2C Academy", "Business to Customer", 5),
     ("b2b", "B2B Academy", "Business to Business", 6),
-    ("tm", "TM Academy", "Talent Management", 7),
-    ("fl", "F&L Academy", "Finance & Legal", 8),
+    ("bd", "BD Academy", "Business Development", 7),
+    ("tm", "TM Academy", "Talent Management", 8),
+    ("fl", "F&L Academy", "Finance & Legal", 9),
 ]
 
 

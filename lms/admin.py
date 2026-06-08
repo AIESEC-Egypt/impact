@@ -27,7 +27,15 @@ class ContentManagerInline(admin.TabularInline):
 class MaterialInline(admin.TabularInline):
     model = Material
     extra = 1
-    fields = ("title", "subtitle", "thumbnail", "url", "order", "is_published")
+    fields = (
+        "title",
+        "section_group",
+        "subtitle",
+        "thumbnail",
+        "url",
+        "order",
+        "is_published",
+    )
 
 
 class SessionInline(admin.TabularInline):
@@ -57,6 +65,27 @@ class AcademyAdmin(admin.ModelAdmin):
     search_fields = ("title", "key")
     prepopulated_fields = {"key": ("title",)}
     inlines = [ContentManagerInline, MaterialInline, SessionInline, ExamInline]
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": ("title", "key", "subtitle", "description", "kind", "order", "is_published"),
+                "description": (
+                    "URL slug must be lowercase (e.g. b2b, ogv). "
+                    "The public page is always /academy/&lt;key&gt;/ — do not create a second "
+                    "academy with a different spelling for the same function."
+                ),
+            },
+        ),
+        (
+            "Advanced",
+            {
+                "classes": ("collapse",),
+                "fields": ("template_name",),
+                "description": "Leave blank. Uses the standard Django academy page for all functions.",
+            },
+        ),
+    )
 
 
 @admin.register(HomePromo)
@@ -203,6 +232,7 @@ class ExamAdmin(admin.ModelAdmin):
                     "max_attempts",
                     "shuffle_questions",
                     "questions_per_attempt",
+                    "show_correct_answers_after_pass",
                 )
             },
         ),
@@ -254,6 +284,7 @@ class AnswerInline(admin.TabularInline):
 @admin.register(Attempt)
 class AttemptAdmin(admin.ModelAdmin):
     list_display = (
+        "expa_id",
         "user",
         "exam",
         "score_display",
@@ -262,9 +293,16 @@ class AttemptAdmin(admin.ModelAdmin):
         "submitted_at",
     )
     list_filter = ("passed", "exam__academy", "exam", "submitted_at")
-    search_fields = ("user__username", "user__full_name", "exam__title")
+    search_fields = (
+        "expa_id",
+        "user__username",
+        "user__full_name",
+        "user__expa_id",
+        "exam__title",
+    )
     readonly_fields = (
         "user",
+        "expa_id",
         "exam",
         "started_at",
         "submitted_at",

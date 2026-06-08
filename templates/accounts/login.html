@@ -15,7 +15,8 @@
       background-size: 300% 300%; animation: bgMove 6s ease infinite alternate;
       font-family: 'Unbounded', sans-serif;
     }
-    .logo { width: 100px; margin: 0 auto 20px auto; display: block; }
+    .logo-link { display: block; margin: 0 auto 20px auto; width: fit-content; }
+    .logo { width: 100px; display: block; }
     @keyframes bgMove { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
     .container {
       text-align: center; padding: 35px; background: rgba(255, 255, 255, 0.1);
@@ -37,7 +38,9 @@
 </head>
 <body>
   <div class="container">
-    <img src="{% static 'aspects/icon.png' %}" alt="Logo" class="logo" />
+    <a href="{% url 'home' %}" class="logo-link" aria-label="Back to IMPACT home">
+      <img src="{% static 'aspects/icon.png' %}" alt="Logo" class="logo" />
+    </a>
     <h1>Welcome to IMPACT</h1>
     <p class="sub">Sign in with your AIESEC EXPA account to access the academies and the dreaming process. Only active members of AIESEC in Egypt can log in.</p>
     {% if messages %}

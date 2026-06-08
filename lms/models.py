@@ -37,6 +37,27 @@ class Academy(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        if self.key:
+            self.key = self.key.strip().lower()
+        # template_name is for optional Django templates only — not a URL path.
+        tn = (self.template_name or "").strip()
+        if tn.startswith("/") or tn.endswith(".html"):
+            if tn.startswith("/academy/"):
+                self.template_name = ""
+            elif tn in {
+                "Academy/oGV.html",
+                "Academy/iGV.html",
+                "Academy/oGT.html",
+                "Academy/iGT.html",
+                "Academy/B2C.html",
+                "Academy/B2B.html",
+                "Academy/MXP.html",
+                "Academy/F&L.html",
+            }:
+                self.template_name = ""
+        super().save(*args, **kwargs)
+
     def get_absolute_url(self):
         from django.urls import reverse
 
@@ -201,6 +222,15 @@ class Material(models.Model):
     def __str__(self):
         return f"{self.academy.key}: {self.title}"
 
+    def save(self, *args, **kwargs):
+        if self.url:
+            u = self.url.strip()
+            if u and not u.lower().startswith(("http://", "https://")):
+                u = f"https://{u.lstrip('/')}"
+            self.url = u
+        super().save(*args, **kwargs)
+
+    @property
     def link_url(self):
         """External URL when the card is clickable (Drive, etc.). Never PDFs."""
         u = (self.url or "").strip()
@@ -247,18 +277,16 @@ class Session(models.Model):
         return f"{self.academy.key}: {self.title}"
 
     @property
+    def youtube_id(self):
+        from .video_embed import youtube_video_id
+
+        return youtube_video_id(self.video_url) or ""
+
+    @property
     def embed_url(self):
-        u = self.video_url
-        if "youtube.com/watch" in u and "v=" in u:
-            vid = u.split("v=")[1].split("&")[0]
-            return f"https://www.youtube.com/embed/{vid}"
-        if "youtu.be/" in u:
-            vid = u.split("youtu.be/")[1].split("?")[0]
-            return f"https://www.youtube.com/embed/{vid}"
-        if "drive.google.com/file/d/" in u and "/preview" not in u:
-            base = u.split("/view")[0]
-            return base.rstrip("/") + "/preview"
-        return u
+        from .video_embed import video_embed_url
+
+        return video_embed_url(self.video_url)
 
 
 class Exam(models.Model):
@@ -285,6 +313,13 @@ class Exam(models.Model):
         default=0, help_text="0 means unlimited attempts."
     )
     shuffle_questions = models.BooleanField(default=False)
+    show_correct_answers_after_pass = models.BooleanField(
+        default=True,
+        help_text=(
+            "After a member passes, show the review section with correct answers. "
+            "When off, passed attempts only show the score."
+        ),
+    )
     questions_per_attempt = models.PositiveIntegerField(
         default=0,
         help_text=(
@@ -385,6 +420,12 @@ class Attempt(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="attempts"
     )
+    expa_id = models.CharField(
+        max_length=64,
+        blank=True,
+        db_index=True,
+        help_text="EXPA person ID at submit time — used to link attempts across logins.",
+    )
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE, related_name="attempts")
     started_at = models.DateTimeField(auto_now_add=True)
     submitted_at = models.DateTimeField(null=True, blank=True)
@@ -415,6 +456,10 @@ class Attempt(models.Model):
         self.percentage = (earned / total * 100) if total else 0
         self.passed = self.percentage >= self.exam.pass_mark
         self.submitted_at = timezone.now()
+        if not self.expa_id and self.user_id:
+            user_expa = getattr(self.user, "expa_id", "") or ""
+            if user_expa:
+                self.expa_id = user_expa
         self.save()
         return self
 

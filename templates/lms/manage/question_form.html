@@ -1,0 +1,21 @@
+{% extends "lms/manage/base_manage.html" %}
+
+{% block title %}{% if editing %}Edit{% else %}Add{% endif %} question{% endblock %}
+
+{% block content %}
+<div class="manage-hero" style="background: linear-gradient(135deg, #1b1b2f, var(--manage-accent)); padding: 20px 28px;">
+  <h1>{% if editing %}Edit question{% else %}New question{% endif %}</h1>
+  <p>{{ exam.title }} · {{ academy.title }}</p>
+</div>
+
+<div class="manage-section manage-form">
+  <form method="post">
+    {% csrf_token %}
+    {% include "lms/manage/_question_form_fields.html" %}
+    <div class="mt-4 d-flex gap-2 flex-wrap">
+      <button type="submit" class="btn-manage">Save changes</button>
+      <a class="btn-manage-outline" href="{% url 'lms:manage_exam_questions' academy.key exam.pk %}">Back to quiz builder</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

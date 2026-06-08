@@ -1,4 +1,4 @@
-{% load static %}
+{% load static lms_extras %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,8 +28,12 @@
       {% endif %}
       <a href="/">Home</a>
       {% if user.is_authenticated %}
-      <span class="manage-topbar__name">{{ user.full_name|default:user.get_full_name|default:user.username }}</span>
+      {% with account_name=user|navbar_account_name %}
+      {% if account_name %}
+      <span class="manage-topbar__name">{{ account_name }}</span>
+      {% endif %}
       {% if user.is_staff %}<a href="{% url 'admin:index' %}">Admin</a>{% endif %}
+      {% endwith %}
       <a href="{% url 'accounts:logout' %}">Logout</a>
       {% endif %}
     </div>

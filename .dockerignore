@@ -11,6 +11,11 @@ __pycache__
 .pytest_cache
 .mypy_cache
 
+# Tests (not needed in production image)
+**/tests/
+**/test_*.py
+conftest.py
+
 # Secrets & local DB
 .env
 .env.*
@@ -34,6 +39,10 @@ membership-ranking.html
 b2b-contracts.html
 icx-apds-submissions.html
 Academy/*.html
+!Academy/pdf/
+!Academy/img/
+!Academy/fonts/
+!Academy/style.css
 expa-login-extract/
 membership-extract/
 tools/

@@ -47,4 +47,39 @@ urlpatterns = [
         manage_views.session_delete,
         name="manage_session_delete",
     ),
+    path(
+        "manage/<slug:key>/exams/new/",
+        manage_views.exam_create,
+        name="manage_exam_create",
+    ),
+    path(
+        "manage/<slug:key>/exams/<int:exam_id>/edit/",
+        manage_views.exam_edit,
+        name="manage_exam_edit",
+    ),
+    path(
+        "manage/<slug:key>/exams/<int:exam_id>/delete/",
+        manage_views.exam_delete,
+        name="manage_exam_delete",
+    ),
+    path(
+        "manage/<slug:key>/exams/<int:exam_id>/questions/",
+        manage_views.exam_questions,
+        name="manage_exam_questions",
+    ),
+    path(
+        "manage/<slug:key>/exams/<int:exam_id>/questions/new/",
+        manage_views.question_create,
+        name="manage_question_create",
+    ),
+    path(
+        "manage/<slug:key>/exams/<int:exam_id>/questions/<int:pk>/edit/",
+        manage_views.question_edit,
+        name="manage_question_edit",
+    ),
+    path(
+        "manage/<slug:key>/exams/<int:exam_id>/questions/<int:pk>/delete/",
+        manage_views.question_delete,
+        name="manage_question_delete",
+    ),
 ]

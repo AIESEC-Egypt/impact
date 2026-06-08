@@ -1,5 +1,6 @@
 """Who may use the hidden /manage/ academy content portal."""
 
+from django.conf import settings
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib import messages
 from django.shortcuts import redirect
@@ -94,7 +95,7 @@ def require_manage_academy(view_func):
             messages.error(
                 request,
                 "You are not assigned as a content manager for this academy. "
-                "Ask a site admin to add your EXPA ID in Django admin.",
+                f"Contact {settings.SUPPORT_CONTACT_NAME} to get access.",
             )
             return redirect("lms:manage_hub")
         request.manage_academy = academy

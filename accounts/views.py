@@ -7,6 +7,7 @@ Flow:
                             -> exchanges code, fetches profile, gates, logs in
 """
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login, logout
 from django.shortcuts import redirect, render
@@ -43,7 +44,10 @@ def login_page(request):
 def expa_start(request):
     config = get_config()
     if not config.client_id:
-        messages.error(request, "EXPA OAuth is not configured yet. Add it in the admin.")
+        messages.error(
+            request,
+            f"EXPA login is not set up yet. Please contact {settings.SUPPORT_CONTACT_NAME}.",
+        )
         return redirect("accounts:login")
     request.session[NEXT_SESSION_KEY] = request.GET.get(
         "next", request.session.get(NEXT_SESSION_KEY, "/")
@@ -88,15 +92,10 @@ def handle_oauth_callback(request, code):
         summary=summary,
     )
     if not allowed:
-        request.session["last_expa_eligibility"] = summary
         return render(
             request,
             "accounts/access_denied.html",
-            {
-                "reason": reason,
-                "profile": profile,
-                "eligibility": summary,
-            },
+            {"reason": reason},
             status=403,
         )
 

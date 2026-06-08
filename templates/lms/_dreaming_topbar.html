@@ -1,6 +1,6 @@
-{% load static %}
+{% load static lms_extras %}
 <header class="dreaming-topbar">
-  <a class="brand" href="{% url 'lms:dreaming' %}">
+  <a class="brand" href="{% url 'home' %}">
     <img src="{% static 'image/Dream Team/eye.png' %}" alt="" width="36" height="36" />
     <span class="brand__label">
       IMPACT
@@ -9,11 +9,15 @@
   </a>
   <div class="userbox">
     {% if user.is_authenticated %}
-      <span class="dreaming-topbar__name">{{ user.full_name|default:user.get_full_name|default:user.username }}</span>
+      {% with account_name=user|navbar_account_name %}
+      {% if account_name %}
+      <span class="dreaming-topbar__name">{{ account_name }}</span>
+      {% endif %}
       {% if user.is_staff %}
       <a href="{% url 'admin:index' %}">Admin</a>
       {% endif %}
       <a href="{% url 'accounts:logout' %}">Logout</a>
+      {% endwith %}
     {% else %}
       <a href="{% url 'accounts:login' %}">Login</a>
     {% endif %}

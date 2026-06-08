@@ -1,0 +1,106 @@
+{% extends "lms/manage/base_manage.html" %}
+
+{% block title %}{% if editing %}Edit{% else %}Add{% endif %} quiz{% endblock %}
+
+{% block content %}
+<ol class="manage-steps">
+  <li class="active" aria-current="step">1. Quiz settings</li>
+  <li class="{% if not editing %}manage-steps__locked{% endif %}">
+    {% if editing %}
+    <a href="{% url 'lms:manage_exam_questions' academy.key exam.pk %}">2. Questions</a>
+    {% else %}
+    2. Questions <span class="manage-steps__hint">(save settings first)</span>
+    {% endif %}
+  </li>
+</ol>
+
+<div class="manage-hero" style="background: linear-gradient(135deg, #1b1b2f, var(--manage-accent)); padding: 20px 28px;">
+  <h1>{% if editing %}Edit quiz{% else %}New quiz / exam{% endif %}</h1>
+  <p>{{ academy.title }}{% if not editing %} · Enter a title below, then continue to add questions{% endif %}</p>
+</div>
+
+<div class="manage-section manage-form">
+  <form method="post" id="quiz-settings-form">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+    {% if form.title.errors %}
+      <div class="alert alert-danger">{{ form.title.errors }}</div>
+    {% endif %}
+
+    <div class="row g-3">
+      <div class="col-12">
+        <label class="form-label" for="{{ form.title.id_for_label }}">Title <span class="text-danger">*</span></label>
+        {{ form.title }}
+      </div>
+      <div class="col-12">
+        <label class="form-label" for="{{ form.description.id_for_label }}">Description</label>
+        {{ form.description }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.pass_mark.id_for_label }}">Pass mark (%)</label>
+        {{ form.pass_mark }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="{{ form.questions_per_attempt.id_for_label }}">Questions per attempt</label>
+        {{ form.questions_per_attempt }}
+        <div class="form-text">0 = all questions in the bank</div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-check mt-4">{{ form.is_published }} <label class="form-check-label" for="{{ form.is_published.id_for_label }}">Published on live page</label></div>
+      </div>
+    </div>
+
+    <div class="manage-form-actions manage-form-actions--inline mt-4">
+      <button type="submit" class="btn-manage btn-manage-lg">Continue to questions →</button>
+      {% if editing %}
+      <a class="btn-manage-outline" href="{% url 'lms:manage_exam_questions' academy.key exam.pk %}">Skip to questions</a>
+      {% endif %}
+      <a class="btn-manage-outline" href="{% url 'lms:manage_dashboard' academy.key %}">Cancel</a>
+    </div>
+
+    <details class="manage-details mt-4">
+      <summary>Advanced options (time limit, attempts, layers, shuffle…)</summary>
+      <div class="row g-3 mt-2">
+        <div class="col-md-4">
+          <label class="form-label" for="{{ form.time_limit_minutes.id_for_label }}">Time limit (minutes)</label>
+          {{ form.time_limit_minutes }}
+          <div class="form-text">0 = no limit</div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label" for="{{ form.max_attempts.id_for_label }}">Max attempts</label>
+          {{ form.max_attempts }}
+          <div class="form-text">0 = unlimited</div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-check mt-4">{{ form.shuffle_questions }} <label class="form-check-label" for="{{ form.shuffle_questions.id_for_label }}">Shuffle questions</label></div>
+          <div class="form-check">{{ form.show_correct_answers_after_pass }} <label class="form-check-label" for="{{ form.show_correct_answers_after_pass.id_for_label }}">Show answers after pass</label></div>
+          <div class="form-check">{{ form.is_mandatory }} <label class="form-check-label" for="{{ form.is_mandatory.id_for_label }}">Mandatory for all layers</label></div>
+        </div>
+        <div class="col-12">
+          <label class="form-label">{{ form.mandatory_layer_picks.label }}</label>
+          <div class="d-flex flex-wrap gap-3">
+            {% for checkbox in form.mandatory_layer_picks %}
+            <div class="form-check">{{ checkbox.tag }} <label class="form-check-label" for="{{ checkbox.id_for_label }}">{{ checkbox.choice_label }}</label></div>
+            {% endfor %}
+          </div>
+          <div class="form-text">{{ form.mandatory_layer_picks.help_text }}</div>
+        </div>
+      </div>
+    </details>
+  </form>
+</div>
+
+<div class="manage-form-bar" aria-hidden="false">
+  <div class="manage-form-bar__inner">
+    <span class="manage-form-bar__label">{% if editing %}Save settings{% else %}Next: add questions{% endif %}</span>
+    <div class="manage-form-actions">
+      <button type="submit" form="quiz-settings-form" class="btn-manage btn-manage-lg">Continue to questions →</button>
+      {% if editing %}
+      <a class="btn-manage-outline" href="{% url 'lms:manage_exam_questions' academy.key exam.pk %}">Questions</a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

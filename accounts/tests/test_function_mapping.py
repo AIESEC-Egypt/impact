@@ -137,3 +137,9 @@ class FunctionMappingTests(SimpleTestCase):
 
     def test_parse_code_dash_name(self):
         self.assertEqual(parse_expa_function("MKT - Marketing"), ("MKT", "Marketing"))
+
+    def test_bd_maps_bd_academy(self):
+        self.assertEqual(resolve_academy_key("BD - Business/Partnership Development"), "bd")
+
+    def test_b2b_maps_b2b_academy(self):
+        self.assertEqual(resolve_academy_key("B2B - Business to Business"), "b2b")

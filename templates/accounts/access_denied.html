@@ -10,7 +10,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@300;600&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      height: 100vh; display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; display: flex; justify-content: center; align-items: center;
       background: linear-gradient(135deg, #b00020, #6f42c1);
       font-family: 'Unbounded', sans-serif; text-align: center; padding: 20px;
     }
@@ -18,7 +18,8 @@
       padding: 40px; background: rgba(255, 255, 255, 0.1); border-radius: 20px;
       backdrop-filter: blur(12px); max-width: 520px; width: 90%; color: #fff;
     }
-    .logo { width: 90px; margin: 0 auto 20px auto; display: block; }
+    .logo-link { display: block; margin: 0 auto 20px auto; width: fit-content; }
+    .logo { width: 90px; display: block; }
     h1 { font-size: 1.6rem; margin-bottom: 16px; }
     p { font-weight: 300; line-height: 1.6; margin-bottom: 24px; font-size: 0.95rem; }
     a.btn { padding: 12px 26px; border-radius: 50px; background: #fff; color: #b00020; text-decoration: none; font-size: 0.9rem; }
@@ -26,51 +27,18 @@
 </head>
 <body>
   <div class="container">
-    <img src="{% static 'aspects/icon.png' %}" alt="Logo" class="logo" />
+    <a href="{% url 'home' %}" class="logo-link" aria-label="Back to IMPACT home">
+      <img src="{% static 'aspects/icon.png' %}" alt="Logo" class="logo" />
+    </a>
     <h1>You can't access IMPACT yet</h1>
     {% if reason == "not_in_roster" %}
-      <p>Your EXPA ID is not on the current member roster for AIESEC in Egypt. Only synced members can access IMPACT. Ask your LCVP iCX/iGX to confirm you appear on EXPA, then ask an admin to run <strong>sync_expa_members</strong>.</p>
+      <p>Your EXPA account is not on the current member roster for AIESEC in Egypt. Ask your LCVP iCX/iGX to confirm you appear on EXPA. If everything looks correct on your side, contact <strong>{{ support_contact }}</strong>.</p>
     {% elif reason == "no_active_position" %}
-      <p>Your EXPA account does not have an active member position. IMPACT is only available to active members of AIESEC in Egypt. Please contact your LC if you believe this is a mistake.</p>
+      <p>Your EXPA account does not have an active member position. IMPACT is only available to active members of AIESEC in Egypt. If you believe this is a mistake, contact <strong>{{ support_contact }}</strong>.</p>
     {% elif reason == "entity_not_allowed" %}
       <p>IMPACT is currently available to members of AIESEC in Egypt only. Your account belongs to a different entity.</p>
     {% else %}
-      <p>We could not verify your eligibility to access IMPACT. Please contact your AIESEC team.</p>
-    {% endif %}
-    {% if eligibility %}
-      <div style="text-align:left;margin:20px 0;padding:14px;background:rgba(0,0,0,0.2);border-radius:12px;font-size:0.72rem;line-height:1.5;max-height:280px;overflow:auto;">
-        <strong style="display:block;margin-bottom:8px;">What EXPA returned (for troubleshooting)</strong>
-        <div><b>Name:</b> {{ eligibility.full_name|default:"—" }}</div>
-        <div><b>EXPA ID:</b> {{ eligibility.expa_id|default:"—" }}</div>
-        <div><b>Home LC:</b> {{ eligibility.home_lc|default:"—" }} · <b>Home MC:</b> {{ eligibility.home_mc|default:"—" }}</div>
-        <div><b>is_aiesecer:</b> {{ eligibility.is_aiesecer|default:"—" }} · <b>person_status:</b> {{ eligibility.person_status|default:"—" }}</div>
-        {% if eligibility.roster_gate %}
-        <div><b>Roster check:</b> {% if eligibility.in_roster %}in roster{% else %}not in roster{% endif %}</div>
-        {% if eligibility.roster_role %}<div><b>Role:</b> {{ eligibility.roster_role }}</div>{% endif %}
-        {% if eligibility.roster_department %}<div><b>Department:</b> {{ eligibility.roster_department }}</div>{% endif %}
-        {% if eligibility.roster_academy %}<div><b>Academy:</b> {{ eligibility.roster_academy }}</div>{% endif %}
-        {% elif eligibility.profile_department %}
-        <div><b>Role (profile):</b> {{ eligibility.profile_role|default:"—" }}</div>
-        <div><b>Department (profile):</b> {{ eligibility.profile_department }}</div>
-        {% if eligibility.profile_academy %}<div><b>Academy (mapped):</b> {{ eligibility.profile_academy }}</div>{% endif %}
-        {% endif %}
-        <div><b>Entities found:</b> {{ eligibility.entities_found|join:", "|default:"none" }}</div>
-        <div><b>Egypt entity match:</b> {% if eligibility.entity_allowed %}yes{% else %}no{% endif %}</div>
-        <div><b>Active position detected:</b> {% if eligibility.has_active_position %}yes{% else %}no{% endif %}</div>
-        {% if eligibility.positions %}
-          <div style="margin-top:10px;"><b>Positions ({{ eligibility.positions|length }}):</b></div>
-          {% for pos in eligibility.positions %}
-            <div style="margin-top:6px;padding:6px;background:rgba(255,255,255,0.08);border-radius:6px;">
-              {{ pos.title|default:"(no title)" }} — status: {{ pos.status|default:"(none)" }},
-              active: {% if pos.counts_as_active %}yes{% else %}no{% endif %}<br>
-              office: {{ pos.office|default:"—" }}, role: {{ pos.role|default:"—" }}<br>
-              {{ pos.start_date|default:"?" }} → {{ pos.end_date|default:"ongoing" }}
-            </div>
-          {% endfor %}
-        {% else %}
-          <div style="margin-top:10px;">No positions in <code>member_positions</code> or <code>current_positions</code>.</div>
-        {% endif %}
-      </div>
+      <p>We could not verify your eligibility to access IMPACT. Please contact <strong>{{ support_contact }}</strong>.</p>
     {% endif %}
     <a class="btn" href="{% url 'accounts:login' %}">Back to login</a>
   </div>

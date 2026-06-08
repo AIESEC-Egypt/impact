@@ -1,0 +1,90 @@
+{% extends "lms/manage/base_manage.html" %}
+
+{% block title %}{{ exam.title }} — quiz builder{% endblock %}
+
+{% block content %}
+<ol class="manage-steps">
+  <li><a href="{% url 'lms:manage_exam_edit' academy.key exam.pk %}">1. Quiz settings</a></li>
+  <li class="active" aria-current="step">2. Questions</li>
+</ol>
+
+<div class="manage-hero" style="background: linear-gradient(135deg, #1b1b2f, var(--manage-accent)); padding: 20px 28px;">
+  <h1>{{ exam.title }}</h1>
+  <p>
+    {{ academy.title }} · Pass {{ exam.pass_mark }}%
+    · {{ questions.count }} question{{ questions.count|pluralize }} in bank
+    {% if exam.questions_per_attempt %} · {{ exam.questions_per_attempt }} per attempt{% endif %}
+    · {% if exam.is_published %}<span class="badge-live">Live</span>{% else %}<span class="badge-draft">Draft</span>{% endif %}
+  </p>
+  {% if not exam.is_published and questions.count %}
+  <p class="manage-meta">When you are done, open <a href="{% url 'lms:manage_exam_edit' academy.key exam.pk %}" style="color:#fff;text-decoration:underline;">Quiz settings</a> and check <strong>Published on live academy page</strong>.</p>
+  {% elif not questions.count %}
+  <p class="manage-meta">Add questions below, then publish from quiz settings.</p>
+  {% endif %}
+</div>
+
+<section class="manage-section manage-form manage-add-question" id="add-question">
+  <h2>Add a question</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% include "lms/manage/_question_form_fields.html" %}
+    <div class="mt-4 d-flex gap-2 flex-wrap">
+      <button type="submit" class="btn-manage">Save question</button>
+      <button type="submit" name="add_another" value="1" class="btn-manage-outline">Save &amp; add another</button>
+    </div>
+  </form>
+</section>
+
+<section class="manage-section">
+  <h2>
+    Question bank
+    <a class="btn-manage-outline" href="{% url 'lms:manage_exam_edit' academy.key exam.pk %}">Quiz settings</a>
+  </h2>
+
+  {% if questions %}
+  <div class="table-responsive">
+    <table class="manage-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Question</th>
+          <th>Type</th>
+          <th>Points</th>
+          <th>Answers</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for q in questions %}
+        <tr>
+          <td>{{ q.order }}</td>
+          <td><strong>{{ q.text|truncatechars:80 }}</strong></td>
+          <td>{{ q.get_question_type_display }}</td>
+          <td>{{ q.points }}</td>
+          <td>{{ q.choices.count }} option{{ q.choices.count|pluralize }}</td>
+          <td>
+            <div class="manage-actions">
+              <a class="btn-manage-outline" href="{% url 'lms:manage_question_edit' academy.key exam.pk q.pk %}">Edit</a>
+              <form method="post" action="{% url 'lms:manage_question_delete' academy.key exam.pk q.pk %}" class="d-inline" onsubmit="return confirm('Delete this question?');">
+                {% csrf_token %}
+                <button type="submit" class="btn-manage-danger">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="manage-empty">No questions saved yet — use the form above to add your first one.</p>
+  {% endif %}
+</section>
+
+<p class="link-muted">
+  <a href="{% url 'lms:manage_dashboard' academy.key %}">← Dashboard</a>
+  {% if exam.is_published and questions.count %}
+  · <a href="{% url 'lms:exam_take' academy.key exam.pk %}" target="_blank" rel="noopener">Preview quiz ↗</a>
+  {% endif %}
+</p>
+{% endblock %}

@@ -55,6 +55,7 @@ class UserAdmin(DjangoUserAdmin):
             obj.expa_id,
             role_code=obj.role_code,
             role_name=obj.role_name,
+            admin_profile=True,
         )
 
 
@@ -80,18 +81,27 @@ class ExpaOAuthConfigAdmin(admin.ModelAdmin):
     )
 
 
-def _format_quiz_results_html(expa_id, academy_key=None, role_code=None, role_name=None):
+def _format_quiz_results_html(
+    expa_id,
+    academy_key=None,
+    role_code=None,
+    role_name=None,
+    *,
+    admin_profile=False,
+):
     progress = quiz_progress_for_expa_id(
         expa_id,
         academy_key=academy_key or None,
         role_code=role_code,
         role_name=role_name,
+        admin_profile=admin_profile,
     )
     summary = mandatory_completion_summary(
         expa_id, role_code=role_code, role_name=role_name
     )
     user = progress["user"]
-    if not user:
+    has_attempts = any(row["attempt"] for row in progress["rows"])
+    if not user and not has_attempts:
         return mark_safe(
             "<p><em>No IMPACT login yet for EXPA ID "
             f"{escape(expa_id or '—')}.</em></p>"
@@ -120,8 +130,11 @@ def _format_quiz_results_html(expa_id, academy_key=None, role_code=None, role_na
             score = escape(f"{row['percentage']:.0f}%")
             result = escape("Passed" if row["passed"] else "Not passed")
             color = "#0a8a0a" if row["passed"] else "#b00020"
+            submitted = row["submitted_at"]
+            when = escape(submitted.strftime("%Y-%m-%d %H:%M")) if submitted else "—"
             score_cell = (
-                f'<td><span style="color:{color}"><b>{score}</b> ({result})</span></td>'
+                f'<td><span style="color:{color}"><b>{score}</b> ({result})</span>'
+                f"<br><span style='color:#666;font-size:11px'>Last: {when}</span></td>"
             )
         else:
             score_cell = "<td>—</td>"
@@ -141,7 +154,7 @@ def _format_quiz_results_html(expa_id, academy_key=None, role_code=None, role_na
         "<thead><tr style='background:#f0f0f0'>"
         "<th align='left'>Academy</th><th align='left'>Quiz</th>"
         "<th align='left'>Type</th><th align='left'>Best score</th>"
-        "<th align='left'>Pass mark</th>"
+        "<th align='left'>Pass %</th>"
         "</tr></thead><tbody>"
         + "".join(rows_html)
         + "</tbody></table>"
@@ -232,9 +245,9 @@ class MemberRosterAdmin(admin.ModelAdmin):
     def quiz_results_display(self, obj):
         return _format_quiz_results_html(
             obj.expa_id,
-            academy_key=obj.academy_key or None,
             role_code=obj.role_code,
             role_name=obj.role_name,
+            admin_profile=True,
         )
 
 

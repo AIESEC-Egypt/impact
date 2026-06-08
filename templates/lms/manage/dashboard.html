@@ -8,8 +8,9 @@
   <p>{{ academy.subtitle }}</p>
   <p class="manage-meta">
     {{ materials.count }} material{{ materials.count|pluralize }},
-    {{ sessions.count }} session{{ sessions.count|pluralize }}
-    · {{ published_materials }} / {{ published_sessions }} published on the live page
+    {{ sessions.count }} session{{ sessions.count|pluralize }},
+    {{ exams.count }} quiz{{ exams.count|pluralize }}
+    · {{ published_materials }} / {{ published_sessions }} / {{ published_exams }} published on the live page
   </p>
 </div>
 
@@ -105,6 +106,52 @@
   </div>
   {% else %}
   <p class="manage-empty">No sessions yet. Paste a YouTube or Drive video URL for each recording.</p>
+  {% endif %}
+</section>
+
+<section class="manage-section">
+  <h2>
+    Quizzes &amp; exams
+    <a class="btn-manage" href="{% url 'lms:manage_exam_create' academy.key %}">+ Add quiz</a>
+  </h2>
+  {% if exams %}
+  <div class="table-responsive">
+    <table class="manage-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Questions</th>
+          <th>Pass %</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in exams %}
+        <tr>
+          <td><strong>{{ e.title }}</strong></td>
+          <td>{{ e.questions.count }}{% if e.questions_per_attempt %} ({{ e.questions_per_attempt }}/attempt){% endif %}</td>
+          <td>{{ e.pass_mark }}%</td>
+          <td>
+            {% if e.is_published %}<span class="badge-live">Live</span>{% else %}<span class="badge-draft">Draft</span>{% endif %}
+          </td>
+          <td>
+            <div class="manage-actions">
+              <a class="btn-manage-outline" href="{% url 'lms:manage_exam_questions' academy.key e.pk %}">Questions</a>
+              <a class="btn-manage-outline" href="{% url 'lms:manage_exam_edit' academy.key e.pk %}">Settings</a>
+              <form method="post" action="{% url 'lms:manage_exam_delete' academy.key e.pk %}" class="d-inline" onsubmit="return confirm('Delete this quiz and all its questions?');">
+                {% csrf_token %}
+                <button type="submit" class="btn-manage-danger">Delete</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="manage-empty">No quizzes yet. Create one, add questions, then publish it on the academy page.</p>
   {% endif %}
 </section>
 

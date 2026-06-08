@@ -39,8 +39,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
 <!-- Swiper JS -->
 
-<link rel="stylesheet" href="{% static 'styles.css' %}">
-<link rel="stylesheet" href="{% static 'lms/index-impact-letters.css' %}">
+<link rel="stylesheet" href="{% static 'styles.min.css' %}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{% static 'styles.min.css' %}"></noscript>
 <link rel="stylesheet" href="{% static 'lms/site-nav-account.css' %}">
 <link rel="stylesheet" href="{% static 'lms/site-navbar-layout.css' %}">
     <link rel="icon" href="{% static 'aspects/icon.png' %}">
@@ -105,82 +105,7 @@
     <!-- Floating Scroll to Top Button -->
 <button id="scrollToTopBtn" class="scroll-to-top">&#8679;</button>
 
-    <nav class="navbar navbar-expand-lg impact-site-navbar">
-        <a href="/" class="logo">
-            <img class="navbar-brand" src="{% static 'aspects/impact.png' %}" alt="AIESEC">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse impact-navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav nav-links impact-navbar-center">
-                <li class="nav-item"><a class="nav-link" href="/history/">History</a></li>
-                
-                <!-- Functional Academies Dropdown -->
-                <li class="nav-item dropdown">
-                    {% if user.is_authenticated %}
-                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Academies</a>
-                    <ul class="dropdown-menu" style="width: 100%;">
-                        <li><a class="dropdown-item" href="/academy/ogv/">oGV Academy</a></li>
-                        <li><a class="dropdown-item" href="/academy/igv/">iGV Academy</a></li>
-                        <li><a class="dropdown-item" href="/academy/ogt/">oGT Academy</a></li>
-                        <li><a class="dropdown-item" href="/academy/igt/">iGT Academy</a></li>
-                        <li><a class="dropdown-item" href="/academy/b2c/">B2C Academy</a></li>
-                        <li><a class="dropdown-item" href="/academy/b2b/">B2B Academy</a></li>
-                        <li><a class="dropdown-item" href="/academy/tm/">TM Academy</a></li>
-                        <li><a class="dropdown-item" href="/academy/fl/">F&L Academy</a></li>
-                    </ul>
-                    {% else %}
-                    <a class="nav-link" href="/accounts/login/?next=/academy/">Academies</a>
-                    {% endif %}
-                </li>
-            <li class="nav-item dropdown">
-
-                <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Contracts</a>
-
-                <ul class="dropdown-menu" style="width: 250px; white-space: normal;">
-                    <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
-       onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
-       onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://docs.google.com/forms/d/1n54SOC6Tz-rGqfeytC8x5-GgN59JHQiDegTf-gRak_8/" target="_blank">iGV Contracts System</a></li>
-                    <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
-                        onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
-                        onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://docs.google.com/forms/d/e/1FAIpQLScLOJfJ3YN6oTwKHs030-jB2RkIerVdileWt3XZcAh0swNgrQ/viewform?usp=sf_link" target="_blank">iGTa/e Contracts System</a></li>
-                    <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
-                        onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
-                        onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://forms.gle/SjbiVE4NwLxZ3KML8" target="_blank">oGX Contracts System</a></li>
-                    <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
-                        onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
-                        onmouseout="this.style.background='transparent'; this.style.color='black';" href="/b2b-contracts/">B2B Contracts System</a></li>
-                </ul>
-            </li> 
-                <!-- Conference Outputs Dropdown -->
-               <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown">Conferences</a>
-                    <ul class="dropdown-menu" style="width: 100%;">
-                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
-                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
-                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/16YWyC5145B376VjVhrO3_nF6aS9Od_8k?usp=drive_link" target="_blank">Fusion</a></li>
-                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
-                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
-                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/1MYHeFNWYYIFhgRrhzQl2sVwJQK_4MZMM?usp=drive_link" target="_blank">Activate</a></li>
-                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
-                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
-                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/1RN-P9HI6QlKPtp80xm6GH78D5NiVZ0ez?usp=drive_link" target="_blank">Mahd</a></li>
-                        <li><a class="dropdown-item" style="padding: 14px 20px; font-size: 14px; transition: background 0.3s ease-in-out, color 0.3s ease-in-out;"
-                            onmouseover="this.style.background='#037ef3'; this.style.color='white';" 
-                            onmouseout="this.style.background='transparent'; this.style.color='black';" href="https://drive.google.com/drive/folders/1zFYJ-dJVQXwRFozoqWgNrU7E7Sq8A-91?usp=drive_link" target="_blank">Momentum</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="/membership-ranking/">Ranking</a></li>
-                <li class="nav-item"><a class="nav-link dreaming-highlight" href="/dreaming/">Dreaming</a></li>
-            </ul>
-            <div class="impact-navbar-end">
-                <ul class="navbar-nav">
-                    {% include "lms/_navbar_user_account.html" %}
-                </ul>
-            </div>
-        </div>
-    </nav>
+    {% include "lms/_site_navbar.html" %}
     <main>
         
         <h1 class="main-title">Shape Egypt's Future—One Leader at a Time</h1>
@@ -300,6 +225,9 @@ function Play_OGV_1() {
             <div class="swiper-slide academy-card b2b">
                <a href="/academy/b2b/" style="color: white; text-decoration: none !important;"> <h3 class="card-title" ><span class="custom-font" >B2B</span> ACADEMY</h3> </a>
             </div>
+            <div class="swiper-slide academy-card b2b">
+               <a href="/academy/bd/" style="color: white; text-decoration: none !important;"> <h3 class="card-title" ><span class="custom-font" >BD</span> ACADEMY</h3> </a>
+            </div>
             <div class="swiper-slide academy-card purple">
                <a href="/academy/tm/" style="color: white; text-decoration: none !important;"><h3 class="card-title"><span class="custom-font">TM</span> ACADEMY</h3></a>
             </div>
@@ -324,6 +252,9 @@ function Play_OGV_1() {
             </div>
             <div class="swiper-slide academy-card b2b">
                <a href="/accounts/login/?next=/academy/" style="color: white; text-decoration: none !important;"> <h3 class="card-title" ><span class="custom-font" >B2B</span> ACADEMY</h3> </a>
+            </div>
+            <div class="swiper-slide academy-card b2b">
+               <a href="/accounts/login/?next=/academy/" style="color: white; text-decoration: none !important;"> <h3 class="card-title" ><span class="custom-font" >BD</span> ACADEMY</h3> </a>
             </div>
             <div class="swiper-slide academy-card purple">
                <a href="/accounts/login/?next=/academy/" style="color: white; text-decoration: none !important;"><h3 class="card-title"><span class="custom-font">TM</span> ACADEMY</h3></a>

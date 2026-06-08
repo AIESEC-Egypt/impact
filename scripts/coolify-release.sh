@@ -7,8 +7,12 @@ echo "==> migrate"
 python manage.py migrate --noinput
 
 echo "==> static"
-python manage.py sync_static_assets
-python manage.py collectstatic --noinput
+if [ -f staticfiles/.image-baked ]; then
+  echo "    baked in Docker image — skip sync/collectstatic"
+else
+  python manage.py sync_static_assets
+  python manage.py collectstatic --noinput
+fi
 
 if [ "${SKIP_SEED:-0}" = "1" ]; then
   echo "==> SKIP_SEED=1 — skipping data seeds"
@@ -17,6 +21,7 @@ fi
 
 echo "==> seed LMS"
 python manage.py seed_lms
+python manage.py merge_duplicate_academies
 python manage.py clear_legacy_academy_materials
 python manage.py seed_home_howya_promo
 python manage.py seed_dreaming_history_quiz --replace

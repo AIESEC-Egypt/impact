@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 
@@ -66,9 +67,23 @@ def _material_sections(materials):
     return sections
 
 
+def _visible_materials(academy):
+    """Published materials for the public page.
+
+    Hide legacy HTML imports (static card graphic only, no link or upload).
+    Show admin/manage rows that have a Drive URL and/or uploaded thumbnail,
+    even if a legacy card_image path is still on the row.
+    """
+    from django.db.models import Q
+
+    legacy_card_only = Q(card_image__startswith="Academy/") & (
+        Q(url="") | Q(url__isnull=True)
+    ) & (Q(thumbnail__isnull=True) | Q(thumbnail=""))
+    return academy.materials.filter(is_published=True).exclude(legacy_card_only)
+
+
 def academy_context(academy):
-    # Only materials created via /manage/ (legacy HTML import sets card_image).
-    materials = academy.materials.filter(is_published=True, card_image="")
+    materials = _visible_materials(academy)
     return {
         "academy": academy,
         "materials": materials,
@@ -92,7 +107,14 @@ def academy_chooser(request):
 def academy_detail(request, key):
     if key == "mxp":
         return redirect("lms:academy_detail", key="tm")
-    academy = get_object_or_404(Academy, key=key, is_published=True)
+    canonical = (key or "").strip().lower()
+    if canonical != key:
+        return redirect("lms:academy_detail", key=canonical)
+    academy = Academy.objects.filter(key__iexact=key, is_published=True).first()
+    if not academy:
+        raise Http404
+    if academy.key != canonical:
+        return redirect("lms:academy_detail", key=academy.key)
     context = academy_context(academy)
     context["user_attempts"] = {
         a.exam_id: a
@@ -165,7 +187,11 @@ def exam_take(request, key, exam_id):
             messages.warning(request, "Invalid quiz submission. Please try again.")
             return redirect("lms:exam_take", key=academy.key, exam_id=exam.id)
 
-        attempt = Attempt.objects.create(user=request.user, exam=exam)
+        attempt = Attempt.objects.create(
+            user=request.user,
+            exam=exam,
+            expa_id=(request.user.expa_id or "").strip(),
+        )
         for qid in presented_ids:
             question = questions_by_id[qid]
             field = f"question_{question.id}"
@@ -225,6 +251,8 @@ def exam_result(request, key, exam_id, attempt_id):
             }
         )
 
+    show_review = (not attempt.passed) or exam.show_correct_answers_after_pass
+
     return render(
         request,
         "lms/exam_result.html",
@@ -233,5 +261,6 @@ def exam_result(request, key, exam_id, attempt_id):
             exam=exam,
             attempt=attempt,
             review=review,
+            show_review=show_review,
         ),
     )

@@ -8,12 +8,13 @@ ACADEMY_CARD_CLASS = {
     "igt": "blue",
     "b2c": "b2c",
     "b2b": "b2b",
+    "bd": "b2b",
     "tm": "purple",
     "fl": "green",
 }
 
 # Same order as the index Function Academies carousel
-ACADEMY_CHOOSER_ORDER = ("ogv", "ogt", "igv", "igt", "b2c", "b2b", "tm", "fl")
+ACADEMY_CHOOSER_ORDER = ("ogv", "ogt", "igv", "igt", "b2c", "b2b", "bd", "tm", "fl")
 
 ACADEMY_THEMES = {
     "ogv": {
@@ -48,6 +49,12 @@ ACADEMY_THEMES = {
     },
     "b2b": {
         "label": "B2B",
+        "theme_class": "academy-hero--b2b",
+        "accent": "#0e33af",
+        "card_class": "b2b",
+    },
+    "bd": {
+        "label": "BD",
         "theme_class": "academy-hero--b2b",
         "accent": "#0e33af",
         "card_class": "b2b",

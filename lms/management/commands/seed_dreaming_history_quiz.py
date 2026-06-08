@@ -46,6 +46,7 @@ class Command(BaseCommand):
         exam.pass_mark = 60
         exam.questions_per_attempt = 15
         exam.shuffle_questions = True
+        exam.show_correct_answers_after_pass = False
         exam.is_published = True
         exam.save()
 

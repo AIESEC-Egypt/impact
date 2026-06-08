@@ -1,0 +1,37 @@
+/* Per-academy navbar accents on academy detail pages (matches legacy Academy/*.html). */
+
+.impact-site-navbar--b2b .navbar-toggler {
+  background: linear-gradient(135deg, #0e33af, #2651dc);
+  border: none;
+  border-radius: 6px;
+}
+
+.impact-site-navbar--b2b .navbar-toggler-icon {
+  filter: brightness(0) invert(1);
+}
+
+.impact-site-navbar--b2b .impact-nav-account-box {
+  border-color: #0e33af;
+}
+
+.impact-site-navbar--b2b .impact-nav-account-box__name,
+.impact-site-navbar--b2b .impact-nav-account-box__sep,
+.impact-site-navbar--b2b .impact-nav-account-box__action,
+.impact-site-navbar--b2b .impact-nav-account-box__login {
+  color: #0e33af;
+}
+
+.impact-site-navbar--b2b .impact-nav-account-box__action:hover,
+.impact-site-navbar--b2b .impact-nav-account-box__login:hover {
+  color: #0a2889;
+}
+
+.impact-site-navbar--b2b .nav-links .nav-link:hover {
+  color: #0e33af;
+}
+
+.impact-site-navbar--b2b .site-nav-dropdown-item:hover,
+.impact-site-navbar--b2b .site-nav-dropdown-item:focus {
+  background: #0e33af;
+  color: #fff;
+}

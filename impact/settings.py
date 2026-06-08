@@ -30,6 +30,8 @@ SECRET_KEY = os.environ.get(
 
 DEBUG = env_bool("DJANGO_DEBUG", True)
 
+SUPPORT_CONTACT_NAME = os.environ.get("SUPPORT_CONTACT_NAME", "Wello")
+
 ALLOWED_HOSTS = [
     h.strip()
     for h in os.environ.get(
@@ -83,6 +85,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "impact.context_processors.site_support",
             ],
         },
     },
@@ -210,9 +213,19 @@ EXPA_SYNC_DATE_TO = os.environ.get("EXPA_SYNC_DATE_TO", "")
 # Iframe embedding: allow our own pages to frame Drive/YouTube content.
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
-# EXPA OAuth debug: full GIS API responses on each login attempt.
+# EXPA OAuth debug: full GIS API responses on each login attempt (file optional).
 LOGS_DIR = BASE_DIR / "logs"
-LOGS_DIR.mkdir(exist_ok=True)
+
+
+def _writable_logs_dir():
+    try:
+        LOGS_DIR.mkdir(parents=True, exist_ok=True)
+        probe = LOGS_DIR / ".write_probe"
+        probe.write_text("", encoding="utf-8")
+        probe.unlink(missing_ok=True)
+        return True
+    except OSError:
+        return False
 
 # Production hardening (when DJANGO_DEBUG=False)
 if not DEBUG:
@@ -226,6 +239,23 @@ if not DEBUG:
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_REFERRER_POLICY = "same-origin"
 
+_expa_handlers = ["console"]
+_expa_handler_defs = {
+    "console": {
+        "level": "INFO",
+        "class": "logging.StreamHandler",
+        "formatter": "verbose",
+    },
+}
+if _writable_logs_dir():
+    _expa_handlers.insert(0, "expa_file")
+    _expa_handler_defs["expa_file"] = {
+        "level": "INFO",
+        "class": "logging.FileHandler",
+        "filename": str(LOGS_DIR / "expa_oauth.log"),
+        "formatter": "verbose",
+    }
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -235,22 +265,10 @@ LOGGING = {
             "style": "{",
         },
     },
-    "handlers": {
-        "expa_file": {
-            "level": "INFO",
-            "class": "logging.FileHandler",
-            "filename": LOGS_DIR / "expa_oauth.log",
-            "formatter": "verbose",
-        },
-        "console": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
-            "formatter": "verbose",
-        },
-    },
+    "handlers": _expa_handler_defs,
     "loggers": {
         "accounts.expa": {
-            "handlers": ["expa_file", "console"],
+            "handlers": _expa_handlers,
             "level": "INFO",
             "propagate": False,
         },
