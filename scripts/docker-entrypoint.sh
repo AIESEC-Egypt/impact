@@ -30,6 +30,8 @@ raise SystemExit(0 if Academy.objects.exists() else 1)
 case "${1:-web}" in
   web)
     if [ "${SKIP_MIGRATE:-0}" != "1" ]; then
+      echo "==> repair ghost migrations (if needed)"
+      python manage.py repair_ghost_migrations
       echo "==> migrate (startup)"
       python manage.py migrate --noinput
     fi

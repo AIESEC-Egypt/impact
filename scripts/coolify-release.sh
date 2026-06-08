@@ -3,6 +3,9 @@
 #   /app/scripts/docker-entrypoint.sh release
 set -e
 
+echo "==> repair ghost migrations (if needed)"
+python manage.py repair_ghost_migrations
+
 echo "==> migrate"
 python manage.py migrate --noinput
 
