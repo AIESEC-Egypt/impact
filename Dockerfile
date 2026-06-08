@@ -71,7 +71,7 @@ COPY --chown=app:app templates/ templates/
 COPY --chown=app:app scripts/ scripts/
 COPY --from=static --chown=app:app /app/staticfiles/ staticfiles/
 
-RUN mkdir -p /app/logs /app/media \
+RUN mkdir -p /app/logs /app/media /app/static \
     && chmod +x /app/scripts/docker-entrypoint.sh /app/scripts/coolify-release.sh \
     && chown -R app:app /app
 

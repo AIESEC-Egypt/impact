@@ -159,8 +159,11 @@ _STATIC_EXTRA = [
     ("aspects", BASE_DIR / "aspects"),
     ("image", BASE_DIR / "image"),
 ]
-STATICFILES_DIRS = [BASE_DIR / "static"] + [
-    entry for entry in _STATIC_EXTRA if entry[1].exists()
+_STATIC_APP_DIR = BASE_DIR / "static"
+STATICFILES_DIRS = [
+    entry
+    for entry in ([_STATIC_APP_DIR] if _STATIC_APP_DIR.exists() else [])
+    + [path for _name, path in _STATIC_EXTRA if path.exists()]
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STORAGES = {
