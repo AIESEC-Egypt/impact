@@ -1,3 +1,5 @@
+import logging
+
 from django.contrib import messages
 from django.db.utils import DatabaseError
 from django.http import Http404
@@ -9,6 +11,16 @@ from accounts.views import handle_oauth_callback
 
 from .academy_themes import academies_for_chooser, get_academy_theme
 from .models import Academy, Attempt, Answer, Exam, HomePromo
+
+logger = logging.getLogger("impact")
+
+
+def _home_promos_safe():
+    try:
+        return list(HomePromo.objects.filter(is_published=True))
+    except DatabaseError:
+        logger.exception("Home promos unavailable (database not ready)")
+        return []
 
 
 def home(request):
@@ -22,10 +34,14 @@ def home(request):
     if code and not request.user.is_authenticated:
         return handle_oauth_callback(request, code)
     try:
-        home_promos = list(HomePromo.objects.filter(is_published=True))
-    except DatabaseError:
-        home_promos = []
-    return render(request, "index.html", {"home_promos": home_promos})
+        return render(
+            request,
+            "index.html",
+            {"home_promos": _home_promos_safe()},
+        )
+    except Exception:
+        logger.exception("Home page render failed")
+        raise
 
 
 def _published_academies():

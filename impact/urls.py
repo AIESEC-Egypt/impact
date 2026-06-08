@@ -9,6 +9,7 @@ from lms import views as lms_views
 
 urlpatterns = [
     path("health/", impact_views.health, name="health"),
+    path("health/db/", impact_views.health_db, name="health_db"),
     path("admin/", admin.site.urls),
     path("accounts/", include("accounts.urls")),
 

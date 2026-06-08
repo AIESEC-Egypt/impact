@@ -8,6 +8,23 @@ def health(request):
     return HttpResponse("ok", content_type="text/plain")
 
 
+def health_db(request):
+    """Database probe for ops (exempt from HTTPS redirect)."""
+    from django.db import connection
+
+    try:
+        connection.ensure_connection()
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+    except Exception as exc:
+        return HttpResponse(
+            f"db-unavailable: {exc}",
+            status=503,
+            content_type="text/plain",
+        )
+    return HttpResponse("ok", content_type="text/plain")
+
+
 def page_not_found(request, exception):
     return render(
         request,

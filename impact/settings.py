@@ -235,7 +235,8 @@ def _writable_logs_dir():
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = env_bool("DJANGO_SECURE_SSL_REDIRECT", True)
-    SECURE_REDIRECT_EXEMPT = [r"^health/$"]
+    SECURE_REDIRECT_EXEMPT = [r"^health"]
+    SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_HSTS_SECONDS = 31536000
@@ -275,6 +276,16 @@ LOGGING = {
         "accounts.expa": {
             "handlers": _expa_handlers,
             "level": "INFO",
+            "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "impact": {
+            "handlers": ["console"],
+            "level": "ERROR",
             "propagate": False,
         },
     },

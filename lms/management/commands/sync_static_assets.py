@@ -52,6 +52,11 @@ class Command(BaseCommand):
                 copied += 1
                 break
 
+        if (static / "styles.css").is_file() and not (static / "styles.min.css").is_file():
+            shutil.copy2(static / "styles.css", static / "styles.min.css")
+            self.stdout.write("Copied static/styles.css → static/styles.min.css")
+            copied += 1
+
         video_src = _video_src(base)
         if video_src:
             dest = static / "Middel Video"
