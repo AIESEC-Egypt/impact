@@ -39,6 +39,10 @@ ALLOWED_HOSTS = [
     ).split(",")
     if h.strip()
 ]
+# Coolify/Docker healthchecks probe 127.0.0.1 from inside the container.
+for _internal_host in ("127.0.0.1", "localhost"):
+    if _internal_host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(_internal_host)
 
 CSRF_TRUSTED_ORIGINS = [
     o.strip()
