@@ -320,3 +320,27 @@ body:has(.manage-form-bar) .manage-wrap {
   font-size: 0.78rem;
   color: #037ef3;
 }
+
+.manage-respondents__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6rem;
+  padding: 2px 8px;
+  margin-left: 8px;
+  border-radius: 999px;
+  background: rgba(3, 126, 243, 0.12);
+  color: #037ef3;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.manage-respondents__pass {
+  color: #0a8a0a;
+  font-weight: 600;
+}
+
+.manage-respondents__fail {
+  color: #b00020;
+  font-weight: 600;
+}

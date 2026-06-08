@@ -40,6 +40,13 @@
 {% endif %}
 
 {% if is_site_admin %}
+{% if howya_exam %}
+<div class="manage-section mt-4">
+  <h2 class="h5 mb-2">Dreaming — Howya certificate quiz</h2>
+  <p class="link-muted mb-3">Site admins can view respondents and edit the El Haweya knowledge test.</p>
+  <a class="btn-manage" href="{% url 'lms:manage_exam_questions' 'dreaming' howya_exam.pk %}">Open Howya quiz</a>
+</div>
+{% endif %}
 <p class="link-muted mt-4">
   As staff you can open any function above, or assign managers in
   <a href="/admin/lms/academycontentmanager/">Django admin</a>.

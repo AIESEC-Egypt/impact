@@ -52,6 +52,18 @@ def can_manage_academy(user, academy):
     return manager_assignment(user, academy) is not None
 
 
+def resolve_manage_academy(key, user):
+    """Academy for /manage/<key>/ — functional academies or dreaming for site admins."""
+    academy = Academy.objects.filter(key=key).first()
+    if not academy:
+        return None
+    if academy.kind == Academy.KIND_DREAMING and not is_site_admin(user):
+        return None
+    if academy.kind not in (Academy.KIND_ACADEMY, Academy.KIND_DREAMING):
+        return None
+    return academy
+
+
 def managed_academies_queryset(user):
     qs = Academy.objects.filter(kind=Academy.KIND_ACADEMY).order_by("order", "key")
     if not user.is_authenticated:
@@ -87,7 +99,7 @@ def require_manage_academy(view_func):
 
     @wraps(view_func)
     def _wrapped(request, key, *args, **kwargs):
-        academy = Academy.objects.filter(key=key, kind=Academy.KIND_ACADEMY).first()
+        academy = resolve_manage_academy(key, request.user)
         if not academy:
             messages.error(request, "Academy not found.")
             return redirect("lms:manage_hub")

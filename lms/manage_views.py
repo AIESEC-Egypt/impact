@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_POST
 
 from .academy_themes import get_academy_theme
+from .exam_respondents import resolve_howya_exam, respondents_for_exam
 from .manage_access import (
     is_site_admin,
     manage_login_required,
@@ -45,11 +46,13 @@ def manage_hub(request):
             f"No academy is assigned to your EXPA ID yet. "
             f"Contact {settings.SUPPORT_CONTACT_NAME} to get access.",
         )
+    howya_exam = resolve_howya_exam() if is_site_admin(request.user) else None
     return render(
         request,
         "lms/manage/hub.html",
         {
             "academies": academies,
+            "howya_exam": howya_exam,
             "is_site_admin": is_site_admin(request.user),
             "user_expa_id": user_expa_id(request.user),
         },
@@ -57,7 +60,12 @@ def manage_hub(request):
 
 
 def _get_exam(academy, exam_id):
-    return get_object_or_404(Exam, pk=exam_id, academy=academy, kind=Exam.KIND_EXAM)
+    return get_object_or_404(
+        Exam,
+        pk=exam_id,
+        academy=academy,
+        kind__in=(Exam.KIND_EXAM, Exam.KIND_QUIZ),
+    )
 
 
 def _blank_question_forms(exam):
@@ -304,6 +312,7 @@ def exam_questions(request, key, exam_id):
             academy,
             exam=exam,
             questions=questions,
+            respondents=respondents_for_exam(exam),
             form=form,
             formset=formset,
         ),

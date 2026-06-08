@@ -1,0 +1,45 @@
+<section class="manage-section manage-respondents">
+  <h2>
+    Members who answered
+    <span class="manage-respondents__count">{{ respondents|length }}</span>
+  </h2>
+
+  {% if respondents %}
+  <div class="table-responsive">
+    <table class="manage-table manage-respondents__table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>EXPA ID</th>
+          <th>Email</th>
+          <th>Best %</th>
+          <th>Result</th>
+          <th>Last submitted</th>
+          <th>Attempts</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in respondents %}
+        <tr>
+          <td><strong>{{ r.full_name|default:"—" }}</strong></td>
+          <td>{{ r.expa_id|default:"—" }}</td>
+          <td>{{ r.email|default:"—" }}</td>
+          <td>{{ r.percentage|floatformat:0 }}%</td>
+          <td>
+            {% if r.passed %}
+            <span class="manage-respondents__pass">Passed</span>
+            {% else %}
+            <span class="manage-respondents__fail">Failed</span>
+            {% endif %}
+          </td>
+          <td>{{ r.submitted_at|date:"Y-m-d H:i" }}</td>
+          <td>{{ r.attempt_count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="manage-empty">No members have submitted this quiz yet.</p>
+  {% endif %}
+</section>

@@ -1,10 +1,20 @@
 from django.urls import path
 
-from . import manage_views, views
+from . import export_views, manage_views, views
 
 app_name = "lms"
 
 urlpatterns = [
+    path(
+        "api/exports/exam-respondents/",
+        export_views.export_exam_respondents,
+        name="export_exam_respondents",
+    ),
+    path(
+        "api/exports/howya-respondents/",
+        export_views.export_howya_respondents,
+        name="export_howya_respondents",
+    ),
     path("dreaming/", views.dreaming, name="dreaming"),
     path("academy/", views.academy_chooser, name="academy_chooser"),
     path("academy/<slug:key>/", views.academy_detail, name="academy_detail"),

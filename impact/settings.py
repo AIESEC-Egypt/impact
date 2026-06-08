@@ -212,6 +212,9 @@ EXPA_SYNC_OFFICE_ID = os.environ.get("EXPA_SYNC_OFFICE_ID", "")
 EXPA_SYNC_DATE_FROM = os.environ.get("EXPA_SYNC_DATE_FROM", "2025-01-01")
 EXPA_SYNC_DATE_TO = os.environ.get("EXPA_SYNC_DATE_TO", "")
 
+# Quiz respondent export API (Google Apps Script → Sheets). Keep secret.
+QUIZ_EXPORT_API_TOKEN = os.environ.get("QUIZ_EXPORT_API_TOKEN", "")
+
 # Iframe embedding: allow our own pages to frame Drive/YouTube content.
 X_FRAME_OPTIONS = "SAMEORIGIN"
 

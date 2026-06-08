@@ -1,6 +1,9 @@
 from django.contrib import admin
+from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
+from .exam_respondents import respondents_for_exam
 from .forms import ExamAdminForm, HomePromoAdminForm
 from .models import (
     Academy,
@@ -236,9 +239,76 @@ class ExamAdmin(admin.ModelAdmin):
                 )
             },
         ),
+        (
+            "Respondents",
+            {
+                "fields": ("respondents_summary",),
+                "description": "Members who submitted this quiz (best attempt per person).",
+            },
+        ),
     )
     search_fields = ("title",)
     inlines = [QuestionInline]
+    readonly_fields = ("respondents_summary",)
+
+    @admin.display(description="Members who answered")
+    def respondents_summary(self, obj):
+        if not obj or not obj.pk:
+            return "Save the exam first to see respondents."
+        rows = respondents_for_exam(obj)
+        attempts_url = (
+            reverse("admin:lms_attempt_changelist")
+            + f"?exam__id__exact={obj.pk}"
+        )
+        header = format_html(
+            '<p><a href="{}">View all attempts ({})</a></p>',
+            attempts_url,
+            obj.attempts.filter(submitted_at__isnull=False).count(),
+        )
+        if not rows:
+            return format_html("{}<p><em>No submissions yet.</em></p>", header)
+        table_rows = []
+        for r in rows:
+            result = "Passed" if r["passed"] else "Failed"
+            color = "#0a8a0a" if r["passed"] else "#b00020"
+            submitted = (
+                r["submitted_at"].strftime("%Y-%m-%d %H:%M")
+                if r["submitted_at"]
+                else "—"
+            )
+            table_rows.append(
+                format_html(
+                    "<tr>"
+                    "<td>{}</td><td>{}</td><td>{}</td>"
+                    '<td>{}%</td><td style="color:{};font-weight:600;">{}</td>'
+                    "<td>{}</td><td>{}</td>"
+                    "</tr>",
+                    r["full_name"] or "—",
+                    r["expa_id"] or "—",
+                    r["email"] or "—",
+                    f"{r['percentage']:.0f}",
+                    color,
+                    result,
+                    submitted,
+                    r["attempt_count"],
+                )
+            )
+        tbody = mark_safe("".join(str(row) for row in table_rows))
+        return mark_safe(
+            str(header)
+            + '<table style="width:100%;border-collapse:collapse;font-size:13px;">'
+            "<thead><tr>"
+            '<th style="text-align:left;padding:6px;border-bottom:1px solid #ddd;">Name</th>'
+            '<th style="text-align:left;padding:6px;border-bottom:1px solid #ddd;">EXPA ID</th>'
+            '<th style="text-align:left;padding:6px;border-bottom:1px solid #ddd;">Email</th>'
+            '<th style="text-align:left;padding:6px;border-bottom:1px solid #ddd;">Best %</th>'
+            '<th style="text-align:left;padding:6px;border-bottom:1px solid #ddd;">Result</th>'
+            '<th style="text-align:left;padding:6px;border-bottom:1px solid #ddd;">Submitted</th>'
+            '<th style="text-align:left;padding:6px;border-bottom:1px solid #ddd;">Attempts</th>'
+            "</tr></thead><tbody>"
+            + str(tbody)
+            + "</tbody></table>"
+        )
 
     @admin.display(description="Mandatory")
     def mandatory_display(self, obj):

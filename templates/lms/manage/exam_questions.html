@@ -81,6 +81,8 @@
   {% endif %}
 </section>
 
+{% include "lms/manage/_exam_respondents.html" %}
+
 <p class="link-muted">
   <a href="{% url 'lms:manage_dashboard' academy.key %}">← Dashboard</a>
   {% if exam.is_published and questions.count %}
