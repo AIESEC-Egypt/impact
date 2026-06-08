@@ -32,6 +32,7 @@ COPY image/ image/
 COPY Academy/ Academy/
 COPY ["Middle Video/", "Middle Video/"]
 COPY ["styles server.css", "styles server.css"]
+COPY script.js script.js
 
 # Django app (needed for collectstatic + template refs)
 COPY manage.py .
@@ -40,6 +41,7 @@ COPY accounts/ accounts/
 COPY lms/ lms/
 COPY templates/ templates/
 COPY static/lms/ static/lms/
+COPY static/script.js static/script.js
 
 RUN mkdir -p static \
     && python manage.py sync_static_assets \

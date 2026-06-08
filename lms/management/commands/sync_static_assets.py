@@ -52,9 +52,19 @@ class Command(BaseCommand):
             self.stdout.write("Synced static/styles.css → static/styles.min.css")
             copied += 1
 
+        for js_name in ("script.js",):
+            js_src = base / js_name
+            if js_src.is_file():
+                shutil.copy2(js_src, static / "script.js")
+                self.stdout.write(f"Copied {js_name} → static/script.js")
+                copied += 1
+            elif (static / "script.js").is_file():
+                self.stdout.write("Using existing static/script.js")
+
         video_src = _video_src(base)
         if video_src:
-            dest = static / "Middel Video"
+            # URL-safe folder name (spaces in "Middel Video" break some static servers)
+            dest = static / "middel-video"
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copytree(
                 video_src,
@@ -66,7 +76,7 @@ class Command(BaseCommand):
             )
             count = sum(1 for _ in dest.rglob("*") if _.is_file())
             self.stdout.write(
-                f"Copied dir {video_src.name} → static/Middel Video ({count} files)"
+                f"Copied dir {video_src.name} → static/middel-video ({count} files)"
             )
 
         for src_rel, dest_rel in SYNC_PATHS:

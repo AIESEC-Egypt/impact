@@ -147,14 +147,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
-_MIDDLE_VIDEO = BASE_DIR / "Middle Video"
-if not _MIDDLE_VIDEO.exists():
-    _MIDDLE_VIDEO = BASE_DIR / "Middel Video"
 _STATIC_EXTRA = [
     ("fonts", BASE_DIR / "fonts"),
     ("AiE", BASE_DIR / "AiE"),
-    # Legacy templates use the typo "Middel"; folder on disk is often "Middle Video".
-    ("Middel Video", _MIDDLE_VIDEO),
     ("Academy", BASE_DIR / "Academy"),
     ("aspects", BASE_DIR / "aspects"),
     ("image", BASE_DIR / "image"),

@@ -39,8 +39,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
 <!-- Swiper JS -->
 
-<link rel="stylesheet" href="{% static 'styles.min.css' %}" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="{% static 'styles.min.css' %}"></noscript>
+<link rel="stylesheet" href="{% static 'styles.min.css' %}">
 <link rel="stylesheet" href="{% static 'lms/site-nav-account.css' %}">
 <link rel="stylesheet" href="{% static 'lms/site-navbar-layout.css' %}">
     <link rel="icon" href="{% static 'aspects/icon.png' %}">
@@ -152,10 +151,9 @@
     <h1><span class="the-text">THE </span> <span class="aiesec1-text">AIESEC</span><span class="the-text"> WAY </span></h1>
 
     <div class="video_container">
-        <img loading="lazy" src="{% static 'Middel Video/thumbnail.jpg' %}" alt="Video Thumbnail" class="video_thumbnail">
+        <img loading="lazy" src="{% static 'middel-video/thumbnail.jpg' %}" alt="Video Thumbnail" class="video_thumbnail">
         <div class="play_button" onclick="playVideo()">▶</div>
-        <video id="aiesecVideo" controls>
-            <source src="{% static 'Middel Video/This Is AIESEC.mp4' %}" type="video/mp4">
+        <video id="aiesecVideo" controls preload="none" playsinline poster="{% static 'middel-video/thumbnail.jpg' %}">
             Your browser does not support the video tag.
         </video>
     </div>
@@ -176,7 +174,7 @@ function Play_OGV_1() {
   var butt = document.getElementById('myButton1');
 
   // Ensure the correct video path
-  mp4.src = "{% static 'Middel Video/The AIESEC way.mp4' %}";
+  mp4.src = "{% static 'middel-video/The AIESEC way.mp4' %}";
   
   // Make sure the button is hidden
   butt.style.display = "none";
@@ -190,10 +188,18 @@ function Play_OGV_1() {
 }
 
     function playVideo() {
+        const video = document.getElementById('aiesecVideo');
+        if (!video.querySelector('source')) {
+            const source = document.createElement('source');
+            source.src = "{% static 'middel-video/This Is AIESEC.mp4' %}";
+            source.type = 'video/mp4';
+            video.appendChild(source);
+        }
         document.querySelector('.video_thumbnail').style.display = 'none';
         document.querySelector('.play_button').style.display = 'none';
-        document.getElementById('aiesecVideo').style.display = 'block';
-        document.getElementById('aiesecVideo').play();
+        video.style.display = 'block';
+        video.load();
+        video.play().catch(function (err) { console.error('Playback error:', err); });
     }
 </script>
 
@@ -335,7 +341,7 @@ function Play_OGV_1() {
 
     <section class="memory-section">
   <div class="memory-container">
-    <img src="/static/image/WhatsApp Image 2025-06-10 at 19.14.05_bc410ec0.jpg" alt="Youssef Khaled" class="memory-photo">
+    <img src="{% static 'image/WhatsApp Image 2025-06-10 at 19.14.05_bc410ec0.jpg' %}" alt="Youssef Khaled" class="memory-photo">
     <div class="memory-text">
       <h2>In Loving Memory</h2>
       <h3>Youssef Khaled</h3>
@@ -352,16 +358,16 @@ function Play_OGV_1() {
     <footer class="image-footer">
         <div class="scrolling-container">
             <div class="scrolling-content">
-                <img loading="lazy" src="/static/image/IMG-20250213-WA0004.webp" alt="Image 1">
-                <img loading="lazy" src="/static/image/IMG-20250213-WA0005.webp" alt="Image 2">
-                <img loading="lazy" src="/static/image/IMG-20250213-WA0006.webp" alt="Image 3">
-                <img loading="lazy" src="/static/image/IMG-20250213-WA0007.webp" alt="Image 4">
-                <img loading="lazy" src="/static/image/IMG-20250213-WA0008.webp" alt="Image 5">
-                <img loading="lazy" src="/static/image/IMG-20250213-WA0010.webp" alt="Image 6">
+                <img loading="lazy" src="{% static 'image/IMG-20250213-WA0004.webp' %}" alt="Image 1">
+                <img loading="lazy" src="{% static 'image/IMG-20250213-WA0005.webp' %}" alt="Image 2">
+                <img loading="lazy" src="{% static 'image/IMG-20250213-WA0006.webp' %}" alt="Image 3">
+                <img loading="lazy" src="{% static 'image/IMG-20250213-WA0007.webp' %}" alt="Image 4">
+                <img loading="lazy" src="{% static 'image/IMG-20250213-WA0008.webp' %}" alt="Image 5">
+                <img loading="lazy" src="{% static 'image/IMG-20250213-WA0010.webp' %}" alt="Image 6">
                 <!-- Duplicate images for infinite effect -->
-                <img loading="lazy" src="/static/image/IMG-20250213-WA0009.webp" alt="Image 2">
-                <img loading="lazy" src="/static/image/IMG-20250213-WA0011.webp" alt="Image 3">
-                <img loading="lazy" src="/static/image/IMG-20250213-WA0012.webp" alt="Image 4">
+                <img loading="lazy" src="{% static 'image/IMG-20250213-WA0009.webp' %}" alt="Image 2">
+                <img loading="lazy" src="{% static 'image/IMG-20250213-WA0011.webp' %}" alt="Image 3">
+                <img loading="lazy" src="{% static 'image/IMG-20250213-WA0012.webp' %}" alt="Image 4">
 
 
             </div>
@@ -373,13 +379,11 @@ Developed by <a href="https://www.linkedin.com/in/ibraheem-a-nassar/" target="_b
     </footer>
     
 </main>
-    <script src="{% static 'script.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script src="{% static 'script.js' %}"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const scrollBtn = document.getElementById("scrollToTopBtn");
@@ -404,18 +408,16 @@ Developed by <a href="https://www.linkedin.com/in/ibraheem-a-nassar/" target="_b
 </script>
 
 <script>
-  window.addEventListener("load", function () {
+  function hidePreloader() {
     const loader = document.querySelector(".pre-loader");
+    if (!loader) return;
     loader.style.transition = "opacity 0.5s ease";
     loader.style.opacity = "0";
-    setTimeout(() => loader.remove(), 500);
-  });
-</script>
-<script>
-  document.documentElement.classList.add("loading");
-  window.addEventListener("load", function () {
+    setTimeout(function () { loader.remove(); }, 500);
     document.documentElement.classList.remove("loading");
-  });
+  }
+  document.documentElement.classList.add("loading");
+  document.addEventListener("DOMContentLoaded", hidePreloader);
 </script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
