@@ -39,6 +39,7 @@ COPY impact/ impact/
 COPY accounts/ accounts/
 COPY lms/ lms/
 COPY templates/ templates/
+COPY static/lms/ static/lms/
 
 RUN mkdir -p static \
     && python manage.py sync_static_assets \

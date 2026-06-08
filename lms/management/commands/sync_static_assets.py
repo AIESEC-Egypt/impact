@@ -37,13 +37,6 @@ class Command(BaseCommand):
         copied = 0
         skipped = 0
 
-        for styles_name in ("styles.min.css",):
-            styles_src = base / styles_name
-            if styles_src.is_file():
-                shutil.copy2(styles_src, static / "styles.min.css")
-                self.stdout.write(f"Copied {styles_name} → static/styles.min.css")
-                copied += 1
-
         for styles_name in ("styles server.css", "styles.css"):
             styles_src = base / styles_name
             if styles_src.is_file():
@@ -52,9 +45,11 @@ class Command(BaseCommand):
                 copied += 1
                 break
 
-        if (static / "styles.css").is_file() and not (static / "styles.min.css").is_file():
+        # Templates load styles.min.css — always mirror the full stylesheet so
+        # a stale root/static min file cannot ship half the rules.
+        if (static / "styles.css").is_file():
             shutil.copy2(static / "styles.css", static / "styles.min.css")
-            self.stdout.write("Copied static/styles.css → static/styles.min.css")
+            self.stdout.write("Synced static/styles.css → static/styles.min.css")
             copied += 1
 
         video_src = _video_src(base)
