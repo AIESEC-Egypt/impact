@@ -54,11 +54,15 @@ class Command(BaseCommand):
 
         js_dest = static / "script.js"
         for js_src in (base / "script.js", base / "static" / "script.js"):
-            if js_src.is_file():
+            if not js_src.is_file():
+                continue
+            if js_src.resolve() == js_dest.resolve():
+                self.stdout.write("static/script.js already present")
+            else:
                 shutil.copy2(js_src, js_dest)
                 self.stdout.write(f"Copied {js_src.relative_to(base)} → static/script.js")
-                copied += 1
-                break
+            copied += 1
+            break
 
         video_src = _video_src(base)
         if video_src:
