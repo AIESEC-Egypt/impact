@@ -64,13 +64,28 @@ query memberPosition($id: Int!) {
 """
 
 
-def get_sync_config():
-    row = ExpaMemberSyncConfig.objects.filter(is_active=True).first()
-    if row:
-        return row
-    token = (getattr(settings, "EXPA_SYNC_ACCESS_TOKEN", None) or "").strip()
+def _normalize_access_token(raw):
+    """Strip whitespace and accidental quotes from Coolify/.env values."""
+    token = (raw or "").strip()
+    if len(token) >= 2 and token[0] == token[-1] and token[0] in "\"'":
+        token = token[1:-1].strip()
+    return token
+
+
+def _parse_sync_date(value, default):
+    if not value:
+        return default
+    if isinstance(value, date):
+        return value
+    return date.fromisoformat(str(value)[:10])
+
+
+def _env_sync_config():
+    token = _normalize_access_token(getattr(settings, "EXPA_SYNC_ACCESS_TOKEN", None))
     if not token:
         return None
+    office_raw = getattr(settings, "EXPA_SYNC_OFFICE_ID", None)
+    office_id = int(office_raw) if office_raw not in (None, "") else None
     return type(
         "EnvSyncConfig",
         (),
@@ -79,22 +94,57 @@ def get_sync_config():
             "graphql_url": getattr(
                 settings, "EXPA_SYNC_GRAPHQL_URL", "https://gis-api.aiesec.org/graphql"
             ),
-            "office_id": getattr(settings, "EXPA_SYNC_OFFICE_ID", None),
-            "date_from": getattr(settings, "EXPA_SYNC_DATE_FROM", date(2025, 1, 1)),
-            "date_to": getattr(settings, "EXPA_SYNC_DATE_TO", date.today()),
+            "office_id": office_id,
+            "date_from": _parse_sync_date(
+                getattr(settings, "EXPA_SYNC_DATE_FROM", None), date(2025, 1, 1)
+            ),
+            "date_to": _parse_sync_date(
+                getattr(settings, "EXPA_SYNC_DATE_TO", None), date.today()
+            ),
         },
     )()
 
 
+def get_sync_config(*, prefer_admin=False):
+    """Resolve sync credentials.
+
+    When EXPA_SYNC_ACCESS_TOKEN is set in the environment (Coolify), it takes
+    precedence over the admin row so production env vars are not shadowed by a
+    stale admin configuration.
+    """
+    row = ExpaMemberSyncConfig.objects.filter(is_active=True).first()
+    env = _env_sync_config()
+    if prefer_admin and row:
+        return row, "admin"
+    if env:
+        return env, "environment"
+    if row:
+        return row, "admin"
+    return None, "none"
+
+
+def describe_sync_config(*, prefer_admin=False):
+    config, source = get_sync_config(prefer_admin=prefer_admin)
+    if not config:
+        return source, "no configuration"
+    token = _normalize_access_token(getattr(config, "access_token", None))
+    preview = f"{token[:8]}…" if len(token) > 8 else "(empty)"
+    return source, (
+        f"source={source}, office_id={getattr(config, 'office_id', None)}, "
+        f"token_len={len(token)}, token_preview={preview}"
+    )
+
+
 def fetch_member_positions_from_expa(config=None):
     """Fetch all member positions for the configured MC office."""
-    config = config or get_sync_config()
+    if config is None:
+        config, _source = get_sync_config()
     if not config:
         raise ValueError(
             "No EXPA sync config. Add Expa member sync in admin or set EXPA_SYNC_ACCESS_TOKEN."
         )
 
-    token = (config.access_token or "").strip()
+    token = _normalize_access_token(config.access_token)
     if not token:
         raise ValueError("EXPA sync access token is empty.")
 
@@ -175,10 +225,11 @@ def fetch_member_positions_from_expa(config=None):
 
 def fetch_member_position_from_expa(position_id, config=None):
     """Fetch one memberPosition by id (same shape as EXPA UI query)."""
-    config = config or get_sync_config()
+    if config is None:
+        config, _source = get_sync_config()
     if not config:
         raise ValueError("No EXPA sync config.")
-    token = (config.access_token or "").strip()
+    token = _normalize_access_token(config.access_token)
     if not token:
         raise ValueError("EXPA sync access token is empty.")
     url = config.graphql_url or "https://gis-api.aiesec.org/graphql"
