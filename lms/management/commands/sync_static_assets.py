@@ -64,6 +64,24 @@ class Command(BaseCommand):
             copied += 1
             break
 
+        for js_name in (
+            "b2b-contracts-submit.js",
+            "icx-apds-submissions.js",
+            "ranking-script.js",
+        ):
+            js_src = base / js_name
+            js_dest = static / js_name
+            if not js_src.is_file():
+                self.stdout.write(self.style.WARNING(f"Skip (missing): {js_name}"))
+                skipped += 1
+                continue
+            if js_src.resolve() == js_dest.resolve():
+                self.stdout.write(f"static/{js_name} already present")
+            else:
+                shutil.copy2(js_src, js_dest)
+                self.stdout.write(f"Copied {js_name} → static/{js_name}")
+            copied += 1
+
         video_src = _video_src(base)
         if video_src:
             # URL-safe folder name (spaces in "Middel Video" break some static servers)

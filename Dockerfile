@@ -41,6 +41,7 @@ COPY lms/ lms/
 COPY templates/ templates/
 COPY static/lms/ static/lms/
 COPY static/script.js static/script.js
+COPY b2b-contracts-submit.js icx-apds-submissions.js ranking-script.js ./
 
 RUN mkdir -p static \
     && python manage.py sync_static_assets \
