@@ -10,7 +10,7 @@
  */
 
 // Configuration - UPDATE THIS URL after deploying Apps Script
-const APPS_SCRIPT_URL =  'https://script.google.com/macros/s/AKfycbyoSqcDZUyXvvdDD_sa6G6rCJ1AcNgAJJSgOG-38KvKB3SFC7Ufj1K5JDs-OndHvYPs/exec'
+const APPS_SCRIPT_URL =  'https://script.google.com/macros/s/AKfycbwPzwkV51fCx_Ra06R9YZss8BM83bkEuk_a1jyQzBXbuSDxjxbFwN1lzSbdyAyIIo8/exec'
 /**
  * Collect form data and submit to Google Apps Script
  */
