@@ -35,7 +35,7 @@ function setupContractGenerationTrigger() {
   // Create a new trigger that runs every 3 minutes (to prevent overlaps)
   ScriptApp.newTrigger('processPendingContracts')
     .timeBased()
-    .everyMinutes(3)
+    .everyMinutes(5)
     .create();
   
   Logger.log('✅ Contract generation trigger set up successfully');
@@ -186,14 +186,15 @@ function doPost(e) {
     
     // Map opportunities based on contract type
     const contractType = data.contractType || '';
-    const isMixed = contractType.includes('3 iGV + 1 iGTa') || contractType.includes('3 iGV + 1 iGTe');
-    const isIGTa = contractType.includes('iGTa') || contractType.includes('iGTe');
+    const mix = parseMixedContract_(contractType);
+    const isIGTa = /iGT[ae]/i.test(contractType);
     
-    if (isMixed) {
-      // Mixed contract: iGV opportunities go to 1-3, iGTa/e goes to 16
-      mapIGVOpportunities(data, rowData, headerMap, 1, 3);
-      // For mixed contracts, the 4th opportunity (opp_4_) should map to position 16
-      mapIGTaOpportunityFromSource(data, rowData, headerMap, 16, 4);
+    if (mix) {
+      // Mixed contract: first N form opportunities are iGV, the rest are iGTa/e
+      mapIGVOpportunities(data, rowData, headerMap, 1, mix.igv);
+      for (let k = 1; k <= mix.igt; k++) {
+        mapIGTaOpportunityFromSource(data, rowData, headerMap, igtPosition_(k), mix.igv + k);
+      }
     } else if (isIGTa) {
       // iGTa/e contract: opportunities start from position 16
       const oppCount = parseInt(data.oppCount || '0');
@@ -282,11 +283,25 @@ function mapBasicInfo(data, rowData, headerMap) {
 }
 
 /**
- * Map iGV opportunities (positions 1-15)
+ * Sheet/template position layout (kept backward compatible with existing columns):
+ *   iGV roles  1-15  -> positions 1-15      iGV roles 16-50 -> positions 26-60
+ *   iGT roles  1-10  -> positions 16-25     iGT roles 11-16 -> positions 61-66
+ */
+const MAX_IGV_ROLES = 50;
+const MAX_IGT_ROLES = 16;
+function igvPosition_(role) { return role <= 15 ? role : role + 10; }
+function igtPosition_(role) { return role <= 10 ? role + 15 : role + 50; }
+function parseMixedContract_(contractType) {
+  const m = String(contractType || '').match(/^\s*(\d+)\s*iGV\s*\+\s*(\d+)\s*iGT[ae]\s*$/i);
+  return m ? { igv: Number(m[1]), igt: Number(m[2]) } : null;
+}
+
+/**
+ * Map iGV opportunities (roles 1-50)
  */
 function mapIGVOpportunities(data, rowData, headerMap, startPos, count) {
-  for (let i = 1; i <= count && (startPos + i - 1) <= 15; i++) {
-    const oppNum = startPos + i - 1;
+  for (let i = 1; i <= count && i <= MAX_IGV_ROLES; i++) {
+    const oppNum = igvPosition_(i);
     const prefix = `opp_${i}_`;
     
     // Basic opportunity fields (in order matching CSV headers)
@@ -365,11 +380,11 @@ function mapIGVOpportunities(data, rowData, headerMap, startPos, count) {
 }
 
 /**
- * Map iGTa/e opportunities (positions 16-25)
+ * Map iGTa/e opportunities (roles 1-16)
  */
 function mapIGTaOpportunities(data, rowData, headerMap, startPos, count) {
-  for (let i = 1; i <= count && (startPos + i - 1) <= 25; i++) {
-    const oppNum = startPos + i - 1;
+  for (let i = 1; i <= count && i <= MAX_IGT_ROLES; i++) {
+    const oppNum = igtPosition_(i);
     const prefix = `opp_${i}_`;
     
     Logger.log(`[iGTa/e Opportunity ${oppNum}] Using prefix: ${prefix}`);
@@ -709,7 +724,12 @@ function generateB2BContract(rowIndexOverride) {
 
       // Date placeholders
       if (String(tag).includes('sd}}')) {
-        value = value ? Utilities.formatDate(new Date(value), 'GMT+3', 'dd/MM/yyyy') : '';
+        if (value) {
+          const d = new Date(value);
+          value = Utilities.formatDate(d, 'GMT+3', 'dd/MM/yyyy');
+        } else {
+          value = '';
+        }
       }
 
       // Reference Code generation (if used in Reference mapping)
@@ -734,9 +754,7 @@ function generateB2BContract(rowIndexOverride) {
     }
 
     // ✅ One-pass replacement
-    fastReplaceAll_(body, tagValueMap);
-
-    doc.saveAndClose();
+    replaceTagsInDoc_(doc, tagValueMap);
 
     // Move to LC folder if configured
     if (typeof lcsFolders !== 'undefined' && lcsFolders) {
@@ -749,6 +767,7 @@ function generateB2BContract(rowIndexOverride) {
     // Send email
     MailApp.sendEmail({
       to: emails.join(','),
+      cc: 'abdelrahman02.yasser@aiesec.net, Kenzyheggy@aiesec.net, omar.ziko@aiesec.net',
       subject: `${name} Contract`,
       body:
         `Hello ${aiesecerName},\n` +
@@ -873,6 +892,33 @@ function findLastPendingRow_(sheet, sendCol) {
   return 0;
 }
 
+/**
+ * Replace every {{tag}} in the generated doc.
+ * Uses the Docs API (Advanced Service "Docs" must be enabled) so all tags are replaced
+ * in a few batch calls - fast enough for 50-role contracts and keeps text formatting.
+ * Falls back to the old paragraph-by-paragraph replacement if the service is missing.
+ */
+function replaceTagsInDoc_(doc, tagValueMap) {
+  const id = doc.getId();
+  const text = doc.getBody().getText();
+  const present = Object.keys(tagValueMap || {}).filter(t => t && text.indexOf(t) !== -1);
+  if (typeof Docs !== 'undefined' && Docs.Documents) {
+    doc.saveAndClose();
+    const requests = present.map(t => {
+      const v = tagValueMap[t];
+      return { replaceAllText: { containsText: { text: t, matchCase: true },
+        replaceText: (v === '' || v === null || v === undefined) ? ' ' : String(v) } };
+    });
+    for (let i = 0; i < requests.length; i += 400) {
+      Docs.Documents.batchUpdate({ requests: requests.slice(i, i + 400) }, id);
+    }
+    Logger.log(`Replaced ${requests.length} tags via Docs API`);
+    return;
+  }
+  fastReplaceAll_(doc.getBody(), tagValueMap);
+  doc.saveAndClose();
+}
+
 /** One-pass replace across paragraphs + table cells using a combined regex */
 function fastReplaceAll_(body, tagValueMap) {
   const tags = Object.keys(tagValueMap || {});
@@ -923,13 +969,18 @@ function fastReplaceAll_(body, tagValueMap) {
 }
 
 /** Find first column by header text, tolerant of spacing/dashes/case */
+const _headerIndexCache_ = new Map();
 function firstColByHeader_(sheet, headerText) {
-  const headerRow = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-  const want = _normHeader_(headerText);
-  for (let i = 0; i < headerRow.length; i++) {
-    if (_normHeader_(headerRow[i]) === want) return i + 1;
+  // Header row is read once per Sheet object per execution (it has ~2,600 columns now);
+  // no Spreadsheet service calls on cache hits.
+  let index = _headerIndexCache_.get(sheet);
+  if (!index) {
+    index = {};
+    const headerRow = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+    for (let i = headerRow.length - 1; i >= 0; i--) index[_normHeader_(headerRow[i])] = i + 1; // first match wins
+    _headerIndexCache_.set(sheet, index);
   }
-  return 0;
+  return index[_normHeader_(headerText)] || 0;
 }
 
 function _normHeader_(s) {

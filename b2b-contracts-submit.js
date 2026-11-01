@@ -64,7 +64,7 @@ async function submitB2BContract(event) {
     });
     
     // Log iGTa opportunity data if it exists (for mixed contracts)
-    if (formData.contractType && (formData.contractType.includes('3 iGV + 1 iGTa') || formData.contractType.includes('3 iGV + 1 iGTe'))) {
+    if (formData.contractType && /^\s*3\s*iGV\s*\+\s*1\s*iGT[ae]\s*$/i.test(formData.contractType)) {
       console.log('[2/7] iGTa Opportunity 4 data:', {
         title: formData.opp_4_title,
         fieldOfWork: formData.opp_4_fieldOfWork,
@@ -332,7 +332,9 @@ function collectFormData() {
     
     // Method 1: Check contract type first (most reliable)
     // Pure iGV contracts: contains "iGV" but NOT "iGTa" or "iGTe" (unless it's a mixed contract)
-    const isMixed = contractType.includes('3 iGV + 1 iGTa') || contractType.includes('3 iGV + 1 iGTe');
+    const mixMatch = contractType.match(/^\s*(\d+)\s*iGV\s*\+\s*(\d+)\s*iGT[ae]\s*$/i);
+    const isMixed = !!mixMatch;
+    const mixedIgvCount = mixMatch ? Number(mixMatch[1]) : 0;
     const isPureIGVContract = contractType.includes('iGV') && 
                               !contractType.includes('iGTa') && 
                               !contractType.includes('iGTe') && 
@@ -359,7 +361,7 @@ function collectFormData() {
       isIGTa = true;
     } else if (isMixed) {
       // Mixed contract: only opportunity 4 is iGTa
-      isIGTa = (oppNum === 4);
+      isIGTa = (oppNum > mixedIgvCount);
     } else if (isPureIGVContract) {
       // Pure iGV contract: all opportunities are iGV (NOT iGTa)
       isIGTa = false;

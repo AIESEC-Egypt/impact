@@ -886,20 +886,43 @@
                     <option value="" selected disabled>Select contract type...</option>
                     <option>iGV 5+1 - (Accommodation Not Covered)</option>
                     <option>iGV 7+2 - (Accommodation Not Covered)</option>
+                    <option>iGV 6+1 - (Accommodation Not Covered)</option>
+                    <option>iGV 10+3 - (Accommodation Not Covered)</option>
+                    <option>iGV 15+5 - (Accommodation Not Covered)</option>
+                    <option>iGV 20+10 - (Accommodation Not Covered)</option>
+                    <option>iGV 6+1 - (Accommodation Not Covered - 4 Weeks)</option>
+                    <option>iGV 10+3 - (Accommodation Not Covered - 4 Weeks)</option>
+                    <option>iGV 15+5 - (Accommodation Not Covered - 4 Weeks)</option>
+                    <option>iGV 20+10 - (Accommodation Not Covered - 4 Weeks)</option>
                     <option>iGV 3+1 - (Accommodation Covered)</option>
                     <option>iGV 5+2 - (Accommodation Covered)</option>
+                    <option>iGV 7+3 - (Accommodation Covered)</option>
                     <option>iGV 10+5 - (Accommodation Covered)</option>
+                    <option>iGV 13+7 - (Accommodation Covered)</option>
+                    <option>iGV 20+12 - (Accommodation Covered)</option>
+                    <option>iGV 30+20 - (Accommodation Covered)</option>
                     <option>iGTa 2+1</option>
+                    <option>iGTa 3+1</option>
                     <option>iGTa 5+2</option>
+                    <option>iGTa 6+3</option>
                     <option>iGTa 7+3</option>
+                    <option>iGTa 10+6</option>
                     <option>iGTe Nurseries 2+1</option>
+                    <option>iGTe Nurseries 3+1</option>
                     <option>iGTe Nurseries 5+2</option>
+                    <option>iGTe Nurseries 6+3</option>
                     <option>iGTe Nurseries 7+3</option>
+                    <option>iGTe Nurseries 10+6</option>
                     <option>iGTe Schools 2+1</option>
+                    <option>iGTe Schools 3+1</option>
                     <option>iGTe Schools 5+2</option>
+                    <option>iGTe Schools 6+3</option>
                     <option>iGTe Schools 7+3</option>
+                    <option>iGTe Schools 10+6</option>
                     <option>3 iGV + 1 iGTa</option>
                     <option>3 iGV + 1 iGTe</option>
+                    <option>6 iGV + 3 iGTa</option>
+                    <option>6 iGV + 3 iGTe</option>
                 </select>
             </div>
             <div class="row mb-3">
@@ -1016,40 +1039,37 @@
                contractType.includes('IGTa') || contractType.includes('IGTe');
     }
 
+    // Package helpers. Package names encode their slot counts, e.g.
+    // "iGV 10+5 - (...)" -> 15, "iGTa 6+3" -> 9, "6 iGV + 3 iGTa" -> 6 iGV + 3 iGT.
+    const MAX_IGV_OPPS = 50;
+    const MAX_IGT_OPPS = 16;
+
+    function parseMixedContract(contractType) {
+        const m = String(contractType || '').match(/^\s*(\d+)\s*iGV\s*\+\s*(\d+)\s*iGT[ae]\s*$/i);
+        return m ? { igv: Number(m[1]), igt: Number(m[2]) } : null;
+    }
+
     function isMixedContract(contractType) {
-        return contractType === '3 iGV + 1 iGTa' || contractType === '3 iGV + 1 iGTe';
+        return parseMixedContract(contractType) !== null;
     }
 
     function getMaxOppsForContractType(contractType) {
-        if (contractType === 'iGV 5+1 - (Accommodation Not Covered)') {
-            return 6;
-        } else if (contractType === 'iGV 7+2 - (Accommodation Not Covered)') {
-            return 9;
-        } else if (contractType === 'iGV 3+1 - (Accommodation Covered)') {
-            return 4;
-        } else if (contractType === 'iGV 5+2 - (Accommodation Covered)') {
-            return 7;
-        } else if (contractType === 'iGV 10+5 - (Accommodation Covered)') {
-            return 15;
-        } else if (contractType === 'iGTa 2+1') {
-            return 3;
-        } else if (contractType === 'iGTa 5+2') {
-            return 7;
-        } else if (contractType === 'iGTa 7+3') {
-            return 10;
-        } else if (contractType.includes('iGTe') && !contractType.startsWith('3 iGV')) {
-            if (contractType.includes('2+1')) return 3;
-            if (contractType.includes('5+2')) return 7;
-            if (contractType.includes('7+3')) return 10;
-            return 9;
-        } else if (contractType === '3 iGV + 1 iGTa') {
-            return 4;
-        } else if (contractType === '3 iGV + 1 iGTe') {
-            return 4;
-        } else {
-            // Default for any other type
-            return 9;
-        }
+        const mix = parseMixedContract(contractType);
+        if (mix) return Math.min(mix.igv, MAX_IGV_OPPS) + Math.min(mix.igt, MAX_IGT_OPPS);
+        const m = String(contractType || '').match(/(\d+)\s*\+\s*(\d+)/);
+        if (!m) return 9;
+        const total = Number(m[1]) + Number(m[2]);
+        return Math.min(total, isIGTaOrIGTeContract(contractType) ? MAX_IGT_OPPS : MAX_IGV_OPPS);
+    }
+
+    function isFourWeekContract(contractType) {
+        return /4\s*Weeks/i.test(String(contractType || ''));
+    }
+
+    function igvDurationOptionsFor(contractType) {
+        if (isFourWeekContract(contractType)) return ['4 weeks'];
+        if (String(contractType).includes('Accommodation Covered')) return ['4 weeks', '6 weeks', '8 weeks', '6 - 8 weeks'];
+        return ['6 weeks', '8 weeks', '6 - 8 weeks'];
     }
 
     function updateMaxOpportunities() {
@@ -1126,13 +1146,11 @@
             container.innerHTML = '';
             oppCount = 0;
             
-            // Add 3 iGV opportunities
-            for (let i = 0; i < 3; i++) {
+            // Add all iGV opportunities, then all iGTa/e opportunities
+            const mixCounts = parseMixedContract(selectedContractType);
+            for (let i = 0; i < mixCounts.igv + mixCounts.igt; i++) {
                 addOpportunity();
             }
-            
-            // Add 1 iGTa/e opportunity (4th one)
-            addOpportunity();
             
             // Hide the add button since all opportunities are added
             if (addOppBtn) {
@@ -1217,30 +1235,17 @@
      * Add or remove "4 weeks" on iGV duration dropdowns when contract is Accommodation Covered vs not.
      */
     function syncIGVDurationOptionsForContractType(selectedContractType) {
-        const showFourWeeks = selectedContractType.includes('Accommodation Covered');
+        const wanted = igvDurationOptionsFor(selectedContractType);
         for (let i = 1; i <= oppCount; i++) {
-            const oppCard = document.getElementById(`opp-${i}`);
-            if (!oppCard) continue;
-            if (!oppCard.querySelector('select[name*="_projectType"]')) continue;
-            const durationSelect = oppCard.querySelector('select[name*="_duration"]');
-            if (!durationSelect) continue;
-            const options = Array.from(durationSelect.options);
-            const fourWeeksIdx = options.findIndex(o => o.text === '4 weeks');
-            if (showFourWeeks && fourWeeksIdx === -1) {
-                const opt = document.createElement('option');
-                opt.textContent = '4 weeks';
-                const placeholder = durationSelect.querySelector('option[disabled]') || durationSelect.options[0];
-                if (placeholder && placeholder.nextSibling) {
-                    durationSelect.insertBefore(opt, placeholder.nextSibling);
-                } else {
-                    durationSelect.add(opt, 1);
-                }
-            } else if (!showFourWeeks && fourWeeksIdx !== -1) {
-                if (durationSelect.selectedIndex === fourWeeksIdx) {
-                    durationSelect.selectedIndex = 0;
-                }
-                durationSelect.remove(fourWeeksIdx);
-            }
+            const card = document.getElementById(`opp-${i}`);
+            if (!card || !card.querySelector('select[name*="_projectType"]')) continue;
+            const sel = card.querySelector('select[name*="_duration"]');
+            if (!sel) continue;
+            const current = sel.value;
+            sel.innerHTML = '<option value="" selected disabled>Select duration...</option>' +
+                wanted.map(o => `<option>${o}</option>`).join('');
+            if (wanted.includes(current)) sel.value = current;
+            else if (wanted.length === 1) sel.value = wanted[0];
         }
     }
 
@@ -1266,21 +1271,17 @@
         // For mixed contracts: first 3 are iGV, 4th is iGTa/e
         let shouldUseIGTaFormat = false;
         if (isMixed) {
-            shouldUseIGTaFormat = (oppCount === 4); // 4th opportunity (after increment, oppCount is 4)
+            shouldUseIGTaFormat = (oppCount > parseMixedContract(selectedContractType).igv); // iGTa/e opportunities come after the iGV ones
         } else {
             shouldUseIGTaFormat = isIGTa;
         }
         
-        const igvDurationOptionsHtml = selectedContractType.includes('Accommodation Covered')
-            ? `<option value="" selected disabled>Select duration...</option>
-                            <option>4 weeks</option>
-                            <option>6 weeks</option>
-                            <option>8 weeks</option>
-                            <option>6 - 8 weeks</option>`
-            : `<option value="" selected disabled>Select duration...</option>
-                            <option>6 weeks</option>
-                            <option>8 weeks</option>
-                            <option>6 - 8 weeks</option>`;
+        const igvDurationOptionsHtml = (() => {
+            const opts = igvDurationOptionsFor(selectedContractType);
+            const single = opts.length === 1;
+            return `<option value="" ${single ? '' : 'selected '}disabled>Select duration...</option>` +
+                opts.map(o => `<option${single ? ' selected' : ''}>${o}</option>`).join('');
+        })();
         
         let oppHtml = '';
         
