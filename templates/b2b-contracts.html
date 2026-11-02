@@ -1077,6 +1077,13 @@
         return ['6 weeks', '8 weeks', '6 - 8 weeks'];
     }
 
+    // iGTa/e duration on mixed packages must match the package length; pure iGTa/e keeps legacy ranges.
+    function igtDurationOptionsFor(contractType) {
+        if (isFourWeekContract(contractType)) return ['4 weeks'];
+        if (isMixedContract(contractType)) return ['6 weeks'];
+        return ['6-8 weeks', '9-12 Weeks'];
+    }
+
     function updateMaxOpportunities() {
         const contractTypeSelect = document.getElementById('contractType');
         const selectedContractType = contractTypeSelect ? contractTypeSelect.value : '';
@@ -1240,17 +1247,21 @@
      * Add or remove "4 weeks" on iGV duration dropdowns when contract is Accommodation Covered vs not.
      */
     function syncIGVDurationOptionsForContractType(selectedContractType) {
-        const wanted = igvDurationOptionsFor(selectedContractType);
+        const igvWanted = igvDurationOptionsFor(selectedContractType);
+        const igtWanted = igtDurationOptionsFor(selectedContractType);
         for (let i = 1; i <= oppCount; i++) {
             const card = document.getElementById(`opp-${i}`);
-            if (!card || !card.querySelector('select[name*="_projectType"]')) continue;
+            if (!card) continue;
             const sel = card.querySelector('select[name*="_duration"]');
             if (!sel) continue;
+            const isIgvCard = !!card.querySelector('select[name*="_projectType"]');
+            const wanted = isIgvCard ? igvWanted : igtWanted;
             const current = sel.value;
-            sel.innerHTML = '<option value="" selected disabled>Select duration...</option>' +
+            const single = wanted.length === 1;
+            sel.innerHTML = `<option value="" ${single ? '' : 'selected '}disabled>Select duration...</option>` +
                 wanted.map(o => `<option>${o}</option>`).join('');
             if (wanted.includes(current)) sel.value = current;
-            else if (wanted.length === 1) sel.value = wanted[0];
+            else if (single) sel.value = wanted[0];
         }
     }
 
@@ -1281,12 +1292,13 @@
             shouldUseIGTaFormat = isIGTa;
         }
         
-        const igvDurationOptionsHtml = (() => {
-            const opts = igvDurationOptionsFor(selectedContractType);
+        const durationOptionsHtml = (opts) => {
             const single = opts.length === 1;
             return `<option value="" ${single ? '' : 'selected '}disabled>Select duration...</option>` +
                 opts.map(o => `<option${single ? ' selected' : ''}>${o}</option>`).join('');
-        })();
+        };
+        const igvDurationOptionsHtml = durationOptionsHtml(igvDurationOptionsFor(selectedContractType));
+        const igtDurationOptionsHtml = durationOptionsHtml(igtDurationOptionsFor(selectedContractType));
         
         let oppHtml = '';
         
@@ -1305,9 +1317,7 @@
                     <div class="col-md-4">
                         <label class="form-label">Duration <span class="text-danger">*</span></label>
                         <select class="form-select" name="opp_${oppCount}_duration" required>
-                            <option value="" selected disabled>Select duration...</option>
-                            <option>6-8 weeks</option>
-                            <option>9-12 Weeks</option>
+                            ${igtDurationOptionsHtml}
                         </select>
                     </div>
                 </div>
