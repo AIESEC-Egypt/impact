@@ -1072,6 +1072,7 @@
 
     function igvDurationOptionsFor(contractType) {
         if (isFourWeekContract(contractType)) return ['4 weeks'];
+        if (isMixedContract(contractType)) return ['6 weeks']; // 3 iGV + 1 / 6 iGV + 3 (6-week mixed packages)
         if (String(contractType).includes('Accommodation Covered')) return ['4 weeks', '6 weeks', '8 weeks', '6 - 8 weeks'];
         return ['6 weeks', '8 weeks', '6 - 8 weeks'];
     }
