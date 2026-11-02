@@ -919,15 +919,15 @@
                     <option>iGTe Schools 6+3</option>
                     <option>iGTe Schools 7+3</option>
                     <option>iGTe Schools 10+6</option>
-                    <!-- Mixed: unlabeled = 6 weeks; "(4 Weeks)" = 4 weeks -->
-                    <option>3 iGV + 1 iGTa</option>
-                    <option>3 iGV + 1 iGTe</option>
-                    <option>6 iGV + 3 iGTa</option>
-                    <option>6 iGV + 3 iGTe</option>
-                    <option>3 iGV + 1 iGTa - (4 Weeks)</option>
-                    <option>3 iGV + 1 iGTe - (4 Weeks)</option>
-                    <option>6 iGV + 3 iGTa - (4 Weeks)</option>
-                    <option>6 iGV + 3 iGTe - (4 Weeks)</option>
+                    <!-- Mixed labels show weeks; value matches Reference sheet names -->
+                    <option value="3 iGV + 1 iGTa">3 iGV + 1 iGTa - (6 Weeks)</option>
+                    <option value="3 iGV + 1 iGTe">3 iGV + 1 iGTe - (6 Weeks)</option>
+                    <option value="6 iGV + 3 iGTa">6 iGV + 3 iGTa - (6 Weeks)</option>
+                    <option value="6 iGV + 3 iGTe">6 iGV + 3 iGTe - (6 Weeks)</option>
+                    <option value="3 iGV + 1 iGTa - (4 Weeks)">3 iGV + 1 iGTa - (4 Weeks)</option>
+                    <option value="3 iGV + 1 iGTe - (4 Weeks)">3 iGV + 1 iGTe - (4 Weeks)</option>
+                    <option value="6 iGV + 3 iGTa - (4 Weeks)">6 iGV + 3 iGTa - (4 Weeks)</option>
+                    <option value="6 iGV + 3 iGTe - (4 Weeks)">6 iGV + 3 iGTe - (4 Weeks)</option>
                 </select>
             </div>
             <div class="row mb-3">
@@ -1901,7 +1901,7 @@
         const contractTypeSelect = document.getElementById('contractType');
         if (contractTypeSelect) {
             Array.from(contractTypeSelect.options).forEach((opt, idx) => {
-                if (opt.text === '3 iGV + 1 iGTa') {
+                if (opt.value === '3 iGV + 1 iGTa' || opt.text.includes('3 iGV + 1 iGTa - (6 Weeks)')) {
                     contractTypeSelect.selectedIndex = idx;
                     contractTypeSelect.dispatchEvent(new Event('change'));
                 }
