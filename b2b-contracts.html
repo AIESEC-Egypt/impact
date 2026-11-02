@@ -919,9 +919,13 @@
                     <option>iGTe Schools 6+3</option>
                     <option>iGTe Schools 7+3</option>
                     <option>iGTe Schools 10+6</option>
-                    <!-- Mixed: first 2 = 6 weeks only; last 2 = 4 weeks only -->
+                    <!-- Mixed: unlabeled = 6 weeks; "(4 Weeks)" = 4 weeks -->
                     <option>3 iGV + 1 iGTa</option>
                     <option>3 iGV + 1 iGTe</option>
+                    <option>6 iGV + 3 iGTa</option>
+                    <option>6 iGV + 3 iGTe</option>
+                    <option>3 iGV + 1 iGTa - (4 Weeks)</option>
+                    <option>3 iGV + 1 iGTe - (4 Weeks)</option>
                     <option>6 iGV + 3 iGTa - (4 Weeks)</option>
                     <option>6 iGV + 3 iGTe - (4 Weeks)</option>
                 </select>
@@ -1068,7 +1072,7 @@
     }
 
     function igvDurationOptionsFor(contractType) {
-        // Mixed shape: 3+1 => 6 weeks only; 6+3 (4 Weeks) => 4 weeks only
+        // Mixed: "(4 Weeks)" packages => 4 weeks; all other mixed => 6 weeks
         if (isFourWeekContract(contractType)) return ['4 weeks'];
         if (isMixedContract(contractType)) return ['6 weeks'];
         if (String(contractType).includes('Accommodation Covered')) return ['4 weeks', '6 weeks', '8 weeks', '6 - 8 weeks'];
