@@ -40,7 +40,7 @@ function igv_setup() {
   igv.getRange(1, 1, 1, IGV_ADJ_REF_COL).setValues([adjustedHeaders_(mHeaders)]);
   igv.getRange('A2').setFormula(
     `=QUERY('Raw adjusted'!A2:${colLetter_(IGV_ADJ_REF_COL)}, ` +
-    `"select * where F matches '^iGV [0-9]+\\+[0-9]+.*' or F matches '^[0-9]+ iGV \\+ [0-9]+ iGT[ae]$'", 0)`);
+    `"select * where F matches '^iGV [0-9]+\\+[0-9]+.*' or F matches '^[0-9]+ iGV \\+ [0-9]+ iGT[ae].*'", 0)`);
   Logger.log('iGV sheet set up. Raw adjusted/iGV width: ' + IGV_ADJ_REF_COL);
 }
 

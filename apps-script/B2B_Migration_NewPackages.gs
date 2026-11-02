@@ -307,3 +307,24 @@ function columnLetter_(c) {
   while (c > 0) { const m = (c - 1) % 26; s = String.fromCharCode(65 + m) + s; c = Math.floor((c - 1) / 26); }
   return s;
 }
+
+/* ---- Nov 2026 follow-up: 4-week mixed packages (1,550 per iGV slot) ---- */
+const MIG_PACKAGES_4W_MIXED = [
+  ['3 iGV + 1 iGTa - (4 Weeks)', '3 iGV + 1 iGTa', 3, 1, 1550, 3, 1],
+  ['3 iGV + 1 iGTe - (4 Weeks)', '3 iGV + 1 iGTe', 3, 1, 1550, 3, 1],
+  ['6 iGV + 3 iGTa - (4 Weeks)', '6 iGV + 3 iGTa', 6, 3, 1550, 6, 3],
+  ['6 iGV + 3 iGTe - (4 Weeks)', '6 iGV + 3 iGTe', 6, 3, 1550, 6, 3],
+];
+function mig_build4WeekMixed() {
+  const props = PropertiesService.getScriptProperties();
+  const done = JSON.parse(props.getProperty('MIG_TEMPLATES_DONE') || '{}');
+  for (const pkg of MIG_PACKAGES_4W_MIXED) {
+    if (done[pkg[0]]) continue;
+    const id = buildTemplate_(pkg);
+    setReferenceTemplate_(pkg[0], id);
+    done[pkg[0]] = id;
+    props.setProperty('MIG_TEMPLATES_DONE', JSON.stringify(done));
+    Logger.log('✅ ' + pkg[0] + ' -> ' + id);
+  }
+  Logger.log('4-WEEK MIXED DONE');
+}

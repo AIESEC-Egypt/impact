@@ -923,6 +923,10 @@
                     <option>3 iGV + 1 iGTe</option>
                     <option>6 iGV + 3 iGTa</option>
                     <option>6 iGV + 3 iGTe</option>
+                    <option>3 iGV + 1 iGTa - (4 Weeks)</option>
+                    <option>3 iGV + 1 iGTe - (4 Weeks)</option>
+                    <option>6 iGV + 3 iGTa - (4 Weeks)</option>
+                    <option>6 iGV + 3 iGTe - (4 Weeks)</option>
                 </select>
             </div>
             <div class="row mb-3">
@@ -1045,7 +1049,7 @@
     const MAX_IGT_OPPS = 16;
 
     function parseMixedContract(contractType) {
-        const m = String(contractType || '').match(/^\s*(\d+)\s*iGV\s*\+\s*(\d+)\s*iGT[ae]\s*$/i);
+        const m = String(contractType || '').match(/^\s*(\d+)\s*iGV\s*\+\s*(\d+)\s*iGT[ae]\b/i);
         return m ? { igv: Number(m[1]), igt: Number(m[2]) } : null;
     }
 

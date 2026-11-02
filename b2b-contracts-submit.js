@@ -332,7 +332,7 @@ function collectFormData() {
     
     // Method 1: Check contract type first (most reliable)
     // Pure iGV contracts: contains "iGV" but NOT "iGTa" or "iGTe" (unless it's a mixed contract)
-    const mixMatch = contractType.match(/^\s*(\d+)\s*iGV\s*\+\s*(\d+)\s*iGT[ae]\s*$/i);
+    const mixMatch = contractType.match(/^\s*(\d+)\s*iGV\s*\+\s*(\d+)\s*iGT[ae]\b/i);
     const isMixed = !!mixMatch;
     const mixedIgvCount = mixMatch ? Number(mixMatch[1]) : 0;
     const isPureIGVContract = contractType.includes('iGV') && 

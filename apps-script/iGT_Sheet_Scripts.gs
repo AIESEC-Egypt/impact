@@ -54,7 +54,7 @@ function igt_setup() {
   igt.getRange(1, 1, 1, headers.length).setValues([headers]);
   igt.getRange('A2').setFormula(
     `=QUERY('Raw adjusted'!A2:${colLetterT_(headers.length)}, ` +
-    `"select * where F matches '^[iI]GT[ae] .*[0-9]+\\+[0-9]+$' or F matches '^[0-9]+ iGV \\+ [0-9]+ iGT[ae]$'", 0)`);
+    `"select * where F matches '^[iI]GT[ae] .*[0-9]+\\+[0-9]+$' or F matches '^[0-9]+ iGV \\+ [0-9]+ iGT[ae].*'", 0)`);
   Logger.log(`iGT sheet set up. Tail: Email ${colLetterT_(IGT_TAIL_EMAIL)}, Ref ${colLetterT_(IGT_TAIL_REF)}`);
 }
 

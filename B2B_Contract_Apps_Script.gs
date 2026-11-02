@@ -292,7 +292,7 @@ const MAX_IGT_ROLES = 16;
 function igvPosition_(role) { return role <= 15 ? role : role + 10; }
 function igtPosition_(role) { return role <= 10 ? role + 15 : role + 50; }
 function parseMixedContract_(contractType) {
-  const m = String(contractType || '').match(/^\s*(\d+)\s*iGV\s*\+\s*(\d+)\s*iGT[ae]\s*$/i);
+  const m = String(contractType || '').match(/^\s*(\d+)\s*iGV\s*\+\s*(\d+)\s*iGT[ae]\b/i);
   return m ? { igv: Number(m[1]), igt: Number(m[2]) } : null;
 }
 
