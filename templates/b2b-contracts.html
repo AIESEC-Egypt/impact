@@ -1079,10 +1079,8 @@
         return ['6 weeks', '8 weeks', '6 - 8 weeks'];
     }
 
-    // iGTa/e duration on mixed packages must match the package length; pure iGTa/e keeps legacy ranges.
+    // iGTa/e roles always run 6 weeks to 3 months, including the iGT slot of mixed packages.
     function igtDurationOptionsFor(contractType) {
-        if (isFourWeekContract(contractType)) return ['4 weeks'];
-        if (isMixedContract(contractType)) return ['6 weeks'];
         return ['6-8 weeks', '9-12 Weeks'];
     }
 
